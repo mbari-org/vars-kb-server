@@ -3,6 +3,8 @@ package org.mbari.vars.kbserver.dao
 import org.mbari.vars.kbserver.model.ConceptNode
 import vars.knowledgebase.Concept
 
+import scala.concurrent.{ ExecutionContext, Future }
+
 /**
  *
  *
@@ -11,8 +13,9 @@ import vars.knowledgebase.Concept
  */
 trait ConceptNodeDAO {
 
-  def findByName(name: String): ConceptNode
+  def findByName(name: String)(implicit ec: ExecutionContext): Future[Option[ConceptNode]]
 
-  def findAllNames(): Seq[String]
+  def findAllNames()(implicit ec: ExecutionContext): Future[Seq[String]]
 
+  def findRoot()(implicit ec: ExecutionContext): Future[Option[ConceptNode]]
 }

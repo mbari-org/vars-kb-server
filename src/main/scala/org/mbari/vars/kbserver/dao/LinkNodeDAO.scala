@@ -2,6 +2,8 @@ package org.mbari.vars.kbserver.dao
 
 import org.mbari.vars.kbserver.model.LinkNode
 
+import scala.concurrent.{ ExecutionContext, Future }
+
 /**
  *
  *
@@ -10,6 +12,9 @@ import org.mbari.vars.kbserver.model.LinkNode
  */
 trait LinkNodeDAO {
 
-  def findLinkTemplatesFor(conceptName: String): Seq[LinkNode]
+  def findAllApplicableTo(conceptName: String)(
+    implicit
+    ec: ExecutionContext
+  ): Future[Seq[LinkNode]]
 
 }
