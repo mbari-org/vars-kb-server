@@ -11,7 +11,7 @@ import vars.knowledgebase.Concept
  */
 trait ConceptNodeDAO {
 
-  def find(name: String): ConceptNode
+  def findByName(name: String): ConceptNode
 
   def findAllNames(): Seq[String]
 
