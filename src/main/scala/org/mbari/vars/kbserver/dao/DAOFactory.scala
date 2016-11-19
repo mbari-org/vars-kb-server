@@ -10,4 +10,8 @@ trait DAOFactory {
 
   def newPhylogenyDAO(): PhylogenyDAO
 
+  def newConceptNodeDAO(): ConceptNodeDAO
+
+  def newLinkNodeDAO(): LinkNodeDAO
+  
 }
