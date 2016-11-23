@@ -1,7 +1,14 @@
 package org.mbari.vars.kbserver.dao.jpa
 
+import javax.persistence.{EntityManagerFactory, Persistence}
+
 import com.typesafe.config.ConfigFactory
 import org.mbari.vars.kbserver.Constants
+import org.mbari.vars.kbserver.dao.{ConceptNodeDAO, DAOFactory, LinkNodeDAO, PhylogenyDAO}
+import vars.knowledgebase.KnowledgebaseDAOFactory
+import vars.knowledgebase.jpa.KnowledgebaseDAOFactoryImpl
+
+import scala.collection.JavaConverters._
 
 /**
   *
@@ -9,25 +16,14 @@ import org.mbari.vars.kbserver.Constants
   * @author Brian Schlining
   * @since 2016-11-18T11:36:00
   */
-class DefaultDAOFactory {
+class DefaultDAOFactory extends DAOFactory {
 
-  val config = ConfigFactory.load()
-  val params = Constants.DB_PARAMS
-  private[this] val props = Map(
-    "eclipselink.connection-pool.default.initial" -> "2",
-    "eclipselink.connection-pool.default.max" -> "16",
-    "eclipselink.connection-pool.default.min" -> "2",
-    "eclipselink.logging.level" -> "INFO",
-    "eclipselink.logging.session" -> "false",
-    "eclipselink.logging.thread" -> "false",
-    "eclipselink.logging.timestamp" -> "false",
-    "eclipselink.target-database" -> params.name,
-    "javax.persistence.database-product-name" -> params.name,
-    "javax.persistence.schema-generation.database.action" -> "create"
-  )
+  override def newPhylogenyDAO(): PhylogenyDAO =
+    Constants.GUICE_INJECTOR.getInstance(classOf[PhylogenyDAO])
 
+  override def newConceptNodeDAO(): ConceptNodeDAO =
+    Constants.GUICE_INJECTOR.getInstance(classOf[ConceptNodeDAO])
 
-
-
-
+  override def newLinkNodeDAO(): LinkNodeDAO =
+    Constants.GUICE_INJECTOR.getInstance(classOf[LinkNodeDAO])
 }

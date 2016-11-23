@@ -16,12 +16,12 @@ import scala.util.Try
  */
 object Constants {
 
-  @volatile lazy val CONFIG: Config = ConfigFactory.load()
+  val CONFIG: Config = ConfigFactory.load()
 
-  @volatile lazy val ENVIRONMENT: String =
+  val ENVIRONMENT: String =
     Try(CONFIG.getString("database.environment")).getOrElse("development")
 
-  @volatile lazy val DB_PARAMS: DbParams = {
+  val DB_PARAMS: DbParams = {
     val path = s"org.mbari.vars.knowledgebase.database.${ENVIRONMENT}"
     val user = CONFIG.getString(s"${path}.user")
     val password = CONFIG.getString(s"${path}.password")
@@ -33,6 +33,12 @@ object Constants {
 
   val GUICE_INJECTOR = Guice.createInjector(new InjectorModule)
 
-  val DAO_FACTORY = GUICE_INJECTOR.getInstance(classOf[DAOFactory])
+  val DAO_FACTORY: DAOFactory = {
+    val className = Try(CONFIG.getString("org.mbari.vars.kbserver.daofactory"))
+        .getOrElse("org.mbari.vars.kbserver.dao.DefaultDAOFactory")
+    Class.forName(className)
+        .newInstance()
+        .asInstanceOf[DAOFactory]
+  }
 
 }
