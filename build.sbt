@@ -65,7 +65,6 @@ lazy val optionSettings = Seq(
     "-Xfatal-warnings",
     "-Xlint",
     "-Yno-adapted-args",
-    "-Ywarn-value-discard",
     "-Xfuture"),
   javacOptions ++= Seq("-target", "1.8", "-source", "1.8"),
   incOptions := incOptions.value.withNameHashing(true),

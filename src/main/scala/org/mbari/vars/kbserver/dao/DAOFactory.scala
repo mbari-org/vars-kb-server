@@ -13,5 +13,5 @@ trait DAOFactory {
   def newConceptNodeDAO(): ConceptNodeDAO
 
   def newLinkNodeDAO(): LinkNodeDAO
-  
+
 }

@@ -1,10 +1,9 @@
 package org.mbari.vars.kbserver
 
 import com.google.inject.Guice
-import com.typesafe.config.{Config, ConfigFactory}
+import com.typesafe.config.{ Config, ConfigFactory }
 import org.mbari.vars.kbserver.dao.DAOFactory
 import org.mbari.vars.kbserver.model.DbParams
-import vars.jpa.InjectorModule
 
 import scala.util.Try
 
@@ -33,12 +32,10 @@ object Constants {
 
   val GUICE_INJECTOR = Guice.createInjector(new InjectorModule)
 
-  val DAO_FACTORY: DAOFactory = {
-    val className = Try(CONFIG.getString("org.mbari.vars.kbserver.daofactory"))
-        .getOrElse("org.mbari.vars.kbserver.dao.DefaultDAOFactory")
-    Class.forName(className)
-        .newInstance()
-        .asInstanceOf[DAOFactory]
-  }
+  //  val DAO_FACTORY: DAOFactory = {
+  //    val className = Try(CONFIG.getString("org.mbari.vars.kbserver.daofactory"))
+  //      .getOrElse("org.mbari.vars.kbserver.dao.DefaultDAOFactory")
+  //    Class.forName(className).newInstance().asInstanceOf[DAOFactory]
+  //  }
 
 }
