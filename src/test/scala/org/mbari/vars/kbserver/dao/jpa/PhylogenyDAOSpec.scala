@@ -28,6 +28,13 @@ class PhylogenyDAOSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   "PhylogenyDAOImpl" should "find phylogeny for Nanomia bijuga" in {
     val cn = Await.result(dao.findUp("Nanomia bijuga"), timeout)
     cn should not be (empty)
+    println(Constants.GSON.toJson(cn.get))
+  }
+
+  it should "find children of Agalmatidae" in {
+    val cn = Await.result(dao.findDown("Agalmatidae"), timeout)
+    cn should not be (empty)
+    println(Constants.GSON.toJson(cn.get))
   }
 
 }

@@ -1,9 +1,11 @@
 package org.mbari.vars.kbserver
 
+import com.google.gson.{ FieldNamingPolicy, GsonBuilder }
 import com.google.inject.Guice
 import com.typesafe.config.{ Config, ConfigFactory }
 import org.mbari.vars.kbserver.dao.DAOFactory
-import org.mbari.vars.kbserver.model.DbParams
+import org.mbari.vars.kbserver.gson.PhylogenyNodeSerializer
+import org.mbari.vars.kbserver.model.{ DbParams, PhylogenyNode }
 
 import scala.util.Try
 
@@ -31,6 +33,13 @@ object Constants {
   }
 
   val GUICE_INJECTOR = Guice.createInjector(new InjectorModule)
+
+  val GSON = new GsonBuilder()
+    .setPrettyPrinting()
+    .registerTypeAdapter(classOf[PhylogenyNode], new PhylogenyNodeSerializer)
+    .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+    .create()
 
   //  val DAO_FACTORY: DAOFactory = {
   //    val className = Try(CONFIG.getString("org.mbari.vars.kbserver.daofactory"))

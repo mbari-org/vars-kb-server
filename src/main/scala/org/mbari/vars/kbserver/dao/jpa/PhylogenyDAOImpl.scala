@@ -19,13 +19,13 @@ class PhylogenyDAOImpl @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFacto
     extends PhylogenyDAO {
 
   override def findUp(name: String)(implicit ec: ExecutionContext): Future[Option[PhylogenyNode]] =
-    find(name, (c: Concept) => rowsToConceptNode(toUpRows(c)))
+    find(name, (c: Concept) => rowsToConceptNode(toUpRows(c)).map(_.root))
 
   override def findDown(name: String)(
     implicit
     ec: ExecutionContext
   ): Future[Option[PhylogenyNode]] =
-    find(name, (c: Concept) => rowsToConceptNode(toDownRows(c)))
+    find(name, (c: Concept) => rowsToConceptNode(toDownRows(c)).flatMap(_.subnode(name)))
 
   private def find(
     name: String,
