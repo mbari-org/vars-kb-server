@@ -2,7 +2,7 @@ package org.mbari.vars.kbserver.dao.jdbc.sqlserver
 
 import java.sql.ResultSet
 
-import org.mbari.vars.kbserver.dao.{ Node, PhylogenyDAO, PhylogenyRow }
+import org.mbari.vars.kbserver.dao.{ PhylogenyDAO, PhylogenyRow }
 import org.mbari.vars.kbserver.model.PhylogenyNode
 import org.slf4j.LoggerFactory
 

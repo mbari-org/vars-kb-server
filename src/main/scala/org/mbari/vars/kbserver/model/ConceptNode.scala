@@ -13,12 +13,14 @@ import scala.collection.JavaConverters._
  * @since 2016-11-17T15:54:00
  */
 case class ConceptNode(
-  name: String,
-  alternateNames: Seq[String],
-  media: Seq[MediaNode],
-  descriptors: Seq[LinkNode],
-  rank: Option[String] = None
-)
+    name: String,
+    alternateNames: Seq[String],
+    media: Seq[MediaNode],
+    descriptors: Seq[LinkNode],
+    rank: Option[String] = None
+) {
+
+}
 
 object ConceptNode {
 

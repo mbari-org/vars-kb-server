@@ -18,22 +18,22 @@ trait PhylogenyDAO {
   def findDown(name: String)(implicit ec: ExecutionContext): Future[Option[PhylogenyNode]]
 
   protected def rowsToConceptNode(rows: Seq[PhylogenyRow]): Option[PhylogenyNode] = {
-    val nodes = new mutable.ArrayBuffer[Node]
+    val nodes = new mutable.ArrayBuffer[PhylogenyNode]
     for (row <- rows) {
       val parent = nodes
         .find(n => n.name == row.parentName)
         .getOrElse({
-          val node = Node(row.parentName, Option(row.parentRank), None)
+          val node = PhylogenyNode(row.parentName, Option(row.parentRank), None)
           nodes += node
           node
         })
 
-      val child = Node(row.childName, Option(row.childRank), Option(parent))
+      val child = PhylogenyNode(row.childName, Option(row.childRank), Option(parent))
       parent.children += child
       nodes += child
     }
 
-    nodes.find(_.parent.isEmpty).map(_.asConceptNode)
+    nodes.find(_.parent.isEmpty)
   }
 
 }
@@ -47,14 +47,3 @@ case class PhylogenyRow(
   childRank: String
 )
 
-case class Node(
-    name: String,
-    rank: Option[String] = None,
-    parent: Option[Node] = None,
-    children: mutable.HashSet[Node] = new mutable.HashSet[Node]
-) {
-
-  def asConceptNode: PhylogenyNode =
-    PhylogenyNode(name, rank, parent.map(_.asConceptNode), children.map(_.asConceptNode).toSet)
-
-}

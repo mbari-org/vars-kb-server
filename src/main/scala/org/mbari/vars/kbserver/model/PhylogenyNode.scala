@@ -1,5 +1,7 @@
 package org.mbari.vars.kbserver.model
 
+import scala.collection.mutable
+
 /**
  *
  *
@@ -10,7 +12,7 @@ case class PhylogenyNode(
     name: String,
     rank: Option[String] = None,
     parent: Option[PhylogenyNode],
-    children: Set[PhylogenyNode]
+    children: mutable.HashSet[PhylogenyNode] = new mutable.HashSet[PhylogenyNode]
 ) {
 
   override def equals(obj: Any): Boolean = name == obj

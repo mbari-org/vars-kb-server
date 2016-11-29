@@ -77,7 +77,7 @@ addCommandAlias("cleanall", ";clean;clean-files")
 
 // --- Modules
 lazy val varsSettings = buildSettings ++ consoleSettings ++ dependencySettings ++
-    optionSettings ++ reformatOnCompileSettings
+    optionSettings // ++ reformatOnCompileSettings
 
 lazy val root = (project in file("."))
   .settings(varsSettings)
