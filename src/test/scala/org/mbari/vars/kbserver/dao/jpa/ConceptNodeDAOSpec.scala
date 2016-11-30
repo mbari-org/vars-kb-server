@@ -1,6 +1,5 @@
 package org.mbari.vars.kbserver.dao.jpa
 
-import org.mbari.vars.kbserver.Constants
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
 import scala.concurrent.Await
@@ -13,20 +12,27 @@ class ConceptNodeDAOSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
 
   override protected def beforeAll(): Unit = TestDatabase.init
 
-  val daoFactory = new DefaultDAOFactory(TestDatabase.knowledgebaseDAOFactory)
-  val dao = daoFactory.newConceptNodeDAO()
+  private[this] val daoFactory = new DefaultDAOFactory(TestDatabase.KB_DAO_FACTORY)
+  private[this] val dao = daoFactory.newConceptNodeDAO()
 
   "ConceptNodeDAO" should "findRoot" in {
-    val root = Await.result(dao.findRoot(), TestDatabase.timeout)
+    val root = Await.result(dao.findRoot(), TestDatabase.TIMEOUT)
     root should not be empty
     root.get.name should be ("object")
   }
 
   it should "findByName" in {
-    val c = Await.result(dao.findByName("Nanomia bijuga"), TestDatabase.timeout)
+    val name = "Nanomia bijuga"
+    val c = Await.result(dao.findByName(name), TestDatabase.TIMEOUT)
     c should not be empty
-    c.get.name should be ("Nanomia bijuga")
-    println(Constants.GSON.toJson(c.get))
+    c.get.name should be (name)
+    //println(Constants.GSON.toJson(c.get))
+  }
+
+  it should "findAllNames" in {
+    val names = Await.result(dao.findAllNames(), TestDatabase.TIMEOUT)
+    names.size should be (5209)
+    names should contain("Nanomia bijuga")
   }
 
 }

@@ -1,13 +1,9 @@
 package org.mbari.vars.kbserver.dao.jpa
 
-import javax.persistence.{ EntityManagerFactory, Persistence }
 
 import com.google.inject.Inject
-import com.typesafe.config.ConfigFactory
-import org.mbari.vars.kbserver.Constants
 import org.mbari.vars.kbserver.dao.{ ConceptNodeDAO, DAOFactory, LinkNodeDAO, PhylogenyDAO }
 import vars.knowledgebase.KnowledgebaseDAOFactory
-import vars.knowledgebase.jpa.KnowledgebaseDAOFactoryImpl
 
 import scala.collection.JavaConverters._
 
