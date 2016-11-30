@@ -4,7 +4,6 @@ import java.util.concurrent.TimeUnit
 
 import org.mbari.vars.kbserver.Constants
 import org.scalatest.{ BeforeAndAfterAll, FlatSpec, Matchers }
-import vars.knowledgebase.KnowledgebaseDAOFactory
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
@@ -18,11 +17,12 @@ import scala.concurrent.ExecutionContext.Implicits.global
  */
 class PhylogenyDAOSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
 
-  override protected def beforeAll(): Unit = InitTestDatabase.init
+  override protected def beforeAll(): Unit = TestDatabase.init
+
+
   private[this] val timeout = Duration(2, TimeUnit.SECONDS)
 
-  val kbf = Constants.GUICE_INJECTOR.getInstance(classOf[KnowledgebaseDAOFactory])
-  val daoFactory = new DefaultDAOFactory(kbf)
+  val daoFactory = new DefaultDAOFactory(TestDatabase.knowledgebaseDAOFactory)
   val dao = daoFactory.newPhylogenyDAO()
 
   "PhylogenyDAOImpl" should "find phylogeny for Nanomia bijuga" in {
