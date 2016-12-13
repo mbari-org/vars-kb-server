@@ -1,6 +1,6 @@
 lazy val buildSettings = Seq(
   organization := "org.mbari.vars",
-  scalaVersion := "2.12.0",
+  scalaVersion := "2.12.1",
   crossScalaVersions := Seq("2.12.0")
 )
 

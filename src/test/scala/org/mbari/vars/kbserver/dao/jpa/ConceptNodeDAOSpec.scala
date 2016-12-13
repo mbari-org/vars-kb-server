@@ -26,7 +26,6 @@ class ConceptNodeDAOSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     val c = Await.result(dao.findByName(name), TestDatabase.TIMEOUT)
     c should not be empty
     c.get.name should be (name)
-    //println(Constants.GSON.toJson(c.get))
   }
 
   it should "findAllNames" in {

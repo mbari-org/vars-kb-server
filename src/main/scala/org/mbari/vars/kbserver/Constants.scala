@@ -4,7 +4,7 @@ import com.google.gson.{FieldNamingPolicy, GsonBuilder}
 import com.google.inject.Guice
 import com.typesafe.config.{Config, ConfigFactory}
 import org.mbari.vars.kbserver.dao.DAOFactory
-import org.mbari.vars.kbserver.gson.{ConceptNodeSerializer, PhylogenyNodeSerializer}
+import org.mbari.vars.kbserver.gson.{ConceptNodeSerializer, OptionSerializer, PhylogenyNodeSerializer}
 import org.mbari.vars.kbserver.model.{ConceptNode, DbParams, PhylogenyNode}
 
 import scala.util.Try
@@ -38,6 +38,7 @@ object Constants {
     .setPrettyPrinting()
     .registerTypeAdapter(classOf[PhylogenyNode], new PhylogenyNodeSerializer)
     .registerTypeAdapter(classOf[ConceptNode], new ConceptNodeSerializer)
+    .registerTypeAdapter(classOf[Option[_]], new OptionSerializer)
     .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
     .setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
     .create()
