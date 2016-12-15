@@ -1,5 +1,8 @@
 import javax.servlet.ServletContext
 
+import org.mbari.vars.kbserver.Constants
+import org.mbari.vars.kbserver.api.{ConceptApi, LinkApi, PhylogenyApi}
+import org.mbari.vars.kbserver.dao.DAOFactory
 import org.scalatra.LifeCycle
 import org.slf4j.LoggerFactory
 
@@ -21,7 +24,15 @@ class ScalatraBootstrap extends LifeCycle {
 
     implicit val executionContext = ExecutionContext.global
 
-    //context.mount(myApi, "/v1/myapi")
+    val daoFactory = Constants.GUICE_INJECTOR.getInstance(classOf[DAOFactory])
+
+    val phylogenyApi = new PhylogenyApi(daoFactory)
+    val conceptApi = new ConceptApi(daoFactory)
+    val linkApi = new LinkApi(daoFactory)
+
+    context.mount(phylogenyApi, "/v1/phylogeny")
+    context.mount(conceptApi, "/v1/concept")
+    context.mount(linkApi, "/v1/links")
 
   }
 

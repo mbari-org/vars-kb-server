@@ -1,0 +1,15 @@
+[Unit]
+Description=VARS Knowledgebase Server (vars-kb-server)
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=2
+Restart=always
+ExecStartPre=-/usr/bin/docker stop vars-kb-server
+ExecStartPre=-/usr/bin/docker rm vars-kb-server
+ExecStart=/usr/bin/docker run --name=vars-kb-server -p 8100:8080  hohonuuli/vars-kb-server
+ExecStop=-/usr/bin/docker stop vars-kb-server
+
+[Install]
+WantedBy=multi-user.target

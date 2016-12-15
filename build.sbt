@@ -1,3 +1,5 @@
+import com.typesafe.sbt.packager.docker.Cmd
+
 lazy val buildSettings = Seq(
   organization := "org.mbari.vars",
   scalaVersion := "2.12.1",
@@ -72,7 +74,19 @@ lazy val optionSettings = Seq(
   scalafmtConfig := Some(file(".scalafmt"))
 )
 
-// --- Aliases
+//lazy val dockerSettings = Seq(
+//  dockerCommands := Seq(), // Wipe out all commands
+//  dockerCommands ++= Seq(
+//    Cmd("FROM", "java:openjdk-8-jre-alpine"),
+//    Cmd("ENV", "APP_HOME", "/opt/vars-kb-server"),
+//    Cmd("RUN", "mkdir", "-p", "${APP_HOME}"),
+//    Cmd("COPY", "target/pack", "${APP_HOME}"),
+//    Cmd("EXPOSE", "8080"),
+//    Cmd("ENTRYPOINT", "${APP_HOME}/bin/jetty-main")
+//  )
+//)
+
+// --- Aliases(
 addCommandAlias("cleanall", ";clean;clean-files")
 
 // --- Modules
@@ -133,6 +147,8 @@ packAutoSettings ++ Seq(
 
 // -- sbt-native-packager
 enablePlugins(JavaServerAppPackaging)
+
+enablePlugins(DockerPlugin)
 
 // -- xsbt-web-plugin
 enablePlugins(JettyPlugin)
