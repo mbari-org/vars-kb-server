@@ -2,7 +2,7 @@ package org.mbari.vars.kbserver.api
 
 import org.mbari.vars.kbserver.Constants
 import org.mbari.vars.kbserver.dao.DAOFactory
-import org.scalatra.BadRequest
+import org.scalatra.{BadRequest, NotFound}
 
 import scala.concurrent.ExecutionContext
 
@@ -24,8 +24,10 @@ class PhylogenyApi(daoFactory: DAOFactory)(implicit val executor: ExecutionConte
       .getOrElse(halt(BadRequest("Please provide a term to look up")))
     val dao = daoFactory.newPhylogenyDAO()
     dao.findUp(name)
-        .map(_.map(Constants.GSON.toJson).getOrElse("{}"))
-
+        .map({
+          case None => halt(NotFound(s"No concept named $name was found"))
+          case Some(c) => toJson(c)
+        })
   }
 
   get("/down/:name") {
@@ -33,7 +35,10 @@ class PhylogenyApi(daoFactory: DAOFactory)(implicit val executor: ExecutionConte
       .getOrElse(halt(BadRequest("Please provide a term to look up")))
     val dao = daoFactory.newPhylogenyDAO()
     dao.findDown(name)
-      .map(_.map(Constants.GSON.toJson).getOrElse("{}"))
+      .map({
+        case None => halt(NotFound(s"No concept named $name was found"))
+        case Some(c) => toJson(c)
+      })
   }
 
 }

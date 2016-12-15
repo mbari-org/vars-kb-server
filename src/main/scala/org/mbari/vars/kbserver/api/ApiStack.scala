@@ -1,11 +1,12 @@
 package org.mbari.vars.kbserver.api
 
-import java.net.{ URI, URL }
-import java.time.{ Duration, Instant }
+import java.net.{URI, URL}
+import java.time.{Duration, Instant}
 import java.util.UUID
 
+import org.mbari.vars.kbserver.Constants
 import org.scalatra.util.conversion.TypeConverter
-import org.scalatra.{ ContentEncodingSupport, FutureSupport, ScalatraServlet }
+import org.scalatra.{ContentEncodingSupport, FutureSupport, ScalatraServlet}
 import org.slf4j.LoggerFactory
 
 import scala.util.Try
@@ -41,5 +42,7 @@ abstract class ApiStack extends ScalatraServlet with ContentEncodingSupport with
   protected implicit val stringToURL = new TypeConverter[String, URL] {
     override def apply(s: String): Option[URL] = Try(new URL(s)).toOption
   }
+
+  def toJson(obj: Any): String = Constants.GSON.toJson(obj)
 
 }
