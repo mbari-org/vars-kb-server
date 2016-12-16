@@ -20,22 +20,17 @@ class PhylogenyDAOImpl extends BaseDAO with PhylogenyDAO {
 
   private[this] val log = LoggerFactory.getLogger(getClass)
 
-  private[this] val upSql = readSQL(getClass.getResource("/sql/sqlserver/up.sql"))
-  private[this] val downSql = readSQL(getClass.getResource("/sql/sqlserver/down.sql"))
 
   override def findUp(name: String)(implicit ec: ExecutionContext): Future[Option[PhylogenyNode]] =
-    Future(rowsToConceptNode(executeQuery(upSql, name)))
+    Future(rowsToConceptNode(executeQuery(PhylogenyDAOImpl.UP_SQL, name)))
 
-  override def findDown(name: String)(
-    implicit
-    ec: ExecutionContext
-  ): Future[Option[PhylogenyNode]] =
-    Future(rowsToConceptNode(executeQuery(downSql, name)))
+  override def findDown(name: String)(implicit ec: ExecutionContext): Future[Option[PhylogenyNode]] =
+    Future(rowsToConceptNode(executeQuery(PhylogenyDAOImpl.DOWN_SQL, name)))
 
   private def executeQuery(sql: String, name: String): Seq[PhylogenyRow] =
     try {
       val connection = dataSource.getConnection()
-      val preparedStatement = connection.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY)
+      val preparedStatement = connection.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
       preparedStatement.setString(1, name)
       val resultSet = preparedStatement.executeQuery()
       val rows = new mutable.ArrayBuffer[PhylogenyRow]()
@@ -55,5 +50,12 @@ class PhylogenyDAOImpl extends BaseDAO with PhylogenyDAO {
         log.error("Failed to execute SQL", e)
         Nil
     }
+
+}
+
+object PhylogenyDAOImpl {
+
+  val UP_SQL = BaseDAO.readSQL(getClass.getResource("/sql/sqlserver/up.sql"))
+  val DOWN_SQL = BaseDAO.readSQL(getClass.getResource("/sql/sqlserver/down.sql"))
 
 }

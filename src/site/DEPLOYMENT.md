@@ -8,6 +8,8 @@ Build and deploy a new docker image:
 
 ```
 sbt pack
+cp src/site/resources/mbari/application.conf target/pack/conf
+# Edit server, username and password in application.conf
 docker build -t hohonuuli/vars-kb-server .
 docker login --username=hohonuuli
 docker push hohonuuli/vars-kb-server

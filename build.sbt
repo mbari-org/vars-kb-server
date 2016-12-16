@@ -20,8 +20,8 @@ lazy val consoleSettings = Seq(
 
 lazy val dependencySettings = Seq(
   libraryDependencies ++= {
-    val slf4jVersion = "1.7.21"
-    val logbackVersion = "1.1.7"
+    val slf4jVersion = "1.7.22"
+    val logbackVersion = "1.1.8"
     Seq(
       "ch.qos.logback" % "logback-classic" % logbackVersion,
       "ch.qos.logback" % "logback-core" % logbackVersion,
@@ -101,8 +101,8 @@ lazy val root = (project in file("."))
     todosTags := Set("TODO", "FIXME", "WTF"),
     fork := true,
     libraryDependencies ++= {
-      val jettyVersion = "9.3.14.v20161028"
-      val scalatraVersion = "2.5.0-RC1"
+      val jettyVersion = "9.4.0.v20161208"
+      val scalatraVersion = "2.5.0"
       Seq(
         "com.fatboyindustrial.gson-javatime-serialisers" % "gson-javatime-serialisers" % "1.1.1",
         "com.google.code.gson" % "gson" % "2.8.0",
@@ -114,7 +114,7 @@ lazy val root = (project in file("."))
         "org.eclipse.jetty" % "jetty-servlets" % jettyVersion % "compile;test",
         "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "compile;test",
         "org.mbari.vars" % "vars-jpa" % "9.0-SNAPSHOT",
-        "org.scalatest" %% "scalatest" % "3.0.0" % "test",
+        "org.scalatest" %% "scalatest" % "3.0.1" % "test",
         "org.scalatra" %% "scalatra" % scalatraVersion,
         "org.scalatra" %% "scalatra-json" % scalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % scalatraVersion,

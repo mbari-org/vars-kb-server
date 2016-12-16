@@ -19,8 +19,6 @@ abstract class BaseDAO {
   @volatile
   lazy val dataSource = new HikariDataSource(BaseDAO.HIKARI_CONFIG)
 
-  def readSQL(url: URL): String = Source.fromURL(url).mkString(" ")
-
 }
 
 object BaseDAO {
@@ -38,4 +36,6 @@ object BaseDAO {
     config.setConnectionTestQuery("SELECT 1")
     config
   }
+
+  def readSQL(url: URL): String = Source.fromURL(url).mkString("")
 }

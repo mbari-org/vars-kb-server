@@ -46,10 +46,12 @@ All returns are JSON objects
 
 1. Build with `sbt pack`
 2. Configure JDBC properties for _production_ in `target/pack/conf/application.conf`
-3. Build docker image: `docker build -t vars-kb-server`
+3. Build docker image: `docker build -t vars-kb-server .`
 4. Launch image: `docker run -d -p 6060:8080 vars-kb-server`
     - Omit the -d flag if you want to watch the debug output.
 5. Endpoint will be accessible on port 6060.
+
+More detailed docs for MBARI deployments can be found in [DEPLOYMENT.md](src/site/DEPLOYMENT.md)
 
 ## For End-users
 

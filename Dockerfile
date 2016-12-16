@@ -6,8 +6,8 @@ ENV APP_HOME /opt/vars-kb-server
 
 RUN mkdir -p ${APP_HOME}
 
-COPY target/phylogeny-server-jar-with-dependencies.jar ${APP_HOME}
+COPY target/pack ${APP_HOME}
 
-EXPOSE 4567
+EXPOSE 8080
 
 ENTRYPOINT $APP_HOME/bin/jetty-main

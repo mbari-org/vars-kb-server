@@ -13,6 +13,7 @@ import scala.concurrent.{ ExecutionContext, Future }
  */
 trait PhylogenyDAO {
 
+
   def findUp(name: String)(implicit ec: ExecutionContext): Future[Option[PhylogenyNode]]
 
   def findDown(name: String)(implicit ec: ExecutionContext): Future[Option[PhylogenyNode]]
@@ -28,13 +29,25 @@ trait PhylogenyDAO {
           node
         })
 
-      val child = PhylogenyNode(row.childName, Option(row.childRank), Option(parent))
-      parent.children += child
-      nodes += child
+      nodes.find(_.name == row.childName) match {
+          case None =>
+            val child = PhylogenyNode(row.childName, Option(row.childRank), Option(parent))
+            nodes += child
+            parent.children += child
+          case Some(child) =>
+            val newChild = child.copy(parent = Option(parent))
+            nodes -= child
+            nodes += newChild
+            parent.children -= child
+            parent.children += newChild
+        }
+
     }
 
     nodes.find(_.parent.isEmpty)
+
   }
+
 
 }
 

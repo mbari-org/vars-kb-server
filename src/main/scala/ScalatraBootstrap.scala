@@ -24,7 +24,7 @@ class ScalatraBootstrap extends LifeCycle {
 
     implicit val executionContext = ExecutionContext.global
 
-    val daoFactory = Constants.GUICE_INJECTOR.getInstance(classOf[DAOFactory])
+    val daoFactory = Constants.DAO_FACTORY
 
     val phylogenyApi = new PhylogenyApi(daoFactory)
     val conceptApi = new ConceptApi(daoFactory)
