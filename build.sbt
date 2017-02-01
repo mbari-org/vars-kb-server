@@ -81,7 +81,6 @@ val apps = Seq("jetty-main")
 
 lazy val root = (project in file("."))
   .enablePlugins(JavaServerAppPackaging, JettyPlugin)
-  .addCommandAlias("cleanall", ";clean;clean-files")
   .settings(varsSettings)
   .settings(
     name := "vars-kb-server",
@@ -126,5 +125,5 @@ lazy val root = (project in file("."))
     )
   )
 
-
+addCommandAlias("cleanall", ";clean;clean-files")
 
