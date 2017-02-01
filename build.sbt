@@ -74,26 +74,14 @@ lazy val optionSettings = Seq(
   scalafmtConfig := Some(file(".scalafmt"))
 )
 
-//lazy val dockerSettings = Seq(
-//  dockerCommands := Seq(), // Wipe out all commands
-//  dockerCommands ++= Seq(
-//    Cmd("FROM", "java:openjdk-8-jre-alpine"),
-//    Cmd("ENV", "APP_HOME", "/opt/vars-kb-server"),
-//    Cmd("RUN", "mkdir", "-p", "${APP_HOME}"),
-//    Cmd("COPY", "target/pack", "${APP_HOME}"),
-//    Cmd("EXPOSE", "8080"),
-//    Cmd("ENTRYPOINT", "${APP_HOME}/bin/jetty-main")
-//  )
-//)
-
-// --- Aliases(
-addCommandAlias("cleanall", ";clean;clean-files")
-
-// --- Modules
 lazy val varsSettings = buildSettings ++ consoleSettings ++ dependencySettings ++
     optionSettings // ++ reformatOnCompileSettings
 
+val apps = Seq("jetty-main")
+
 lazy val root = (project in file("."))
+  .enablePlugins(JavaServerAppPackaging, JettyPlugin)
+  .addCommandAlias("cleanall", ";clean;clean-files")
   .settings(varsSettings)
   .settings(
     name := "vars-kb-server",
@@ -129,26 +117,14 @@ lazy val root = (project in file("."))
     },
     mainClass in assembly := Some("JettyMain")
   )
+  .settings( // config sbt-pack
+    packAutoSettings ++ Seq(
+      packExtraClasspath := apps.map(_ -> Seq("${PROG_HOME}/conf")).toMap,
+      packJvmOpts := apps.map(_ -> Seq("-Duser.timezone=UTC", "-Xmx4g")).toMap,
+      packDuplicateJarStrategy := "latest",
+      packJarNameConvention := "original"
+    )
+  )
 
-// -- SBT-PACK
-// For sbt-pack
-packAutoSettings
 
-// For sbt-pack
-val apps = Seq("jetty-main")
 
-packAutoSettings ++ Seq(
-  packExtraClasspath := apps.map(_ -> Seq("${PROG_HOME}/conf")).toMap,
-  packJvmOpts := apps.map(_ -> Seq("-Duser.timezone=UTC", "-Xmx4g")).toMap,
-  packDuplicateJarStrategy := "latest",
-  packJarNameConvention := "original")
-
-// OTHER SETTINGS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-// -- sbt-native-packager
-enablePlugins(JavaServerAppPackaging)
-
-enablePlugins(DockerPlugin)
-
-// -- xsbt-web-plugin
-enablePlugins(JettyPlugin)
