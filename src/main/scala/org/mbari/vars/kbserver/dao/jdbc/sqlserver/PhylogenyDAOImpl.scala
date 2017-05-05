@@ -16,7 +16,10 @@ import scala.util.control.NonFatal
  * @author Brian Schlining
  * @since 2016-11-17T13:46:00
  */
-class PhylogenyDAOImpl extends BaseDAO with PhylogenyDAO {
+object PhylogenyDAOImpl extends BaseDAO with PhylogenyDAO {
+
+  val UP_SQL = BaseDAO.readSQL(getClass.getResource("/sql/sqlserver/up.sql"))
+  val DOWN_SQL = BaseDAO.readSQL(getClass.getResource("/sql/sqlserver/down.sql"))
 
   private[this] val log = LoggerFactory.getLogger(getClass)
 
@@ -44,6 +47,7 @@ class PhylogenyDAOImpl extends BaseDAO with PhylogenyDAO {
         val r = PhylogenyRow(parentId, parentName, parentRank, childId, childName, childRank)
         rows += r
       }
+      connection.close()
       rows
     } catch {
       case NonFatal(e) =>
@@ -51,11 +55,6 @@ class PhylogenyDAOImpl extends BaseDAO with PhylogenyDAO {
         Nil
     }
 
-}
 
-object PhylogenyDAOImpl {
-
-  val UP_SQL = BaseDAO.readSQL(getClass.getResource("/sql/sqlserver/up.sql"))
-  val DOWN_SQL = BaseDAO.readSQL(getClass.getResource("/sql/sqlserver/down.sql"))
 
 }

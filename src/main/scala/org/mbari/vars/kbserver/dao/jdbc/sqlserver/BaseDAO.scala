@@ -16,12 +16,15 @@ import scala.io.Source
  */
 abstract class BaseDAO {
 
-  @volatile
-  lazy val dataSource = new HikariDataSource(BaseDAO.HIKARI_CONFIG)
+  val dataSource = BaseDAO.dataSource
 
 }
 
 object BaseDAO {
+
+  @volatile
+  lazy val dataSource = new HikariDataSource(BaseDAO.HIKARI_CONFIG)
+
 
   @volatile
   lazy val HIKARI_CONFIG = {
@@ -30,6 +33,7 @@ object BaseDAO {
     config.setJdbcUrl(p.url)
     config.setUsername(p.user)
     config.setPassword(p.password)
+    config.addDataSourceProperty("maximumPoolSize", 30)
     config.addDataSourceProperty("cachePrepStmts", "true")
     config.addDataSourceProperty("prepStmtCacheSize", "250")
     config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048")

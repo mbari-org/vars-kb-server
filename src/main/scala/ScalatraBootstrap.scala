@@ -1,8 +1,8 @@
+import java.util.concurrent.Executors
 import javax.servlet.ServletContext
 
 import org.mbari.vars.kbserver.Constants
 import org.mbari.vars.kbserver.api.{ConceptApi, LinkApi, PhylogenyApi}
-import org.mbari.vars.kbserver.dao.DAOFactory
 import org.scalatra.LifeCycle
 import org.slf4j.LoggerFactory
 
@@ -22,7 +22,7 @@ class ScalatraBootstrap extends LifeCycle {
 
     println("STARTING UP NOW")
 
-    implicit val executionContext = ExecutionContext.global
+    implicit val ec = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(Runtime.getRuntime.availableProcessors()))
 
     val daoFactory = Constants.DAO_FACTORY
 
