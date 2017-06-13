@@ -1,9 +1,23 @@
-import com.typesafe.sbt.packager.docker.Cmd
+lazy val codecVersion = "1.10"
+lazy val configVersion = "1.3.1"
+lazy val fatboyVersion = "1.1.1"
+lazy val gsonVersion = "2.8.1"
+lazy val hikariVersion = "2.6.2"
+lazy val jettyVersion = "9.4.6.v20170531"
+lazy val jtaVersion = "1.1"
+lazy val junitVersion = "4.12"
+lazy val logbackVersion = "1.2.3"
+lazy val scalatestVersion = "3.0.1"
+lazy val scalatraVersion = "2.5.1"
+lazy val servletVersion = "3.1.0"
+lazy val slf4jVersion = "1.7.25"
+lazy val varskbVersion = "9.0-SNAPSHOT"
+
 
 lazy val buildSettings = Seq(
   organization := "org.mbari.vars",
-  scalaVersion := "2.12.1",
-  crossScalaVersions := Seq("2.12.0")
+  scalaVersion := "2.12.2",
+  crossScalaVersions := Seq("2.12.2")
 )
 
 lazy val consoleSettings = Seq(
@@ -20,14 +34,12 @@ lazy val consoleSettings = Seq(
 
 lazy val dependencySettings = Seq(
   libraryDependencies ++= {
-    val slf4jVersion = "1.7.22"
-    val logbackVersion = "1.1.8"
     Seq(
       "ch.qos.logback" % "logback-classic" % logbackVersion,
       "ch.qos.logback" % "logback-core" % logbackVersion,
-      "com.typesafe" % "config" % "1.3.1",
-      "junit" % "junit" % "4.12" % "test",
-      "org.scalatest" %% "scalatest" % "3.0.0" % "test",
+      "com.typesafe" % "config" % configVersion,
+      "junit" % "junit" % junitVersion % "test",
+      "org.scalatest" %% "scalatest" % scalatestVersion % "test",
       "org.slf4j" % "log4j-over-slf4j" % slf4jVersion,
       "org.slf4j" % "slf4j-api" % slf4jVersion)
   },
@@ -70,8 +82,7 @@ lazy val optionSettings = Seq(
     "-Xfuture"),
   javacOptions ++= Seq("-target", "1.8", "-source", "1.8"),
   incOptions := incOptions.value.withNameHashing(true),
-  updateOptions := updateOptions.value.withCachedResolution(true),
-  scalafmtConfig := Some(file(".scalafmt"))
+  updateOptions := updateOptions.value.withCachedResolution(true)
 )
 
 lazy val varsSettings = buildSettings ++ consoleSettings ++ dependencySettings ++
@@ -88,20 +99,18 @@ lazy val root = (project in file("."))
     todosTags := Set("TODO", "FIXME", "WTF"),
     fork := true,
     libraryDependencies ++= {
-      val jettyVersion = "9.4.0.v20161208"
-      val scalatraVersion = "2.5.0"
       Seq(
-        "com.fatboyindustrial.gson-javatime-serialisers" % "gson-javatime-serialisers" % "1.1.1",
-        "com.google.code.gson" % "gson" % "2.8.0",
-        "com.zaxxer" % "HikariCP" % "2.4.5",
-        "commons-codec" % "commons-codec" % "1.10",
-        "javax.servlet" % "javax.servlet-api" % "3.1.0",
-        "javax.transaction" % "jta" % "1.1",
+        "com.fatboyindustrial.gson-javatime-serialisers" % "gson-javatime-serialisers" % fatboyVersion,
+        "com.google.code.gson" % "gson" % gsonVersion,
+        "com.zaxxer" % "HikariCP" % hikariVersion,
+        "commons-codec" % "commons-codec" % codecVersion,
+        "javax.servlet" % "javax.servlet-api" % servletVersion,
+        "javax.transaction" % "jta" % jtaVersion,
         "org.eclipse.jetty" % "jetty-server" % jettyVersion % "compile;test",
         "org.eclipse.jetty" % "jetty-servlets" % jettyVersion % "compile;test",
         "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "compile;test",
-        "org.mbari.vars" % "vars-jpa" % "9.0-SNAPSHOT",
-        "org.scalatest" %% "scalatest" % "3.0.1" % "test",
+        "org.mbari.vars" % "vars-jpa" % varskbVersion,
+        "org.scalatest" %% "scalatest" % scalatestVersion % "test",
         "org.scalatra" %% "scalatra" % scalatraVersion,
         "org.scalatra" %% "scalatra-json" % scalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % scalatraVersion,
