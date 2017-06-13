@@ -1,5 +1,6 @@
 lazy val codecVersion = "1.10"
 lazy val configVersion = "1.3.1"
+lazy val derbyVersion = "10.13.1.1"
 lazy val fatboyVersion = "1.1.1"
 lazy val gsonVersion = "2.8.1"
 lazy val hikariVersion = "2.6.2"
@@ -106,6 +107,9 @@ lazy val root = (project in file("."))
         "commons-codec" % "commons-codec" % codecVersion,
         "javax.servlet" % "javax.servlet-api" % servletVersion,
         "javax.transaction" % "jta" % jtaVersion,
+        "org.apache.derby" % "derby" % derbyVersion % "test",
+        "org.apache.derby" % "derbyclient" % derbyVersion % "test",
+        "org.apache.derby" % "derbynet" % derbyVersion % "test",
         "org.eclipse.jetty" % "jetty-server" % jettyVersion % "compile;test",
         "org.eclipse.jetty" % "jetty-servlets" % jettyVersion % "compile;test",
         "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "compile;test",

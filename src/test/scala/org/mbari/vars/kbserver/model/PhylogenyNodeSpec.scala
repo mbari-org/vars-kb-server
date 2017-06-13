@@ -1,6 +1,6 @@
 package org.mbari.vars.kbserver.model
 
-import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
   * Created by brian on 11/29/16.

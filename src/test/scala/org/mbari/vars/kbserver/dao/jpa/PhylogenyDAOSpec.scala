@@ -1,12 +1,8 @@
 package org.mbari.vars.kbserver.dao.jpa
 
-import java.util.concurrent.TimeUnit
-
-import org.mbari.vars.kbserver.Constants
 import org.scalatest.{ BeforeAndAfterAll, FlatSpec, Matchers }
 
 import scala.concurrent.Await
-import scala.concurrent.duration.Duration
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**

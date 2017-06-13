@@ -1,6 +1,5 @@
 package org.mbari.vars.kbserver.dao.jdbc.sqlserver
 
-import java.io.{ BufferedReader, InputStreamReader }
 import java.net.URL
 
 import com.zaxxer.hikari.{ HikariConfig, HikariDataSource }

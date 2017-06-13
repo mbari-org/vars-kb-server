@@ -1,8 +1,5 @@
 package org.mbari.vars.kbserver.model
 
-import java.net.URL
-
-import vars.ILink
 import vars.knowledgebase.Concept
 import scala.collection.JavaConverters._
 

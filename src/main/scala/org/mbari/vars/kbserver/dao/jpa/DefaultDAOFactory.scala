@@ -5,8 +5,6 @@ import com.google.inject.Inject
 import org.mbari.vars.kbserver.dao.{ ConceptNodeDAO, DAOFactory, LinkNodeDAO, PhylogenyDAO }
 import vars.knowledgebase.KnowledgebaseDAOFactory
 
-import scala.collection.JavaConverters._
-
 /**
  *
  *

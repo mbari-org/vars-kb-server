@@ -1,8 +1,5 @@
 package org.mbari.vars.kbserver.model
 
-import com.typesafe.config.ConfigFactory
-import org.mbari.vars.kbserver.Constants
-
 /**
  *
  *

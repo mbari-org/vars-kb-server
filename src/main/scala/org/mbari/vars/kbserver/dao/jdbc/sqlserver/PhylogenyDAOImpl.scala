@@ -32,6 +32,7 @@ object PhylogenyDAOImpl extends BaseDAO with PhylogenyDAO {
 
   private def executeQuery(sql: String, name: String): Seq[PhylogenyRow] =
     try {
+      // TODO look up primary name in case name is alternate
       val connection = dataSource.getConnection()
       val preparedStatement = connection.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
       preparedStatement.setString(1, name)

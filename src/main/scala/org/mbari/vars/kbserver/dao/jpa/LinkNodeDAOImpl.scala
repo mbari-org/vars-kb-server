@@ -6,7 +6,7 @@ import org.mbari.vars.kbserver.dao.LinkNodeDAO
 import org.mbari.vars.kbserver.model.LinkNode
 
 import scala.collection.JavaConverters._
-import vars.knowledgebase.{ ConceptDAO, KnowledgebaseDAOFactory, LinkTemplateDAO }
+import vars.knowledgebase.KnowledgebaseDAOFactory
 
 import scala.concurrent.{ ExecutionContext, Future }
 

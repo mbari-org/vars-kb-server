@@ -1,8 +1,6 @@
 package org.mbari.vars.kbserver.dao
 
 import org.mbari.vars.kbserver.model.ConceptNode
-import vars.knowledgebase.Concept
-
 import scala.concurrent.{ ExecutionContext, Future }
 
 /**

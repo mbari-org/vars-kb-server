@@ -2,7 +2,6 @@ package org.mbari.vars.kbserver.model
 
 import java.net.URL
 import java.util.regex.Pattern
-import scala.collection.JavaConverters._
 import vars.knowledgebase.Media
 
 /**

@@ -1,9 +1,7 @@
 package org.mbari.vars.kbserver.dao.jpa
 
-import org.mbari.vars.kbserver.Constants
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
-import scala.collection.JavaConverters._
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 

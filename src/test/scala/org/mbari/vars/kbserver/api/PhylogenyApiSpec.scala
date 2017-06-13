@@ -1,9 +1,5 @@
 package org.mbari.vars.kbserver.api
 
-import org.mbari.vars.kbserver.dao.jpa.TestDatabase
-import org.mbari.vars.kbserver.model.PhylogenyNode
-import org.scalatest.BeforeAndAfterAll
-
 /**
   * @author Brian Schlining
   * @since 2016-12-12T16:42:00

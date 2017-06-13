@@ -1,17 +1,14 @@
 package org.mbari.vars.kbserver.dao.jpa
 
-import java.io.{File, IOException}
-import java.net.URL
-import java.util.Scanner
+
 import java.util.concurrent.TimeUnit
-import java.util.zip.ZipFile
 
 import com.google.inject.Guice
 import org.mbari.net.URLUtilities
 import org.slf4j.LoggerFactory
-import vars.gson.{Constants, InitializeKnowledgebaseApp}
+import vars.gson.InitializeKnowledgebaseApp
 import vars.jpa.InjectorModule
-import vars.knowledgebase.{Concept, KnowledgebaseDAOFactory}
+import vars.knowledgebase.KnowledgebaseDAOFactory
 
 import scala.concurrent.duration.Duration
 import scala.util.control.NonFatal
@@ -31,6 +28,7 @@ object TestDatabase {
 
   @volatile
   lazy val init: Boolean = {
+    log.info("Begin database initialization")
     try {
       val url = getClass.getResource("/kb/kb-dump.json.zip")
       val file = URLUtilities.toFile(url)

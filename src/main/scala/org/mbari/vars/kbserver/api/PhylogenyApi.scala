@@ -1,6 +1,5 @@
 package org.mbari.vars.kbserver.api
 
-import org.mbari.vars.kbserver.Constants
 import org.mbari.vars.kbserver.dao.DAOFactory
 import org.scalatra.{BadRequest, NotFound}
 

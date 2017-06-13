@@ -3,7 +3,6 @@ package org.mbari.vars.kbserver.gson
 import java.lang.reflect.Type
 
 import com.google.gson._
-import org.eclipse.persistence.sessions.serializers.JSONSerializer
 
 /**
  *
