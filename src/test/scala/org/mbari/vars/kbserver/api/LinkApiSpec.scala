@@ -18,11 +18,19 @@ class LinkApiSpec extends WebApiStack {
     }
   }
 
-  "LinkApi" should "find links for Nanomia bijuga" in {
+  it should "find links for Nanomia bijuga" in {
     get(s"$path/Nanomia%20bijuga") {
       status should be (200)
-      println(body)
+      //println(body)
     }
+  }
+
+  it should "find links for Nanomia bijuga named 'surface-color'" in {
+    get(s"$path/Nanomia%20bijuga/using/surface-color") {
+      status should be (200)
+      //println(body)
+    }
+
   }
 
 }

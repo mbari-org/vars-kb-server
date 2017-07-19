@@ -17,5 +17,4 @@ trait LinkNodeDAO {
     ec: ExecutionContext
   ): Future[Seq[LinkNode]]
 
-
 }
