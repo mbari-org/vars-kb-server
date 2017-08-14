@@ -3,12 +3,12 @@ lazy val configVersion = "1.3.1"
 lazy val derbyVersion = "10.13.1.1"
 lazy val fatboyVersion = "1.1.1"
 lazy val gsonVersion = "2.8.1"
-lazy val hikariVersion = "2.6.2"
+lazy val hikariVersion = "2.6.3"
 lazy val jettyVersion = "9.4.6.v20170531"
 lazy val jtaVersion = "1.1"
 lazy val junitVersion = "4.12"
 lazy val logbackVersion = "1.2.3"
-lazy val scalatestVersion = "3.0.1"
+lazy val scalatestVersion = "3.0.3"
 lazy val scalatraVersion = "2.5.1"
 lazy val servletVersion = "3.1.0"
 lazy val slf4jVersion = "1.7.25"
@@ -17,8 +17,8 @@ lazy val varskbVersion = "9.0-SNAPSHOT"
 
 lazy val buildSettings = Seq(
   organization := "org.mbari.vars",
-  scalaVersion := "2.12.2",
-  crossScalaVersions := Seq("2.12.2")
+  scalaVersion := "2.12.3",
+  crossScalaVersions := Seq("2.12.3")
 )
 
 lazy val consoleSettings = Seq(
