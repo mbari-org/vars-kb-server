@@ -31,7 +31,7 @@ jetty:start
 
 ## API
 
-All returns are JSON objects
+All returns are JSON objects. See [API](src/site/API.md) docs for more details
 
 ![API](src/site/resources/images/M3_APIs_mindnode.png)
 
