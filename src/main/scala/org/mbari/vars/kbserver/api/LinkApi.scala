@@ -18,6 +18,13 @@ class LinkApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) e
     response.headers += ("Access-Control-Allow-Origin" -> "*")
   }
 
+  get("/") {
+    val dao = daoFactory.newLinkNodeDAO()
+    dao.findAll
+        .map(_.asJava)
+        .map(toJson)
+  }
+
   // return all linktemplates applicable to the provided concept name
   get("/:name") {
     val name = params.get("name")

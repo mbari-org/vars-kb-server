@@ -17,4 +17,6 @@ trait LinkNodeDAO {
     ec: ExecutionContext
   ): Future[Seq[LinkNode]]
 
+  def findAll(implicit ec: ExecutionContext): Future[Seq[LinkNode]]
+
 }

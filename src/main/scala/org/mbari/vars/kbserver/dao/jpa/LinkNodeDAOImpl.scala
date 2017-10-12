@@ -38,4 +38,15 @@ class LinkNodeDAOImpl @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFactor
       links
     }
 
+  def findAll(implicit ec: ExecutionContext): Future[Seq[LinkNode]] = {
+    Future {
+      val dao = knowledgebaseDAOFactory.newLinkTemplateDAO()
+      dao.startTransaction()
+      val links = dao.findAll().asScala.map(LinkNode(_)).toSeq
+      dao.endTransaction()
+      dao.close()
+      links
+    }
+  }
+
 }
