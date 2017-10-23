@@ -1,3 +1,4 @@
+lazy val caffeineVersion = "2.5.6"
 lazy val codecVersion = "1.10"
 lazy val configVersion = "1.3.1"
 lazy val derbyVersion = "10.13.1.1"
@@ -102,6 +103,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= {
       Seq(
         "com.fatboyindustrial.gson-javatime-serialisers" % "gson-javatime-serialisers" % fatboyVersion,
+        "com.github.ben-manes.caffeine" % "caffeine" % caffeineVersion,
         "com.google.code.gson" % "gson" % gsonVersion,
         "com.zaxxer" % "HikariCP" % hikariVersion,
         "commons-codec" % "commons-codec" % codecVersion,
