@@ -14,6 +14,6 @@ import vars.knowledgebase.KnowledgebaseDAOFactory
 class SpecialDAOFactory @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFactory)
     extends DefaultDAOFactory(knowledgebaseDAOFactory) {
 
-  override def newPhylogenyDAO(): PhylogenyDAO = PhylogenyDAOImpl
+  override def newPhylogenyDAO(): PhylogenyDAO = new PhylogenyDAOImpl(newConceptNodeDAO())
 
 }
