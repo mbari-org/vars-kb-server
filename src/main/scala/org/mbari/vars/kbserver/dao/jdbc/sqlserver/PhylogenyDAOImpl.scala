@@ -102,7 +102,7 @@ class PhylogenyDAOImpl @Inject() (conceptNodeDAO: ConceptNodeDAO) extends BaseDA
 }
 
 object PhylogenyDAOImpl {
-  val UP_SQL = BaseDAO.readSQL(getClass.getResource("/sql/sqlserver/up.sql"))
-  val DOWN_SQL = BaseDAO.readSQL(getClass.getResource("/sql/sqlserver/down.sql"))
-  val SINGLE_SQL = BaseDAO.readSQL(getClass.getResource("/sql/sqlserver/single.sql"))
+  val UP_SQL: String = BaseDAO.readSQL(getClass.getResource("/sql/sqlserver/up.sql"))
+  val DOWN_SQL: String = BaseDAO.readSQL(getClass.getResource("/sql/sqlserver/down.sql"))
+  val SINGLE_SQL: String = BaseDAO.readSQL(getClass.getResource("/sql/sqlserver/single.sql"))
 }
