@@ -2,9 +2,10 @@ import java.util.concurrent.Executors
 import javax.servlet.ServletContext
 
 import org.mbari.vars.kbserver.Constants
-import org.mbari.vars.kbserver.api.{ConceptApi, LinkApi, PhylogenyApi}
+import org.mbari.vars.kbserver.api.{ConceptApi, LinkApi, PhylogenyApi, RawApi}
 import org.scalatra.LifeCycle
 import org.slf4j.LoggerFactory
+import vars.knowledgebase.KnowledgebaseDAOFactory
 
 import scala.concurrent.ExecutionContext
 
@@ -30,9 +31,13 @@ class ScalatraBootstrap extends LifeCycle {
     val conceptApi = new ConceptApi(daoFactory)
     val linkApi = new LinkApi(daoFactory)
 
+    val kbDaoFactory = Constants.GUICE_INJECTOR.getInstance(classOf[KnowledgebaseDAOFactory])
+    val rawApi = new RawApi(kbDaoFactory)
+
     context.mount(phylogenyApi, "/v1/phylogeny")
     context.mount(conceptApi, "/v1/concept")
     context.mount(linkApi, "/v1/links")
+    context.mount(rawApi, "/v1/raw")
 
   }
 

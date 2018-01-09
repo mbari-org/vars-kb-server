@@ -17,7 +17,8 @@ import scala.util.Try
  * @author Brian Schlining
  * @since 2016-11-17T13:29:00
  */
-abstract class ApiStack extends ScalatraServlet with ContentEncodingSupport with FutureSupport {
+abstract class ApiStack extends ScalatraServlet
+  with ContentEncodingSupport with FutureSupport {
 
   protected[this] val log = LoggerFactory.getLogger(getClass)
 
