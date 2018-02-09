@@ -17,6 +17,8 @@ case class PhylogenyNode(
     children: mutable.HashSet[PhylogenyNode] = new mutable.HashSet[PhylogenyNode]
 ) {
 
+  require(name != null, "Name can not be null")
+
   override def equals(obj: Any): Boolean = name == obj
 
   override def hashCode(): Int = name.hashCode
