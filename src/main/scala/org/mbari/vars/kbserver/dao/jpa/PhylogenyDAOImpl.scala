@@ -42,6 +42,8 @@ class PhylogenyDAOImpl @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFacto
 
   private def toUpRows(concept: Concept, accum: List[PhylogenyRow] = Nil): Seq[PhylogenyRow] = {
     val rows = toPhylogenyRow(concept) :: accum
+
+    // FIXME - if no parent concept it chokes. Need to handle root as special case
     Option(concept.getParentConcept).map(toUpRows(_, rows)).getOrElse(accum)
   }
 

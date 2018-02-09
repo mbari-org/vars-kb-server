@@ -25,7 +25,7 @@ class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext
         .map(Constants.GSON.toJson)
   }
 
-  get("/root") {
+  get("/find/root") {
     val dao = daoFactory.newConceptNodeDAO()
     dao.findRoot()
         .map({
