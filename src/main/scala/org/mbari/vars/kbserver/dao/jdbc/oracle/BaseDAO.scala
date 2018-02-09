@@ -1,18 +1,16 @@
-package org.mbari.vars.kbserver.dao.jdbc.sqlserver
+package org.mbari.vars.kbserver.dao.jdbc.oracle
 
 import java.net.URL
 
-import com.zaxxer.hikari.{ HikariConfig, HikariDataSource }
-import org.mbari.vars.kbserver.{ Constants => Konstants }
+import com.zaxxer.hikari.{HikariConfig, HikariDataSource}
 
 import scala.io.Source
+import org.mbari.vars.kbserver.{ Constants => Konstants }
 
 /**
- *
- *
- * @author Brian Schlining
- * @since 2016-11-17T14:30:00
- */
+  * @author Brian Schlining
+  * @since 2018-02-09T13:00:00
+  */
 abstract class BaseDAO {
 
   val dataSource = BaseDAO.dataSource
@@ -23,6 +21,7 @@ object BaseDAO {
 
   @volatile
   lazy val dataSource = new HikariDataSource(BaseDAO.HIKARI_CONFIG)
+
 
   @volatile
   lazy val HIKARI_CONFIG = {
@@ -35,7 +34,7 @@ object BaseDAO {
     config.addDataSourceProperty("cachePrepStmts", "true")
     config.addDataSourceProperty("prepStmtCacheSize", "250")
     config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048")
-    config.setConnectionTestQuery("SELECT 1")
+    config.setConnectionTestQuery("SELECT 1 FROM DUAL")
     config
   }
 
