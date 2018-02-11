@@ -18,6 +18,30 @@ class PhylogenyApi(daoFactory: DAOFactory)(implicit val executor: ExecutionConte
     response.headers += ("Access-Control-Allow-Origin" -> "*")
   }
 
+  private[this] val phylogenyDAO2 = daoFactory.newPhylogenyDAO2()
+
+  get("/up2/:name") {
+    val name = params.get("name")
+      .getOrElse(halt(BadRequest("Please provide a term to look up")))
+    val dao = phylogenyDAO2
+    dao.findUp(name)
+          .map({
+            case None => halt(NotFound(s"No concept named $name was found"))
+            case Some(c) => toJson(c)
+          })
+  }
+
+  get("/down2/:name") {
+    val name = params.get("name")
+      .getOrElse(halt(BadRequest("Please provide a term to look up")))
+    val dao = phylogenyDAO2
+    dao.findDown(name)
+      .map({
+        case None => halt(NotFound(s"No concept named $name was found"))
+        case Some(c) => toJson(c)
+      })
+  }
+
   get("/up/:name") {
     val name = params.get("name")
       .getOrElse(halt(BadRequest("Please provide a term to look up")))

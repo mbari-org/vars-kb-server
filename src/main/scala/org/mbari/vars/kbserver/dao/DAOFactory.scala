@@ -1,5 +1,7 @@
 package org.mbari.vars.kbserver.dao
 
+import org.mbari.vars.kbserver.dao.jdbc.generic.PhylogenyDAO2
+
 /**
  *
  *
@@ -13,5 +15,7 @@ trait DAOFactory {
   def newConceptNodeDAO(): ConceptNodeDAO
 
   def newLinkNodeDAO(): LinkNodeDAO
+
+  def newPhylogenyDAO2(): PhylogenyDAO2
 
 }

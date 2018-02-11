@@ -3,6 +3,7 @@ package org.mbari.vars.kbserver.dao.jdbc.oracle
 import java.sql.ResultSet
 import javax.inject.Inject
 
+import org.mbari.vars.kbserver.dao.jdbc.BaseDAO
 import org.mbari.vars.kbserver.dao.{ConceptNodeDAO, PhylogenyDAO, PhylogenyRow}
 import org.mbari.vars.kbserver.model.PhylogenyNode
 import org.slf4j.LoggerFactory
@@ -12,26 +13,33 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
 /**
+  * If needed test query is "SELECT 1 FROM DUAL"
   * @author Brian Schlining
   * @since 2018-02-09T13:03:00
   */
-class PhylogenyDAOImpl @Inject() (conceptNodeDAO: ConceptNodeDAO) extends BaseDAO with PhylogenyDAO {
+class PhylogenyDAOImpl @Inject() (conceptNodeDAO: ConceptNodeDAO)
+  extends BaseDAO(None) with PhylogenyDAO {
 
   private[this] val log = LoggerFactory.getLogger(getClass)
+
+  private[this] val upSql: String = readSQL(getClass.getResource("/sql/oracle/up.sql"))
+  private[this] val downSql: String = readSQL(getClass.getResource("/sql/oracle/down.sql"))
+  private[this] val singleSql: String = readSQL(getClass.getResource("/sql/oracle/single.sql"))
+
 
   // TODO Can abstarct out common founctions betwen oracle and sqlserver
   override def findUp(name: String)(implicit ec: ExecutionContext): Future[Option[PhylogenyNode]] =
     conceptNodeDAO.findByName(name) // We have to look up the primary name first
       .map({
       case None => None
-      case Some(conceptNode) => safeExecuteQuery(PhylogenyDAOImpl.UP_SQL, conceptNode.name)
+      case Some(conceptNode) => safeExecuteQuery(upSql, conceptNode.name)
     })
 
   override def findDown(name: String)(implicit ec: ExecutionContext): Future[Option[PhylogenyNode]] =
     conceptNodeDAO.findByName(name) // We have to look up the primary name first
       .map({
       case None => None
-      case Some(conceptNode) => safeExecuteQuery(PhylogenyDAOImpl.DOWN_SQL, conceptNode.name)
+      case Some(conceptNode) => safeExecuteQuery(downSql, conceptNode.name)
     })
 
   private def executeQuery(sql: String, name: String): Seq[PhylogenyRow] =
@@ -69,7 +77,7 @@ class PhylogenyDAOImpl @Inject() (conceptNodeDAO: ConceptNodeDAO) extends BaseDA
   private def findSingleNode(name: String): Option[PhylogenyNode] = {
     try {
       val connection = dataSource.getConnection()
-      val preparedStatement = connection.prepareStatement(PhylogenyDAOImpl.SINGLE_SQL, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
+      val preparedStatement = connection.prepareStatement(singleSql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
       preparedStatement.setString(1, name)
       val resultSet = preparedStatement.executeQuery()
       val node = if (resultSet.next()) {
@@ -100,8 +108,3 @@ class PhylogenyDAOImpl @Inject() (conceptNodeDAO: ConceptNodeDAO) extends BaseDA
 
 }
 
-object PhylogenyDAOImpl {
-  val UP_SQL: String = BaseDAO.readSQL(getClass.getResource("/sql/oracle/up.sql"))
-  val DOWN_SQL: String = BaseDAO.readSQL(getClass.getResource("/sql/oracle/down.sql"))
-  val SINGLE_SQL: String = BaseDAO.readSQL(getClass.getResource("/sql/oracle/single.sql"))
-}

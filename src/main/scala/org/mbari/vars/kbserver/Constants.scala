@@ -4,7 +4,8 @@ import com.google.gson.{FieldNamingPolicy, GsonBuilder}
 import com.google.inject.Guice
 import com.typesafe.config.{Config, ConfigFactory}
 import org.mbari.vars.kbserver.dao.DAOFactory
-import org.mbari.vars.kbserver.gson.{ConceptNodeSerializer, OptionSerializer, PhylogenyNodeSerializer}
+import org.mbari.vars.kbserver.dao.jdbc.generic.ImmutableConcept
+import org.mbari.vars.kbserver.gson.{ConceptNodeSerializer, ImmutableConceptSerializer, OptionSerializer, PhylogenyNodeSerializer}
 import org.mbari.vars.kbserver.model.{ConceptNode, DbParams, PhylogenyNode}
 
 import scala.util.Try
@@ -17,25 +18,27 @@ import scala.util.Try
  */
 object Constants {
 
-  val CONFIG: Config = ConfigFactory.load()
+  lazy val CONFIG: Config = ConfigFactory.load()
 
-  val ENVIRONMENT: String =
+  lazy val ENVIRONMENT: String =
     Try(CONFIG.getString("database.environment")).getOrElse("development")
 
-  val DB_PARAMS: DbParams = {
-    val path = s"org.mbari.vars.knowledgebase.database.${ENVIRONMENT}"
+  lazy val DB_PARAMS: DbParams = {
+    val path = s"org.mbari.vars.knowledgebase.database.$ENVIRONMENT"
     val user = CONFIG.getString(s"${path}.user")
     val password = CONFIG.getString(s"${path}.password")
     val url = CONFIG.getString(s"${path}.url")
     val driver = CONFIG.getString(s"${path}.driver")
     val name = CONFIG.getString(s"${path}.name")
-    DbParams(user, password, url, driver, name)
+    val testQuery = Try(CONFIG.getString(s"${path}.hikari.test")).toOption
+    DbParams(user, password, url, driver, name, testQuery)
   }
 
-  val GUICE_INJECTOR = Guice.createInjector(new InjectorModule)
+  lazy val GUICE_INJECTOR = Guice.createInjector(new InjectorModule)
 
   val GSON = new GsonBuilder()
     .setPrettyPrinting()
+    .registerTypeAdapter(classOf[ImmutableConcept], new ImmutableConceptSerializer)
     .registerTypeAdapter(classOf[PhylogenyNode], new PhylogenyNodeSerializer)
     .registerTypeAdapter(classOf[ConceptNode], new ConceptNodeSerializer)
     .registerTypeAdapter(classOf[Option[_]], new OptionSerializer)
@@ -43,7 +46,7 @@ object Constants {
     .setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
     .create()
 
-  val DAO_FACTORY: DAOFactory = {
+  lazy val DAO_FACTORY: DAOFactory = {
     val className = Try(CONFIG.getString("org.mbari.vars.kbserver.daofactory"))
       .getOrElse("org.mbari.vars.kbserver.dao.DefaultDAOFactory")
     //Class.forName(className).newInstance().asInstanceOf[DAOFactory]

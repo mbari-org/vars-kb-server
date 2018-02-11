@@ -11,5 +11,6 @@ case class DbParams(
   password: String,
   url: String,
   driver: String,
-  name: String = "Auto"
+  name: String = "Auto",
+  testQuery: Option[String] = None
 )

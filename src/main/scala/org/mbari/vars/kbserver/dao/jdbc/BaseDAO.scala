@@ -1,30 +1,27 @@
-package org.mbari.vars.kbserver.dao.jdbc.oracle
+package org.mbari.vars.kbserver.dao.jdbc
 
 import java.net.URL
 
 import com.zaxxer.hikari.{HikariConfig, HikariDataSource}
 
 import scala.io.Source
+
 import org.mbari.vars.kbserver.{ Constants => Konstants }
 
 /**
+  * @param connectionTestQuery The SQL used by hikari to veryify the connection.
+  *                            See the usages in sqlserver and oracle packages
+  *                            for examples.
   * @author Brian Schlining
-  * @since 2018-02-09T13:00:00
+  * @since 2018-02-11T11:04:00
   */
-abstract class BaseDAO {
-
-  val dataSource = BaseDAO.dataSource
-
-}
-
-object BaseDAO {
+class BaseDAO(connectionTestQuery: Option[String] = None) {
 
   @volatile
-  lazy val dataSource = new HikariDataSource(BaseDAO.HIKARI_CONFIG)
-
+  lazy val dataSource = new HikariDataSource(hikariConfig)
 
   @volatile
-  lazy val HIKARI_CONFIG = {
+  lazy val hikariConfig = {
     val config = new HikariConfig()
     val p = Konstants.DB_PARAMS
     config.setJdbcUrl(p.url)
@@ -34,9 +31,12 @@ object BaseDAO {
     config.addDataSourceProperty("cachePrepStmts", "true")
     config.addDataSourceProperty("prepStmtCacheSize", "250")
     config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048")
-    config.setConnectionTestQuery("SELECT 1 FROM DUAL")
+    val testQuery = if (connectionTestQuery.isEmpty) p.testQuery
+        else connectionTestQuery
+    testQuery.foreach(config.setConnectionTestQuery)
     config
   }
 
   def readSQL(url: URL): String = Source.fromURL(url).mkString("")
+
 }

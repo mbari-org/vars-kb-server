@@ -2,7 +2,9 @@ package org.mbari.vars.kbserver.dao.jpa
 
 
 import com.google.inject.Inject
+import org.mbari.vars.kbserver.Constants
 import org.mbari.vars.kbserver.dao.cached.CachedConceptNodeDAOImpl
+import org.mbari.vars.kbserver.dao.jdbc.generic.PhylogenyDAO2
 import org.mbari.vars.kbserver.dao.{ConceptNodeDAO, DAOFactory, LinkNodeDAO, PhylogenyDAO}
 import vars.knowledgebase.KnowledgebaseDAOFactory
 
@@ -23,4 +25,7 @@ class DefaultDAOFactory @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFact
 
   override def newLinkNodeDAO(): LinkNodeDAO =
     new LinkNodeDAOImpl(knowledgebaseDAOFactory)
+
+  override def newPhylogenyDAO2(): PhylogenyDAO2 =
+    new PhylogenyDAO2(Constants.DB_PARAMS.testQuery)
 }

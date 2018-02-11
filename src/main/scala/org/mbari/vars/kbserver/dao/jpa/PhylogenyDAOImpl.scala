@@ -42,9 +42,15 @@ class PhylogenyDAOImpl @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFacto
 
   private def toUpRows(concept: Concept, accum: List[PhylogenyRow] = Nil): Seq[PhylogenyRow] = {
     val rows = toPhylogenyRow(concept) :: accum
+    Option(concept.getParentConcept) match {
+      case None => rows
+      case Some(parent) => toUpRows(concept, rows)
+    }
 
-    // FIXME - if no parent concept it chokes. Need to handle root as special case
-    Option(concept.getParentConcept).map(toUpRows(_, rows)).getOrElse(accum)
+//    val rows = toPhylogenyRow(concept) :: accum
+//
+//    // FIXME - if no parent concept it chokes. Need to handle root as special case
+//    Option(concept.getParentConcept).map(toUpRows(_, rows)).getOrElse(accum)
   }
 
   private def toDownRows(concept: Concept): Seq[PhylogenyRow] = {
