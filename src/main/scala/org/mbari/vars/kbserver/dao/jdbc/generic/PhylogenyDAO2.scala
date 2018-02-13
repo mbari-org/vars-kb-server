@@ -6,7 +6,6 @@ import java.time.Instant
 import org.mbari.vars.kbserver.dao.jdbc.BaseDAO
 import org.slf4j.LoggerFactory
 
-import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
@@ -21,21 +20,20 @@ class PhylogenyDAO2(connectionTestQuery: Option[String])
   private[this] val log = LoggerFactory.getLogger(getClass)
 
   private[this] var lastUpdate = Instant.EPOCH
-  private[this] var root: Option[ImmutableConcept] = None
-  private[this] var mutableRoot: Option[MutableConcept] = None
-  private[this] var allNames: Seq[String] = Nil
+  private[this] var rootNode: Option[MutableConcept] = None
+  private[this] var allNodes: Seq[MutableConcept] = Nil
 
   def findUp(name: String)(implicit ec: ExecutionContext): Future[Option[ImmutableConcept]] = {
     Future {
       load()
       // Hide the children
       //  do branch walk
-      if (allNames.contains(name)) {
-        findMutableNode(name).map(_.copyUp())
-          .map(_.root())
-          .map(_.toImmutable())
-      }
-      else None
+      val mc = findMutableNode(name)
+      val r = mc.map(_.root())
+      val i = r.map(_.toImmutable())
+//      mc.map(_.root())
+//          .map(_.toImmutable())
+      i
     }
   }
 
@@ -43,78 +41,14 @@ class PhylogenyDAO2(connectionTestQuery: Option[String])
     Future {
       load()
       // Parent is't seen so we can walk down from this node
-      if (allNames.contains(name)) {
-        findNode(name)
-      }
-      else None
+      val mc = findMutableNode(name)
+      mc.map(_.toImmutable())
     }
   }
 
 
-  private def findNode(name: String,
-                       nodes: Seq[ImmutableConcept] = root.map(Seq(_)).getOrElse(Nil)): Option[ImmutableConcept] = {
-
-    nodes.find(_.containsName(name)) match {
-      case Some(nn) => Some(nn)
-      case None =>
-        val children = nodes.flatMap(_.children)
-        findNode(name, children)
-    }
-
-  }
-
-
-  private def findMutableNode(name: String,
-                       nodes: List[MutableConcept] = mutableRoot.map(List(_)).getOrElse(Nil)): Option[MutableConcept] = {
-
-
-    val nodes2 = flatten1()
-    println(nodes2)
-
-    val m = nodes.filter(_.names.map(_.name).contains(name))
-
-    val n = m match {
-      case x :: xs => Some(x)
-      case Nil =>
-        val children = nodes.flatMap(_.children)
-        findMutableNode(name, children)
-    }
-    n
-  }
-
-  private def flatten1(): List[MutableConcept] = {
-    mutableRoot match {
-      case None => Nil
-      case Some(r) => flatten2(List(r), r.children.toList.reverse)
-    }
-  }
-
-  @tailrec
-  private def flatten2(seen: List[MutableConcept], children: List[MutableConcept]): List[MutableConcept] = {
-    children match {
-      case Nil => seen
-      case _ => flatten2(seen ::: children, children.flatMap(_.children))
-    }
-//    val cs = seen ::: children
-//
-//
-//    flatten2()
-//
-//    children.flatMap(c => flatten3(seen, c, c.children.toList))
-//
-//    children match {
-//      case Nil => seen
-//      case x :: xs => flatten2(seen ::: List(x), xs ::: x.children.toList)
-//    }
-  }
-
-//  private def flatten3(seen: List[MutableConcept], child: MutableConcept, remainingChildren: List[MutableConcept]) = {
-//    flatten2(seen ::: List(child), child.children.toList ::: remainingChildren)
-//  }
-
-
-
-
+  private def findMutableNode(name: String): Option[MutableConcept] =
+    allNodes.find(_.names.map(_.name).contains(name))
 
   private def load(): Unit = {
     val lastUpdateInDb = executeLastUpdateQuery()
@@ -126,10 +60,10 @@ class PhylogenyDAO2(connectionTestQuery: Option[String])
         lastUpdate = lu.lastUpdate
       }
 
-      mutableRoot = MutableConcept.toTree(cache)
+      val r = MutableConcept.toTree(cache)
+      rootNode = r._1
+      allNodes = r._2
 
-      root = mutableRoot.map(_.toImmutable())
-      allNames = cache.map(_.name)
     }
   }
 

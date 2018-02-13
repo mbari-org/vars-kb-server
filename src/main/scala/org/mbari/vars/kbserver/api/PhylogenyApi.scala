@@ -20,7 +20,7 @@ class PhylogenyApi(daoFactory: DAOFactory)(implicit val executor: ExecutionConte
 
   private[this] val phylogenyDAO2 = daoFactory.newPhylogenyDAO2()
 
-  get("/up/:name") {
+  get("/up2/:name") {
     val name = params.get("name")
       .getOrElse(halt(BadRequest("Please provide a term to look up")))
     val dao = phylogenyDAO2
@@ -31,7 +31,7 @@ class PhylogenyApi(daoFactory: DAOFactory)(implicit val executor: ExecutionConte
           })
   }
 
-  get("/down/:name") {
+  get("/down2/:name") {
     val name = params.get("name")
       .getOrElse(halt(BadRequest("Please provide a term to look up")))
     val dao = phylogenyDAO2
@@ -42,7 +42,7 @@ class PhylogenyApi(daoFactory: DAOFactory)(implicit val executor: ExecutionConte
       })
   }
 
-  get("/up2/:name") {
+  get("/up/:name") {
     val name = params.get("name")
       .getOrElse(halt(BadRequest("Please provide a term to look up")))
     val dao = daoFactory.newPhylogenyDAO()
@@ -53,7 +53,7 @@ class PhylogenyApi(daoFactory: DAOFactory)(implicit val executor: ExecutionConte
         })
   }
 
-  get("/down2/:name") {
+  get("/down/:name") {
     val name = params.get("name")
       .getOrElse(halt(BadRequest("Please provide a term to look up")))
     val dao = daoFactory.newPhylogenyDAO()

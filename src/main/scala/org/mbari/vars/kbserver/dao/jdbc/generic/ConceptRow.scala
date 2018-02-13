@@ -2,6 +2,8 @@ package org.mbari.vars.kbserver.dao.jdbc.generic
 
 import java.time.Instant
 
+import org.slf4j.LoggerFactory
+
 import scala.collection.mutable
 
 /**
@@ -74,7 +76,8 @@ object MutableConcept {
     mc
   }
 
-  def toTree(rows: Seq[ConceptRow]): Option[MutableConcept] = {
+  // TODO return the nodes too!!
+  def toTree(rows: Seq[ConceptRow]): (Option[MutableConcept], Seq[MutableConcept]) = {
     val nodes = new mutable.ArrayBuffer[MutableConcept]
     for (row <- rows) {
       val parentOpt = row.parentId.map(parentId =>
@@ -84,6 +87,10 @@ object MutableConcept {
               nodes += mc
               mc
             }))
+
+      if (parentOpt.isEmpty) {
+        LoggerFactory.getLogger(getClass).info(s"No Parent found for $row")
+      }
 
       val concept = nodes.find(_.id.getOrElse(-1) == row.id) match {
         case None =>
@@ -105,7 +112,7 @@ object MutableConcept {
 
     }
     val root = nodes.find(_.parent.isEmpty)
-    root
+    (root, nodes)
   }
 
 }
