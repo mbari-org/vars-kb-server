@@ -49,25 +49,6 @@ class PhylogenyDAO2(connectionTestQuery: Option[String])
     }
   }
 
-//  private def findBranch(name: String): Option[ImmutableConcept] = {
-//    def isInPath(node:ImmutableConcept): Boolean =
-//      node.containsName(name) || node.children.exists(isInPath)
-//
-//    def buildPath(node: ImmutableConcept, accum: Seq[ImmutableConcept] = Nil): Seq[ImmutableConcept] = {
-//      if (isInPath(node)) {
-//        val childInPath = node.children.filter(isInPath)
-//        val newNode = node.copy(children = childInPath)
-//        accum :+ newNode
-//      }
-//      else accum
-//    }
-//
-//
-//
-//    root.map(r => buildPath(r))
-//      .map(_.head)
-//
-//  }
 
   private def findNode(name: String,
                        nodes: Seq[ImmutableConcept] = root.map(Seq(_)).getOrElse(Nil)): Option[ImmutableConcept] = {
@@ -91,6 +72,7 @@ class PhylogenyDAO2(connectionTestQuery: Option[String])
     }
     n
   }
+
 
   private def load(): Unit = {
     val lastUpdateInDb = executeLastUpdateQuery()
@@ -122,7 +104,7 @@ class PhylogenyDAO2(connectionTestQuery: Option[String])
       lastUpdate
     } catch {
       case NonFatal(e) =>
-        log.error("Failed to execute SQL", e)
+        log.error(s"Failed to execute SQL: ${PhylogenyDAO2.LAST_UPDATE_SQL}", e)
         Instant.now()
     }
 
@@ -150,7 +132,7 @@ class PhylogenyDAO2(connectionTestQuery: Option[String])
       rows
     } catch {
       case NonFatal(e) =>
-        log.error("Failed to execute SQL", e)
+        log.error(s"Failed to execute SQL: ${PhylogenyDAO2.SQL}", e)
         Nil
     }
 }
@@ -168,14 +150,14 @@ object PhylogenyDAO2 {
       |  c.LAST_UPDATED_TIME AS concept_timestamp,
       |  cn.LAST_UPDATED_TIME AS conceptname_timestamp
       |FROM
-      |  CONCEPT AS C LEFT JOIN
-      |  ConceptName AS cn ON cn.CONCEPTID_FK = C.ID
+      |  CONCEPT C LEFT JOIN
+      |  ConceptName cn ON cn.CONCEPTID_FK = C.ID
     """.stripMargin
 
   val LAST_UPDATE_SQL: String =
     """
       |SELECT
-      |  MAX(c.mytime)
+      |  MAX(mytime)
       |FROM
       |(SELECT
       |  MAX(LAST_UPDATED_TIME) AS mytime
@@ -185,6 +167,6 @@ object PhylogenyDAO2 {
       |SELECT
       |  MAX(LAST_UPDATED_TIME) AS mytime
       |FROM
-      |  ConceptName) as c
+      |  ConceptName)
     """.stripMargin
 }
