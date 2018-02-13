@@ -6,6 +6,7 @@ import java.time.Instant
 import org.mbari.vars.kbserver.dao.jdbc.BaseDAO
 import org.slf4j.LoggerFactory
 
+import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
@@ -62,9 +63,17 @@ class PhylogenyDAO2(connectionTestQuery: Option[String])
 
   }
 
+
   private def findMutableNode(name: String,
-                       nodes: Seq[MutableConcept] = mutableRoot.map(Seq(_)).getOrElse(Nil)): Option[MutableConcept] = {
-    val n = nodes.filter(_.names.map(_.name).contains(name)) match {
+                       nodes: List[MutableConcept] = mutableRoot.map(List(_)).getOrElse(Nil)): Option[MutableConcept] = {
+
+
+    val nodes2 = flatten1()
+    println(nodes2)
+
+    val m = nodes.filter(_.names.map(_.name).contains(name))
+
+    val n = m match {
       case x :: xs => Some(x)
       case Nil =>
         val children = nodes.flatMap(_.children)
@@ -72,6 +81,39 @@ class PhylogenyDAO2(connectionTestQuery: Option[String])
     }
     n
   }
+
+  private def flatten1(): List[MutableConcept] = {
+    mutableRoot match {
+      case None => Nil
+      case Some(r) => flatten2(List(r), r.children.toList.reverse)
+    }
+  }
+
+  @tailrec
+  private def flatten2(seen: List[MutableConcept], children: List[MutableConcept]): List[MutableConcept] = {
+    children match {
+      case Nil => seen
+      case _ => flatten2(seen ::: children, children.flatMap(_.children))
+    }
+//    val cs = seen ::: children
+//
+//
+//    flatten2()
+//
+//    children.flatMap(c => flatten3(seen, c, c.children.toList))
+//
+//    children match {
+//      case Nil => seen
+//      case x :: xs => flatten2(seen ::: List(x), xs ::: x.children.toList)
+//    }
+  }
+
+//  private def flatten3(seen: List[MutableConcept], child: MutableConcept, remainingChildren: List[MutableConcept]) = {
+//    flatten2(seen ::: List(child), child.children.toList ::: remainingChildren)
+//  }
+
+
+
 
 
   private def load(): Unit = {

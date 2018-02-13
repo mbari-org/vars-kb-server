@@ -1,4 +1,5 @@
 lazy val caffeineVersion = "2.6.1"
+lazy val catsVersion = "1.0.1"
 lazy val codecVersion = "1.11"
 lazy val configVersion = "1.3.2"
 lazy val derbyVersion = "10.14.1.0"
@@ -70,6 +71,7 @@ lazy val makeVersionSettings = Seq(
 
 lazy val optionSettings = Seq(
   scalacOptions ++= Seq(
+    "-Ypartial-unification", // needed for cats
     "-deprecation",
     "-encoding",
     "UTF-8", // yes, this is 2 args
@@ -102,6 +104,7 @@ lazy val root = (project in file("."))
     fork := true,
     libraryDependencies ++= {
       Seq(
+        "com.microsoft.sqlserver" % "mssql-jdbc" % "6.2.2.jre8",
         "com.fatboyindustrial.gson-javatime-serialisers" % "gson-javatime-serialisers" % fatboyVersion,
         "com.github.ben-manes.caffeine" % "caffeine" % caffeineVersion,
         "com.google.code.gson" % "gson" % gsonVersion,
@@ -126,7 +129,8 @@ lazy val root = (project in file("."))
 //        "org.scalatra" %% "scalatra-slf4j" % scalatraVersion,
         "org.scalatra" %% "scalatra-swagger" % scalatraVersion,
 //        "org.scalatra" %% "scalatra-swagger-ext" % scalatraVersion,
-        "org.scalatra" %% "scalatra-scalatest" % scalatraVersion).map(
+        "org.scalatra" %% "scalatra-scalatest" % scalatraVersion,
+        "org.typelevel" %% "cats-core" % catsVersion).map(
         _.excludeAll(
           ExclusionRule("org.slf4j", "slf4j-jdk14"),
           ExclusionRule("org.slf4j", "slf4j-log4j12"),
