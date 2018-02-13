@@ -13,8 +13,8 @@ WITH org_name (parent_id, parent_name, parent_rank, child_id, child_name, child_
             ConceptName childname ON childname.ConceptID_FK = child.id LEFT OUTER JOIN
             ConceptName parentname ON parentname.ConceptID_FK = parent.id
         WHERE
-            childname.NameType = 'primary' AND
-            parentname.NameType = 'primary'
+            LOWER(childname.NameType) LIKE LOWER('primary') AND
+            LOWER(parentname.NameType) LIKE LOWER('primary')
     ),
     jn (parent_id, parent_name, parent_rank, child_id, child_name, child_rank) AS
     (
@@ -51,4 +51,4 @@ SELECT DISTINCT
 FROM
     jn
 ORDER BY
-    1;
+    1
