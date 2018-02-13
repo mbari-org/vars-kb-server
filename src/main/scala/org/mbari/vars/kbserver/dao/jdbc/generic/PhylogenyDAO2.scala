@@ -157,7 +157,7 @@ object PhylogenyDAO2 {
   val LAST_UPDATE_SQL: String =
     """
       |SELECT
-      |  MAX(mytime)
+      |  MAX(t.mytime)
       |FROM
       |(SELECT
       |  MAX(LAST_UPDATED_TIME) AS mytime
@@ -167,6 +167,6 @@ object PhylogenyDAO2 {
       |SELECT
       |  MAX(LAST_UPDATED_TIME) AS mytime
       |FROM
-      |  ConceptName)
+      |  ConceptName) t
     """.stripMargin
 }
