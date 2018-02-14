@@ -44,7 +44,12 @@ class PhylogenyDAOImpl @Inject() (conceptNodeDAO: ConceptNodeDAO)
 
   private def executeQuery(sql: String, name: String): Seq[PhylogenyRow] =
     try {
+
+      //val psql = sql.replace("?", s"'$name'")
+
       val connection = dataSource.getConnection()
+//      val statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
+//      val resultSet = statement.executeQuery(psql)
       val preparedStatement = connection.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
       preparedStatement.setString(1, name)
       val resultSet = preparedStatement.executeQuery()

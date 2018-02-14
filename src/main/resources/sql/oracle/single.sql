@@ -1,8 +1,8 @@
 SELECT
     ConceptName AS concept,
-    coalesce(RankLevel, '') || coalesce(RankName, '') AS rank
+    coalesce(RankLevel, '') || coalesce(RankName, '') AS conceptrank
 FROM
-    Concept AS c RIGHT JOIN
-    ConceptName AS n ON n.ConceptID_FK = c.id
+    Concept c RIGHT JOIN
+    ConceptName n ON n.ConceptID_FK = c.id
 WHERE
     ConceptName = ?
