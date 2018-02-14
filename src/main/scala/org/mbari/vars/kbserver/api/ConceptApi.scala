@@ -25,14 +25,6 @@ class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext
         .map(Constants.GSON.toJson)
   }
 
-  get("/find/root") {
-    val dao = daoFactory.newConceptNodeDAO()
-    dao.findRoot()
-        .map({
-          case None => halt(NotFound("Unable to find the root concept. That's crazy!!"))
-          case Some(c) => toJson(c)
-        })
-  }
 
   get("/:name") {
     val name = params.get("name")
@@ -43,6 +35,15 @@ class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext
           case None => halt(NotFound(s"No concept named $name was found"))
           case Some(c) => toJson(c)
         })
+  }
+
+  get("/root") {
+    val dao = daoFactory.newConceptNodeDAO()
+    dao.findRoot()
+      .map({
+        case None => halt(NotFound("Unable to find the root concept. That's crazy!!"))
+        case Some(c) => toJson(c)
+      })
   }
 
 
