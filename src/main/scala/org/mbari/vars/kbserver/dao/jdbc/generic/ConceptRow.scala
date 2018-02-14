@@ -80,6 +80,10 @@ object MutableConcept {
   def toTree(rows: Seq[ConceptRow]): (Option[MutableConcept], Seq[MutableConcept]) = {
     val nodes = new mutable.ArrayBuffer[MutableConcept]
     for (row <- rows) {
+
+      /*
+        Find an existing parent or create one as needed
+       */
       val parentOpt = row.parentId.map(parentId =>
           nodes.find(_.id.getOrElse(-1) == parentId)
             .getOrElse({
@@ -92,23 +96,29 @@ object MutableConcept {
         LoggerFactory.getLogger(getClass).info(s"No Parent found for $row")
       }
 
+      /*
+        Find the existing concept or create one if needed
+       */
       val concept = nodes.find(_.id.getOrElse(-1) == row.id) match {
         case None =>
           val mc = new MutableConcept
           mc.id = Some(row.id)
-          parentOpt.foreach(parent => {
-            mc.parent = parentOpt
-            parent.children = parent.children :+ mc
-          })
           nodes += mc
           mc
         case Some(mc) => mc
       }
 
+      // Set the parent of the concept!!
+      parentOpt.foreach(parent => {
+        concept.parent = parentOpt
+        if (!parent.children.contains(concept)) {
+          parent.children = parent.children :+ concept
+        }
+      })
+
       val cn = CName(row.name, row.nameType)
       concept.rank = row.rank
       concept.names = concept.names :+ cn
-
 
     }
     val root = nodes.find(_.parent.isEmpty)

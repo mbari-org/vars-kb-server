@@ -4,9 +4,9 @@ package org.mbari.vars.kbserver.api
   * @author Brian Schlining
   * @since 2016-12-12T16:42:00
   */
-class PhylogenyApiSpec extends WebApiStack {
+class PhylogenyApiV1Spec extends WebApiStack {
 
-  private[this] val api = new PhylogenyApi(daoFactory)
+  private[this] val api = new PhylogenyApiV1(daoFactory)
   private[this] val path = "/v1/phylogeny"
   addServlet(api, path)
 

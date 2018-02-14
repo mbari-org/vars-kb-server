@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory
 
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.Try
 import scala.util.control.NonFatal
 
 /**
@@ -28,12 +29,10 @@ class PhylogenyDAO2(connectionTestQuery: Option[String])
       load()
       // Hide the children
       //  do branch walk
-      val mc = findMutableNode(name)
-      val r = mc.map(_.root())
-      val i = r.map(_.toImmutable())
-//      mc.map(_.root())
-//          .map(_.toImmutable())
-      i
+      findMutableNode(name)
+        .map(_.copyUp())
+        .map(_.root())
+        .map(_.toImmutable())
     }
   }
 
@@ -45,7 +44,6 @@ class PhylogenyDAO2(connectionTestQuery: Option[String])
       mc.map(_.toImmutable())
     }
   }
-
 
   private def findMutableNode(name: String): Option[MutableConcept] =
     allNodes.find(_.names.map(_.name).contains(name))
@@ -94,13 +92,12 @@ class PhylogenyDAO2(connectionTestQuery: Option[String])
         val id = resultSet.getLong(1)
         val pid = resultSet.getLong(2)
         val parentId = if (pid <= 0) None else Some(pid)
-        //val parentId = Option(resultSet.getLong(2))
         val name = resultSet.getString(3)
         val rankLevel = Option(resultSet.getString(4))
         val rankName = Option(resultSet.getString(5))
         val nameType = resultSet.getString(6)
-        val conceptTimestamp = resultSet.getTimestamp(7).toInstant
-        val conceptNameTimestamp = resultSet.getTimestamp(8).toInstant
+        val conceptTimestamp = Try(resultSet.getTimestamp(7).toInstant).getOrElse(Instant.EPOCH)
+        val conceptNameTimestamp = Try(resultSet.getTimestamp(8).toInstant).getOrElse(Instant.EPOCH)
         val r = ConceptRow(id, parentId, name, rankLevel, rankName, nameType, conceptTimestamp, conceptNameTimestamp)
         rows += r
       }
@@ -128,6 +125,8 @@ object PhylogenyDAO2 {
       |FROM
       |  CONCEPT C LEFT JOIN
       |  ConceptName cn ON cn.CONCEPTID_FK = C.ID
+      |WHERE
+      | cn.CONCEPTNAME IS NOT NULL
     """.stripMargin
 
   val LAST_UPDATE_SQL: String =
