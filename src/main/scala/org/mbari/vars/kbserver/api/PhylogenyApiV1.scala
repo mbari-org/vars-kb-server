@@ -43,7 +43,7 @@ class PhylogenyApiV1(daoFactory: DAOFactory)(implicit val executor: ExecutionCon
   get("/up/:name") {
     val name = params.get("name")
       .getOrElse(halt(BadRequest("Please provide a term to look up")))
-    val dao = daoFactory.newPhylogenyDAO2()
+    val dao = daoFactory.newFastPhylogenyDAO()
     dao.findUp(name)
       .map({
         case None => halt(NotFound(s"No concept named $name was found"))
@@ -54,7 +54,7 @@ class PhylogenyApiV1(daoFactory: DAOFactory)(implicit val executor: ExecutionCon
   get("/down/:name") {
     val name = params.get("name")
       .getOrElse(halt(BadRequest("Please provide a term to look up")))
-    val dao = daoFactory.newPhylogenyDAO2()
+    val dao = daoFactory.newFastPhylogenyDAO()
     dao.findDown(name)
       .map({
         case None => halt(NotFound(s"No concept named $name was found"))

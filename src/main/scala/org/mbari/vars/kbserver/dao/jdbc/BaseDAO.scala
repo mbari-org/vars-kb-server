@@ -27,7 +27,7 @@ class BaseDAO(connectionTestQuery: Option[String] = None) {
     config.setJdbcUrl(p.url)
     config.setUsername(p.user)
     config.setPassword(p.password)
-    config.addDataSourceProperty("maximumPoolSize", 30)
+    config.addDataSourceProperty("maximumPoolSize", 6)
     config.addDataSourceProperty("cachePrepStmts", "true")
     config.addDataSourceProperty("prepStmtCacheSize", "250")
     config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048")

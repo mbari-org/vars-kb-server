@@ -15,7 +15,7 @@ import scala.util.control.NonFatal
   * @author Brian Schlining
   * @since 2018-02-11T11:19:00
   */
-class PhylogenyDAO2(connectionTestQuery: Option[String])
+class FastPhylogenyDAO(connectionTestQuery: Option[String])
   extends BaseDAO(connectionTestQuery) {
 
   private[this] val log = LoggerFactory.getLogger(getClass)
@@ -70,7 +70,7 @@ class PhylogenyDAO2(connectionTestQuery: Option[String])
   private def executeLastUpdateQuery(): Instant =
     try {
       val connection = dataSource.getConnection()
-      val preparedStatement = connection.prepareStatement(PhylogenyDAO2.LAST_UPDATE_SQL, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
+      val preparedStatement = connection.prepareStatement(FastPhylogenyDAO.LAST_UPDATE_SQL, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
       val resultSet = preparedStatement.executeQuery()
       val lastUpdate = if (resultSet.next()) resultSet.getTimestamp(1).toInstant
           else Instant.now()
@@ -78,14 +78,14 @@ class PhylogenyDAO2(connectionTestQuery: Option[String])
       lastUpdate
     } catch {
       case NonFatal(e) =>
-        log.error(s"Failed to execute SQL: ${PhylogenyDAO2.LAST_UPDATE_SQL}", e)
+        log.error(s"Failed to execute SQL: ${FastPhylogenyDAO.LAST_UPDATE_SQL}", e)
         Instant.now()
     }
 
   private def executeQuery(): Seq[ConceptRow] =
     try {
       val connection = dataSource.getConnection()
-      val preparedStatement = connection.prepareStatement(PhylogenyDAO2.SQL, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
+      val preparedStatement = connection.prepareStatement(FastPhylogenyDAO.SQL, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
       val resultSet = preparedStatement.executeQuery()
       val rows = new mutable.ArrayBuffer[ConceptRow]()
       while (resultSet.next()) {
@@ -105,12 +105,12 @@ class PhylogenyDAO2(connectionTestQuery: Option[String])
       rows
     } catch {
       case NonFatal(e) =>
-        log.error(s"Failed to execute SQL: ${PhylogenyDAO2.SQL}", e)
+        log.error(s"Failed to execute SQL: ${FastPhylogenyDAO.SQL}", e)
         Nil
     }
 }
 
-object PhylogenyDAO2 {
+object FastPhylogenyDAO {
   val SQL: String =
     """
       |SELECT
