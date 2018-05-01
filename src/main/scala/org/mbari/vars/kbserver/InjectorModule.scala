@@ -1,6 +1,6 @@
 package org.mbari.vars.kbserver
 
-import com.google.inject.{Binder, Module}
+import com.google.inject.{ Binder, Module }
 import org.mbari.vars.kbserver.dao.DAOFactory
 import org.mbari.vars.kbserver.dao.jpa.DefaultDAOFactory
 

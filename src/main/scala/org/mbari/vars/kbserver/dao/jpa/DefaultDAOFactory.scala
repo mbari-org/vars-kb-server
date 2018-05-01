@@ -1,11 +1,10 @@
 package org.mbari.vars.kbserver.dao.jpa
 
-
 import com.google.inject.Inject
 import org.mbari.vars.kbserver.Constants
 import org.mbari.vars.kbserver.dao.cached.CachedConceptNodeDAOImpl
 import org.mbari.vars.kbserver.dao.jdbc.generic.FastPhylogenyDAO
-import org.mbari.vars.kbserver.dao.{ConceptNodeDAO, DAOFactory, LinkNodeDAO, PhylogenyDAO}
+import org.mbari.vars.kbserver.dao.{ ConceptNodeDAO, DAOFactory, LinkNodeDAO, PhylogenyDAO }
 import vars.knowledgebase.KnowledgebaseDAOFactory
 
 /**

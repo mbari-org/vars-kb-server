@@ -31,7 +31,6 @@ class ScalatraBootstrap extends LifeCycle {
     val conceptApi = new ConceptApi(daoFactory)
     val linkApi = new LinkApi(daoFactory)
 
-
     val kbDaoFactory = Constants.GUICE_INJECTOR.getInstance(classOf[KnowledgebaseDAOFactory])
     val rawApi = new RawApi(kbDaoFactory)
 

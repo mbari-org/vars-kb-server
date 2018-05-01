@@ -4,8 +4,8 @@ import scala.collection.mutable
 
 /**
  * Represents a node in a phylogeny tree. It maps parent-child relationships.
-  *
-  * Note that this is an abomination of case class usage, but it works.
+ *
+ * Note that this is an abomination of case class usage, but it works.
  *
  * @author Brian Schlining
  * @since 2016-11-17T13:41:00
@@ -39,7 +39,6 @@ case class PhylogenyNode(
   def subnode(name: String): Option[PhylogenyNode] =
     if (this.name.equalsIgnoreCase(name)) Some(this)
     else children.toStream.flatMap(n => n.subnode(name)).headOption
-
 
 }
 

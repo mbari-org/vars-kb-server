@@ -1,12 +1,12 @@
 package org.mbari.vars.kbserver
 
-import com.google.gson.{FieldNamingPolicy, GsonBuilder}
+import com.google.gson.{ FieldNamingPolicy, GsonBuilder }
 import com.google.inject.Guice
-import com.typesafe.config.{Config, ConfigFactory}
+import com.typesafe.config.{ Config, ConfigFactory }
 import org.mbari.vars.kbserver.dao.DAOFactory
 import org.mbari.vars.kbserver.dao.jdbc.generic.ImmutableConcept
-import org.mbari.vars.kbserver.gson.{ConceptNodeSerializer, ImmutableConceptSerializer, OptionSerializer, PhylogenyNodeSerializer}
-import org.mbari.vars.kbserver.model.{ConceptNode, DbParams, PhylogenyNode}
+import org.mbari.vars.kbserver.gson.{ ConceptNodeSerializer, ImmutableConceptSerializer, OptionSerializer, PhylogenyNodeSerializer }
+import org.mbari.vars.kbserver.model.{ ConceptNode, DbParams, PhylogenyNode }
 
 import scala.util.Try
 

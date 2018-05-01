@@ -1,6 +1,5 @@
 package org.mbari.vars.kbserver.dao.jpa
 
-
 import java.util.concurrent.TimeUnit
 
 import com.google.inject.Guice
@@ -40,6 +39,5 @@ object TestDatabase {
   }
 
   val KB_DAO_FACTORY = injector.getInstance(classOf[KnowledgebaseDAOFactory])
-
 
 }

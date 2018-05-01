@@ -7,22 +7,24 @@ import org.slf4j.LoggerFactory
 import scala.collection.mutable
 
 /**
-  * @author Brian Schlining
-  * @since 2018-02-11T11:34:00
-  */
-case class ConceptRow(id: Long,
-                      parentId: Option[Long],
-                      name: String,
-                      rankLevel: Option[String],
-                      rankName: Option[String],
-                      nameType: String,
-                      conceptTimestamp: Instant,
-                      conceptNameTimestamp: Instant) {
+ * @author Brian Schlining
+ * @since 2018-02-11T11:34:00
+ */
+case class ConceptRow(
+    id: Long,
+    parentId: Option[Long],
+    name: String,
+    rankLevel: Option[String],
+    rankName: Option[String],
+    nameType: String,
+    conceptTimestamp: Instant,
+    conceptNameTimestamp: Instant
+) {
 
   lazy val rank: Option[String] = rankName.map(n => rankLevel.getOrElse("") + n)
 
   lazy val lastUpdate: Instant = Seq(conceptTimestamp, conceptNameTimestamp)
-      .maxBy(i => i.toEpochMilli)
+    .maxBy(i => i.toEpochMilli)
 
 }
 
@@ -50,9 +52,10 @@ class MutableConcept {
   def toImmutable(): ImmutableConcept = {
     //println(s"${this.id} - ${this.names}")
     val primaryName = names.find(_.nameType.equalsIgnoreCase("primary"))
-          .getOrElse(names.head)
+      .getOrElse(names.head)
     val alternativeNames = names.filter(!_.eq(primaryName))
-    ImmutableConcept(primaryName.name,
+    ImmutableConcept(
+      primaryName.name,
       rank,
       alternativeNames.map(_.name),
       children.map(_.toImmutable())
@@ -64,9 +67,7 @@ class MutableConcept {
     case Some(p) => p.root()
   }
 
-
 }
-
 
 object MutableConcept {
 
@@ -85,12 +86,12 @@ object MutableConcept {
         Find an existing parent or create one as needed
        */
       val parentOpt = row.parentId.map(parentId =>
-          nodes.find(_.id.getOrElse(-1) == parentId)
-            .getOrElse({
-              val mc = newParent(parentId)
-              nodes += mc
-              mc
-            }))
+        nodes.find(_.id.getOrElse(-1) == parentId)
+          .getOrElse({
+            val mc = newParent(parentId)
+            nodes += mc
+            mc
+          }))
 
       if (parentOpt.isEmpty) {
         LoggerFactory.getLogger(getClass).info(s"No Parent found for $row")
@@ -127,13 +128,13 @@ object MutableConcept {
 
 }
 
-case class ImmutableConcept(name: String,
-                            rank: Option[String],
-                            alternativeNames: Seq[String],
-                            children: Seq[ImmutableConcept]) {
+case class ImmutableConcept(
+    name: String,
+    rank: Option[String],
+    alternativeNames: Seq[String],
+    children: Seq[ImmutableConcept]
+) {
   def containsName(n: String): Boolean = name.equals(n) ||
-      alternativeNames.contains(n)
+    alternativeNames.contains(n)
 }
-
-
 

@@ -2,19 +2,19 @@ package org.mbari.vars.kbserver.dao.jdbc
 
 import java.net.URL
 
-import com.zaxxer.hikari.{HikariConfig, HikariDataSource}
+import com.zaxxer.hikari.{ HikariConfig, HikariDataSource }
 
 import scala.io.Source
 
 import org.mbari.vars.kbserver.{ Constants => Konstants }
 
 /**
-  * @param connectionTestQuery The SQL used by hikari to veryify the connection.
-  *                            See the usages in sqlserver and oracle packages
-  *                            for examples.
-  * @author Brian Schlining
-  * @since 2018-02-11T11:04:00
-  */
+ * @param connectionTestQuery The SQL used by hikari to veryify the connection.
+ *                            See the usages in sqlserver and oracle packages
+ *                            for examples.
+ * @author Brian Schlining
+ * @since 2018-02-11T11:04:00
+ */
 class BaseDAO(connectionTestQuery: Option[String] = None) {
 
   @volatile
@@ -32,7 +32,7 @@ class BaseDAO(connectionTestQuery: Option[String] = None) {
     config.addDataSourceProperty("prepStmtCacheSize", "250")
     config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048")
     val testQuery = if (connectionTestQuery.isEmpty) p.testQuery
-        else connectionTestQuery
+    else connectionTestQuery
     testQuery.foreach(config.setConnectionTestQuery)
     config
   }

@@ -7,16 +7,16 @@ import org.mbari.vars.kbserver.dao.jdbc.BaseDAO
 import org.slf4j.LoggerFactory
 
 import scala.collection.mutable
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Try
 import scala.util.control.NonFatal
 
 /**
-  * @author Brian Schlining
-  * @since 2018-02-11T11:19:00
-  */
+ * @author Brian Schlining
+ * @since 2018-02-11T11:19:00
+ */
 class FastPhylogenyDAO(connectionTestQuery: Option[String])
-  extends BaseDAO(connectionTestQuery) {
+    extends BaseDAO(connectionTestQuery) {
 
   private[this] val log = LoggerFactory.getLogger(getClass)
 
@@ -65,15 +65,13 @@ class FastPhylogenyDAO(connectionTestQuery: Option[String])
     }
   }
 
-
-
   private def executeLastUpdateQuery(): Instant =
     try {
       val connection = dataSource.getConnection()
       val preparedStatement = connection.prepareStatement(FastPhylogenyDAO.LAST_UPDATE_SQL, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
       val resultSet = preparedStatement.executeQuery()
       val lastUpdate = if (resultSet.next()) resultSet.getTimestamp(1).toInstant
-          else Instant.now()
+      else Instant.now()
       connection.close()
       lastUpdate
     } catch {

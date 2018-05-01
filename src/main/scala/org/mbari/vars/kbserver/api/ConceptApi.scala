@@ -2,15 +2,15 @@ package org.mbari.vars.kbserver.api
 
 import org.mbari.vars.kbserver.Constants
 import org.mbari.vars.kbserver.dao.DAOFactory
-import org.scalatra.{BadRequest, NotFound}
+import org.scalatra.{ BadRequest, NotFound }
 
 import scala.collection.JavaConverters._
 import scala.concurrent.ExecutionContext
 
 /**
-  * @author Brian Schlining
-  * @since 2016-12-14T14:40:00
-  */
+ * @author Brian Schlining
+ * @since 2016-12-14T14:40:00
+ */
 class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) extends ApiStack {
 
   before() {
@@ -21,20 +21,19 @@ class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext
   get("/") {
     val dao = daoFactory.newConceptNodeDAO()
     dao.findAllNames()
-        .map(_.asJava)
-        .map(Constants.GSON.toJson)
+      .map(_.asJava)
+      .map(Constants.GSON.toJson)
   }
-
 
   get("/:name") {
     val name = params.get("name")
-        .getOrElse(halt(BadRequest("Please provide a term to look up")))
+      .getOrElse(halt(BadRequest("Please provide a term to look up")))
     val dao = daoFactory.newConceptNodeDAO()
     dao.findByName(name)
-        .map({
-          case None => halt(NotFound(s"No concept named $name was found"))
-          case Some(c) => toJson(c)
-        })
+      .map({
+        case None => halt(NotFound(s"No concept named $name was found"))
+        case Some(c) => toJson(c)
+      })
   }
 
   get("/root") {
@@ -45,6 +44,5 @@ class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext
         case Some(c) => toJson(c)
       })
   }
-
 
 }

@@ -1,12 +1,12 @@
 package org.mbari.vars.kbserver.api
 
-import java.net.{URI, URL}
-import java.time.{Duration, Instant}
+import java.net.{ URI, URL }
+import java.time.{ Duration, Instant }
 import java.util.UUID
 
 import org.mbari.vars.kbserver.Constants
 import org.scalatra.util.conversion.TypeConverter
-import org.scalatra.{ContentEncodingSupport, FutureSupport, ScalatraServlet}
+import org.scalatra.{ ContentEncodingSupport, FutureSupport, ScalatraServlet }
 import org.slf4j.LoggerFactory
 
 import scala.util.Try
@@ -18,7 +18,7 @@ import scala.util.Try
  * @since 2016-11-17T13:29:00
  */
 abstract class ApiStack extends ScalatraServlet
-  with ContentEncodingSupport with FutureSupport {
+    with ContentEncodingSupport with FutureSupport {
 
   protected[this] val log = LoggerFactory.getLogger(getClass)
 

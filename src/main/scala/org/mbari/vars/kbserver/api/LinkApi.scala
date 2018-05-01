@@ -7,11 +7,10 @@ import scala.collection.JavaConverters._
 import scala.concurrent.ExecutionContext
 
 /**
-  * @author Brian Schlining
-  * @since 2016-12-14T15:27:00
-  */
+ * @author Brian Schlining
+ * @since 2016-12-14T15:27:00
+ */
 class LinkApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) extends ApiStack {
-
 
   before() {
     contentType = "application/json"
@@ -21,8 +20,8 @@ class LinkApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) e
   get("/") {
     val dao = daoFactory.newLinkNodeDAO()
     dao.findAll
-        .map(_.asJava)
-        .map(toJson)
+      .map(_.asJava)
+      .map(toJson)
   }
 
   // return all linktemplates applicable to the provided concept name
@@ -31,8 +30,8 @@ class LinkApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) e
       .getOrElse(halt(BadRequest("Please provide a term to look up")))
     val dao = daoFactory.newLinkNodeDAO()
     dao.findAllApplicableTo(name)
-        .map(_.asJava)
-        .map(toJson)
+      .map(_.asJava)
+      .map(toJson)
   }
 
   // return all linktemlates with the matching linkname

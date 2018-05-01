@@ -1,10 +1,10 @@
 package org.mbari.vars.kbserver.model
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{ FlatSpec, Matchers }
 
 /**
-  * Created by brian on 11/29/16.
-  */
+ * Created by brian on 11/29/16.
+ */
 class PhylogenyNodeSpec extends FlatSpec with Matchers {
 
   val root = PhylogenyNode("A")
@@ -19,10 +19,10 @@ class PhylogenyNodeSpec extends FlatSpec with Matchers {
 
     val sub = root.subnode("B2")
     sub should not be empty
-    sub.get should be (b2)
+    sub.get should be(b2)
   }
 
   it should "find root" in {
-    c.root should be (root)
+    c.root should be(root)
   }
 }
