@@ -1,17 +1,17 @@
-lazy val caffeineVersion = "2.6.1"
-lazy val catsVersion = "1.0.1"
+lazy val caffeineVersion = "2.6.2"
+lazy val catsVersion = "1.4.0"
 lazy val codecVersion = "1.11"
-lazy val configVersion = "1.3.2"
-lazy val derbyVersion = "10.14.1.0"
+lazy val configVersion = "1.3.3"
+lazy val derbyVersion = "10.14.2.0"
 lazy val fatboyVersion = "1.1.1"
-lazy val gsonVersion = "2.8.2"
-lazy val hikariVersion = "2.7.4"
-lazy val jettyVersion = "9.4.8.v20171121"
+lazy val gsonVersion = "2.8.5"
+lazy val hikariVersion = "2.7.9"
+lazy val jettyVersion = "9.4.12.v20180830"
 lazy val jtaVersion = "1.1"
 lazy val junitVersion = "4.12"
 lazy val logbackVersion = "1.2.3"
-lazy val scalatestVersion = "3.0.4"
-lazy val scalatraVersion = "2.6.2"
+lazy val scalatestVersion = "3.0.5"
+lazy val scalatraVersion = "2.6.3"
 lazy val servletVersion = "3.1.0"
 lazy val slf4jVersion = "1.7.25"
 lazy val varskbVersion = "9.0-SNAPSHOT"
@@ -19,8 +19,11 @@ lazy val varskbVersion = "9.0-SNAPSHOT"
 
 lazy val buildSettings = Seq(
   organization := "org.mbari.vars",
-  scalaVersion := "2.12.4",
-  crossScalaVersions := Seq("2.12.4")
+  scalaVersion := "2.12.7",
+  crossScalaVersions := Seq("2.12.7"),
+  organizationName := "Monterey Bay Aquarium Research Institute",
+  startYear := Some(2017),
+  licenses += ("Apache-2.0", new URL("https://www.apache.org/licenses/LICENSE-2.0.txt"))
 )
 
 lazy val consoleSettings = Seq(
@@ -52,22 +55,6 @@ lazy val dependencySettings = Seq(
     "hohonuuli-bintray" at "http://dl.bintray.com/hohonuuli/maven")
 )
 
-lazy val gitHeadCommitSha =
-  SettingKey[String]("git-head", "Determines the current git commit SHA")
-
-lazy val makeVersionProperties =
-  TaskKey[Seq[File]]("make-version-props", "Makes a version.properties file")
-
-lazy val makeVersionSettings = Seq(
-  gitHeadCommitSha := scala.util.Try(Process("git rev-parse HEAD").lines.head).getOrElse(""),
-  makeVersionProperties := {
-    val propFile = (resourceManaged in Compile).value / "version.properties"
-    val content = "version=%s" format (gitHeadCommitSha.value)
-    IO.write(propFile, content)
-    Seq(propFile)
-  },
-  resourceGenerators in Compile <+= makeVersionProperties
-)
 
 lazy val optionSettings = Seq(
   scalacOptions ++= Seq(
@@ -85,22 +72,22 @@ lazy val optionSettings = Seq(
     "-Yno-adapted-args",
     "-Xfuture"),
   javacOptions ++= Seq("-target", "1.8", "-source", "1.8"),
-  incOptions := incOptions.value.withNameHashing(true),
   updateOptions := updateOptions.value.withCachedResolution(true)
 )
 
 lazy val varsSettings = buildSettings ++ consoleSettings ++ dependencySettings ++
     optionSettings // ++ reformatOnCompileSettings
 
-val apps = Seq("jetty-main")
+lazy val apps = Map("jetty-main" -> "JettyMain")  // for sbt-pack
 
 lazy val root = (project in file("."))
-  .enablePlugins(JavaServerAppPackaging, JettyPlugin)
+  .enablePlugins(JettyPlugin)
+  .enablePlugins(AutomateHeaderPlugin)
+  .enablePlugins(PackPlugin)
   .settings(varsSettings)
   .settings(
     name := "vars-kb-server",
     version := "1.0-SNAPSHOT",
-    todosTags := Set("TODO", "FIXME", "WTF"),
     fork := true,
     libraryDependencies ++= {
       Seq(
@@ -139,12 +126,11 @@ lazy val root = (project in file("."))
     mainClass in assembly := Some("JettyMain")
   )
   .settings( // config sbt-pack
-    packAutoSettings ++ Seq(
-      packExtraClasspath := apps.map(_ -> Seq("${PROG_HOME}/conf")).toMap,
-      packJvmOpts := apps.map(_ -> Seq("-Duser.timezone=UTC", "-Xmx4g")).toMap,
-      packDuplicateJarStrategy := "latest",
-      packJarNameConvention := "original"
-    )
+    packMain := apps,
+    packExtraClasspath := apps.keys.map(k => k -> Seq("${PROG_HOME}/conf")).toMap,
+    packJvmOpts := apps.keys.map(k => k -> Seq("-Duser.timezone=UTC", "-Xmx4g")).toMap,
+    packDuplicateJarStrategy := "latest",
+    packJarNameConvention := "original"
   )
 
 addCommandAlias("cleanall", ";clean;clean-files")
