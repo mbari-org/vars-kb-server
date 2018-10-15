@@ -12,7 +12,8 @@ import scala.concurrent.{ ExecutionContext, Future }
  * @author Brian Schlining
  * @since 2018-01-08T13:07:00
  */
-class RawApi @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFactory)(implicit val executor: ExecutionContext) extends ApiStack {
+class RawApi @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFactory)
+    (implicit val executor: ExecutionContext) extends ApiStack {
 
   before() {
     contentType = "application/json"

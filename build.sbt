@@ -19,8 +19,8 @@ lazy val varskbVersion = "9.0-SNAPSHOT"
 
 lazy val buildSettings = Seq(
   organization := "org.mbari.vars",
-  scalaVersion := "2.12.6",
-  crossScalaVersions := Seq("2.12.6")
+  scalaVersion := "2.12.7",
+  crossScalaVersions := Seq("2.12.7")
 )
 
 lazy val consoleSettings = Seq(
