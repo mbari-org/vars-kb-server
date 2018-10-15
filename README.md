@@ -13,6 +13,8 @@ This is a RESTful read-only service for retrieving information from MBARI's know
 
 This project is built using [SBT](http://www.scala-sbt.org/)
 
+__Requires Java 11__
+
 ## Getting Started
 
 ```
