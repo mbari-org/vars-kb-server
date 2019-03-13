@@ -32,7 +32,7 @@ class PhylogenyDAOSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   override protected def beforeAll(): Unit = TestDatabase.init
 
   private[this] val daoFactory = new DefaultDAOFactory(TestDatabase.KB_DAO_FACTORY)
-  private[this] val dao = daoFactory.newPhylogenyDAO()
+  private[this] val dao = daoFactory.newFastPhylogenyDAO()
 
   "PhylogenyDAOImpl" should "find phylogeny for Nanomia bijuga" in {
     val cn = Await.result(dao.findUp("Nanomia bijuga"), TestDatabase.TIMEOUT)

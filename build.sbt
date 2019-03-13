@@ -1,26 +1,26 @@
-lazy val caffeineVersion = "2.6.2"
-lazy val catsVersion = "1.4.0"
-lazy val codecVersion = "1.11"
+lazy val caffeineVersion = "2.7.0"
+lazy val catsVersion = "1.6.0"
+lazy val codecVersion = "1.12"
 lazy val configVersion = "1.3.3"
-lazy val derbyVersion = "10.14.2.0"
+lazy val derbyVersion = "10.15.1.3"
 lazy val fatboyVersion = "1.1.1"
 lazy val gsonVersion = "2.8.5"
-lazy val hikariVersion = "3.2.0"
-lazy val jettyVersion = "9.4.14.v20181114"
+lazy val hikariVersion = "3.3.1"
+lazy val jettyVersion = "9.4.15.v20190215"
 lazy val jtaVersion = "1.1"
 lazy val junitVersion = "4.12"
 lazy val logbackVersion = "1.2.3"
-lazy val scalatestVersion = "3.0.5"
-lazy val scalatraVersion = "2.6.4"
+lazy val scalatestVersion = "3.0.6"
+lazy val scalatraVersion = "2.6.5"
 lazy val servletVersion = "3.1.0"
-lazy val slf4jVersion = "1.7.25"
+lazy val slf4jVersion = "1.7.26"
 lazy val varskbVersion = "11.0.2"
 
 
 lazy val buildSettings = Seq(
   organization := "org.mbari.vars",
-  scalaVersion := "2.12.7",
-  crossScalaVersions := Seq("2.12.7"),
+  scalaVersion := "2.12.8",
+  crossScalaVersions := Seq("2.12.8"),
   organizationName := "Monterey Bay Aquarium Research Institute",
   startYear := Some(2017),
   licenses += ("Apache-2.0", new URL("https://www.apache.org/licenses/LICENSE-2.0.txt"))
@@ -87,11 +87,11 @@ lazy val root = (project in file("."))
   .settings(varsSettings)
   .settings(
     name := "vars-kb-server",
-    version := "0.1.1",
+    version := "0.1.2",
     fork := true,
     libraryDependencies ++= {
       Seq(
-        "com.microsoft.sqlserver" % "mssql-jdbc" % "6.2.2.jre8",
+        "com.microsoft.sqlserver" % "mssql-jdbc" % "7.2.1.jre11",
         "com.fatboyindustrial.gson-javatime-serialisers" % "gson-javatime-serialisers" % fatboyVersion,
         "com.github.ben-manes.caffeine" % "caffeine" % caffeineVersion,
         "com.google.code.gson" % "gson" % gsonVersion,
@@ -105,6 +105,8 @@ lazy val root = (project in file("."))
          "org.apache.derby" % "derby" % derbyVersion,
          "org.apache.derby" % "derbyclient" % derbyVersion,
          "org.apache.derby" % "derbynet" % derbyVersion,
+        "org.apache.derby" % "derbytools" % derbyVersion,
+        "org.apache.derby" % "derbyshared" % derbyVersion,
         "org.eclipse.jetty" % "jetty-server" % jettyVersion % "compile;test",
         "org.eclipse.jetty" % "jetty-servlets" % jettyVersion % "compile;test",
         "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "compile;test",

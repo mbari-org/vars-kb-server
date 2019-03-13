@@ -39,7 +39,7 @@ object TestDatabase {
   private[this] val log = LoggerFactory.getLogger(getClass)
   private[this] val injector = Guice.createInjector(new InjectorModule)
 
-  val TIMEOUT = Duration(10, TimeUnit.SECONDS)
+  val TIMEOUT = Duration(30, TimeUnit.SECONDS)
 
   @volatile
   lazy val init: Boolean = {
