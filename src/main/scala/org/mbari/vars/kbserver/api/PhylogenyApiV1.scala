@@ -17,7 +17,8 @@
 package org.mbari.vars.kbserver.api
 
 import org.mbari.vars.kbserver.dao.DAOFactory
-import org.scalatra.{ BadRequest, NotFound }
+import org.mbari.vars.kbserver.model.{BasicConceptNode, Msg}
+import org.scalatra.{BadRequest, NotFound}
 
 import scala.concurrent.ExecutionContext
 
@@ -58,23 +59,34 @@ class PhylogenyApiV1(daoFactory: DAOFactory)(implicit val executor: ExecutionCon
 
   get("/up/:name") {
     val name = params.get("name")
-      .getOrElse(halt(BadRequest(s"{'reason': 'Please provide a term to look up'}")))
+      .getOrElse(halt(BadRequest(toJson(Msg("Please provide a term to look up")))))
     val dao = daoFactory.newFastPhylogenyDAO()
     dao.findUp(name)
       .map({
-        case None => halt(NotFound(s"{'reason': 'No concept named $name was found'}"))
+        case None => halt(NotFound(toJson(Msg(s"No concept named $name was found", 404))))
         case Some(c) => toJson(c)
       })
   }
 
   get("/down/:name") {
     val name = params.get("name")
-      .getOrElse(halt(BadRequest(s"{'reason': 'Please provide a term to look up'")))
+      .getOrElse(halt(BadRequest(toJson(Msg("Please provide a term to look up")))))
     val dao = daoFactory.newFastPhylogenyDAO()
     dao.findDown(name)
       .map({
-        case None => halt(NotFound(s"{'reason': 'No concept named $name was found'}"))
+        case None => halt(NotFound(toJson(Msg(s"No concept named $name was found", 404))))
         case Some(c) => toJson(c)
+      })
+  }
+
+  get("/basic/:name") {
+    val name = params.get("name")
+      .getOrElse(halt(BadRequest(toJson(Msg("Please provide a term to look up")))))
+    val dao = daoFactory.newFastPhylogenyDAO()
+    dao.findUp(name)
+      .map({
+        case None => halt(NotFound(toJson(Msg(s"No concept named $name was found", 404))))
+        case Some(c) => toJson(BasicConceptNode.flatten(c).toArray)
       })
   }
 
