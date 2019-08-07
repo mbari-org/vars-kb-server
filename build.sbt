@@ -14,6 +14,7 @@ lazy val scalatestVersion = "3.0.8"
 lazy val scalatraVersion = "2.6.5"
 lazy val servletVersion = "3.1.0"
 lazy val slf4jVersion = "1.7.27"
+lazy val sqlserverVersion = "7.4.1.jre11"
 lazy val varskbVersion = "11.0.2"
 
 
@@ -87,7 +88,7 @@ lazy val root = (project in file("."))
   .settings(varsSettings)
   .settings(
     name := "vars-kb-server",
-    version := "0.2.1",
+    version := "0.2.2",
     fork := true,
     libraryDependencies ++= {
       Seq(
@@ -95,6 +96,7 @@ lazy val root = (project in file("."))
         "com.fatboyindustrial.gson-javatime-serialisers" % "gson-javatime-serialisers" % fatboyVersion,
         "com.github.ben-manes.caffeine" % "caffeine" % caffeineVersion,
         "com.google.code.gson" % "gson" % gsonVersion,
+        "com.microsoft.sqlserver" % "mssql-jdbc" % sqlserverVersion,
         "com.zaxxer" % "HikariCP" % hikariVersion,
         "commons-codec" % "commons-codec" % codecVersion,
         "javax.servlet" % "javax.servlet-api" % servletVersion,
