@@ -16,6 +16,8 @@
 
 package org.mbari.vars.kbserver.api
 
+
+
 /**
  * @author Brian Schlining
  * @since 2016-12-12T16:42:00
@@ -26,7 +28,7 @@ class PhylogenyApiV1Spec extends WebApiStack {
   private[this] val path = "/v1/phylogeny"
   addServlet(api, path)
 
-  "PhylogenyApi" should "find ancestors" in {
+  "PhylogenyApi" should "find ancestors (up)" in {
     get(s"$path/up/Nanomia") {
       status should be(200)
       body.contains("Nanomia") should be(true)
@@ -42,7 +44,7 @@ class PhylogenyApiV1Spec extends WebApiStack {
     }
   }
 
-  it should "find descendents" in {
+  it should "find descendents (down)" in {
     get(s"$path/down/Agalmatidae") {
       status should be(200)
       body.contains("Agalmatidae") should be(true)
@@ -50,6 +52,23 @@ class PhylogenyApiV1Spec extends WebApiStack {
       body.contains("Nanomia bijuga") should be(true)
       body.contains("Halistemma rubrum") should be(true)
       //println(body)
+    }
+  }
+
+  it should "find flattened seq of ancestors (basic)" in {
+    get (s"$path/basic/Nanomia") {
+      status should be (200)
+      println(body)
+      body.contains("Nanomia") should be(true)
+      body.contains("Agalmatidae") should be(true)
+      body.contains("Physonectae") should be(true)
+      body.contains("Siphonophorae") should be(true)
+      body.contains("Hydroidolina") should be(true)
+      body.contains("Hydrozoa") should be(true)
+      body.contains("Cnidaria") should be(true)
+      body.contains("Animalia") should be(true)
+      body.contains("Eukaryota") should be(true)
+
     }
   }
 
