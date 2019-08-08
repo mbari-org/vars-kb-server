@@ -15,7 +15,7 @@ lazy val scalatraVersion = "2.6.5"
 lazy val servletVersion = "3.1.0"
 lazy val slf4jVersion = "1.7.27"
 lazy val sqlserverVersion = "7.4.1.jre11"
-lazy val varskbVersion = "11.0.2"
+lazy val varskbVersion = "11.0.3"
 
 
 lazy val buildSettings = Seq(
