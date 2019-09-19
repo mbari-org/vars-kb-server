@@ -90,7 +90,7 @@ lazy val root = (project in file("."))
   .settings(varsSettings)
   .settings(
     name := "vars-kb-server",
-    version := "0.2.3",
+    version := "0.2.4",
     fork := true,
     libraryDependencies ++= {
       Seq(
