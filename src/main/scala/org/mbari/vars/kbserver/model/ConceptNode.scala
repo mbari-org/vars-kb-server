@@ -54,6 +54,8 @@ object ConceptNode {
       else if (rankLevel == null) rankName
       else rankLevel + rankName
 
-    ConceptNode(name, alternateNames, media, descriptors, Option(rank))
+    val author = Option(concept.getPrimaryConceptName.getAuthor)
+
+    ConceptNode(name, alternateNames, media, descriptors, Option(rank), author)
   }
 }

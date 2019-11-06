@@ -52,11 +52,6 @@ class ConceptNodeDAOImpl @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFac
       val conceptNameDao = knowledgebaseDAOFactory.newConceptNameDAO()
       conceptNameDao.startTransaction()
       val names = conceptNameDao.findAllNamesAsStrings().asScala
-      //      val names = conceptNameDao.findAll()
-      //          .asScala
-      //          .map(_.getName)
-      //          .toSeq
-      //          .sortBy(_.toUpperCase)
       conceptNameDao.endTransaction()
       conceptNameDao.close()
       names
