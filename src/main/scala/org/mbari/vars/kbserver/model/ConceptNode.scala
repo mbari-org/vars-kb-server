@@ -30,7 +30,8 @@ case class ConceptNode(
     alternateNames: Seq[String],
     media: Seq[MediaNode],
     descriptors: Seq[LinkNode],
-    rank: Option[String] = None
+    rank: Option[String] = None,
+    author: Option[String] = None
 ) {
 
 }
