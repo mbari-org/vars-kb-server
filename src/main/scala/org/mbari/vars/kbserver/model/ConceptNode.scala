@@ -25,7 +25,8 @@ import scala.collection.JavaConverters._
  * @author Brian Schlining
  * @since 2016-11-17T15:54:00
  */
-case class ConceptNode(
+case class
+ConceptNode(
     name: String,
     alternateNames: Seq[String],
     media: Seq[MediaNode],

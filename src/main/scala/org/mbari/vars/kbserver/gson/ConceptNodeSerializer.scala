@@ -33,6 +33,7 @@ class ConceptNodeSerializer extends JsonSerializer[ConceptNode] {
     t.rank.foreach(r => obj.addProperty("rank", r))
     obj.add("media", context.serialize(t.media.asJava))
     obj.add("descriptors", context.serialize(t.descriptors.asJava))
+    t.author.foreach(r => obj.addProperty("author", r))
     obj
   }
 }

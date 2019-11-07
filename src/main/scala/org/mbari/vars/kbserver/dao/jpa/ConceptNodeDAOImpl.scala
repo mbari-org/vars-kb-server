@@ -47,6 +47,19 @@ class ConceptNodeDAOImpl @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFac
       node
     }
 
+  override def findParent(name: String)(implicit ec: ExecutionContext): Future[Option[ConceptNode]] = {
+    Future {
+      val conceptDao = knowledgebaseDAOFactory.newConceptDAO()
+      conceptDao.startTransaction()
+      val node = Option(conceptDao.findByName(name))
+        .flatMap(c => Option(c.getParentConcept))
+        .map(ConceptNode(_))
+      conceptDao.endTransaction()
+      conceptDao.close()
+      node
+    }
+  }
+
   override def findAllNames()(implicit ec: ExecutionContext): Future[Seq[String]] =
     Future {
       val conceptNameDao = knowledgebaseDAOFactory.newConceptNameDAO()

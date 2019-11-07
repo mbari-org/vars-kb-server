@@ -41,6 +41,16 @@ class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext
       .map(Constants.GSON.toJson)
   }
 
+  get("/parent/:name") {
+    val name = params.get("name")
+      .getOrElse(halt(BadRequest("Please provide a term to look up")))
+    val dao = daoFactory.newConceptNodeDAO()
+    dao.findParent(name).map({
+      case None => halt(NotFound(s"No parent was found for the concept $name"))
+      case Some(c) => toJson(c)
+    })
+  }
+
   get("/:name") {
     val name = params.get("name")
       .getOrElse(halt(BadRequest("Please provide a term to look up")))
@@ -51,6 +61,8 @@ class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext
         case Some(c) => toJson(c)
       })
   }
+
+
 
   get("/root") {
     val dao = daoFactory.newConceptNodeDAO()

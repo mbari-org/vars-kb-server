@@ -67,6 +67,8 @@ class CachedConceptNodeDAOImpl(val proxied: ConceptNodeDAO) extends ConceptNodeD
   override def findRoot()(implicit ec: ExecutionContext): Future[Option[ConceptNode]] = {
     proxied.findRoot()
   }
+
+  override def findParent(name: String)(implicit ec: ExecutionContext): Future[Option[ConceptNode]] = proxied.findParent(name)
 }
 
 object CachedConceptNodeDAOImpl {
