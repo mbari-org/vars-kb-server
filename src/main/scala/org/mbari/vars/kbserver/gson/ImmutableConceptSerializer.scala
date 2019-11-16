@@ -31,7 +31,7 @@ class ImmutableConceptSerializer extends JsonSerializer[ImmutableConcept] {
     val obj = new JsonObject
     obj.addProperty("name", src.name)
     if (src.alternativeNames.nonEmpty) {
-      obj.add("alternative_names", context.serialize(src.alternativeNames.asJava))
+      obj.add("alternativeNames", context.serialize(src.alternativeNames.asJava))
     }
     src.rank.foreach(r => obj.addProperty("rank", r))
     if (src.children.nonEmpty) {
