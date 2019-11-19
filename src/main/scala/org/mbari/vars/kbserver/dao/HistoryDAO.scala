@@ -16,24 +16,18 @@
 
 package org.mbari.vars.kbserver.dao
 
-import org.mbari.vars.kbserver.dao.jdbc.generic.FastPhylogenyDAO
+import org.mbari.vars.kbserver.model.History
+
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
- *
- *
  * @author Brian Schlining
- * @since 2016-11-17T13:45:00
+ * @since 2019-11-19T13:44:00
  */
-trait DAOFactory {
+trait HistoryDAO {
 
-  def newPhylogenyDAO(): PhylogenyDAO
+  def findPendingHistories()(implicit ec: ExecutionContext): Future[Seq[History]]
 
-  def newConceptNodeDAO(): ConceptNodeDAO
-
-  def newLinkNodeDAO(): LinkNodeDAO
-
-  def newFastPhylogenyDAO(): FastPhylogenyDAO
-
-  def newHistoryDAO(): HistoryDAO
+  def findApprovedHistories()(implicit ec: ExecutionContext): Future[Seq[History]]
 
 }

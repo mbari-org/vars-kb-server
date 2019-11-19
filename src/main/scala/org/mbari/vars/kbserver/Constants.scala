@@ -16,13 +16,14 @@
 
 package org.mbari.vars.kbserver
 
-import com.google.gson.{ FieldNamingPolicy, GsonBuilder }
+import com.fatboyindustrial.gsonjavatime.Converters
+import com.google.gson.{FieldNamingPolicy, GsonBuilder}
 import com.google.inject.Guice
-import com.typesafe.config.{ Config, ConfigFactory }
+import com.typesafe.config.{Config, ConfigFactory}
 import org.mbari.vars.kbserver.dao.DAOFactory
 import org.mbari.vars.kbserver.dao.jdbc.generic.ImmutableConcept
-import org.mbari.vars.kbserver.gson.{ ConceptNodeSerializer, ImmutableConceptSerializer, OptionSerializer, PhylogenyNodeSerializer }
-import org.mbari.vars.kbserver.model.{ ConceptNode, DbParams, PhylogenyNode }
+import org.mbari.vars.kbserver.gson.{ConceptNodeSerializer, ImmutableConceptSerializer, OptionSerializer, PhylogenyNodeSerializer}
+import org.mbari.vars.kbserver.model.{ConceptNode, DbParams, PhylogenyNode}
 
 import scala.util.Try
 
@@ -52,15 +53,18 @@ object Constants {
 
   lazy val GUICE_INJECTOR = Guice.createInjector(new InjectorModule)
 
-  val GSON = new GsonBuilder()
-    .setPrettyPrinting()
-    .registerTypeAdapter(classOf[ImmutableConcept], new ImmutableConceptSerializer)
-    .registerTypeAdapter(classOf[PhylogenyNode], new PhylogenyNodeSerializer)
-    .registerTypeAdapter(classOf[ConceptNode], new ConceptNodeSerializer)
-    .registerTypeAdapter(classOf[Option[_]], new OptionSerializer)
-    .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
-    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-    .create()
+  val GSON = {
+    val gsonBuilder = new GsonBuilder()
+      .setPrettyPrinting()
+      .registerTypeAdapter(classOf[ImmutableConcept], new ImmutableConceptSerializer)
+      .registerTypeAdapter(classOf[PhylogenyNode], new PhylogenyNodeSerializer)
+      .registerTypeAdapter(classOf[ConceptNode], new ConceptNodeSerializer)
+      .registerTypeAdapter(classOf[Option[_]], new OptionSerializer)
+      .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+      .setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+    Converters.registerInstant(gsonBuilder)
+    gsonBuilder.create()
+  }
 
   lazy val DAO_FACTORY: DAOFactory = {
     val className = Try(CONFIG.getString("org.mbari.vars.kbserver.daofactory"))

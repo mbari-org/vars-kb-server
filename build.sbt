@@ -7,7 +7,7 @@ lazy val fatboyVersion = "1.1.1"
 lazy val gsonVersion = "2.8.6"
 lazy val hikariVersion = "3.4.1"
 lazy val javamelodyVersion = "1.80.0"
-lazy val jettyVersion = "9.4.22.v20191022"
+lazy val jettyVersion = "9.4.23.v20191118"
 lazy val jtaVersion = "1.1"
 lazy val junitVersion = "4.12"
 lazy val logbackVersion = "1.2.3"
@@ -55,7 +55,7 @@ lazy val dependencySettings = Seq(
   resolvers ++= Seq(
     Resolver.mavenLocal,
     Resolver.sonatypeRepo("releases"),
-    "hohonuuli-bintray" at "http://dl.bintray.com/hohonuuli/maven")
+    "hohonuuli-bintray" at "https://dl.bintray.com/hohonuuli/maven")
 )
 
 

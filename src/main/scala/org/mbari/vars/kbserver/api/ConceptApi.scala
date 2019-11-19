@@ -62,8 +62,6 @@ class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext
       })
   }
 
-
-
   get("/root") {
     val dao = daoFactory.newConceptNodeDAO()
     dao.findRoot()
