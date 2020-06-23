@@ -1,17 +1,17 @@
-lazy val caffeineVersion = "2.8.0"
-lazy val catsVersion = "2.1.0"
-lazy val codecVersion = "1.13"
+lazy val caffeineVersion = "2.8.4"
+lazy val catsVersion = "2.1.1"
+lazy val codecVersion = "1.14"
 lazy val configVersion = "1.4.0"
 lazy val derbyVersion = "10.15.1.3"
 lazy val fatboyVersion = "1.1.1"
 lazy val gsonVersion = "2.8.6"
-lazy val hikariVersion = "3.4.1"
-lazy val javamelodyVersion = "1.80.0"
-lazy val jettyVersion = "9.4.25.v20191220"
+lazy val hikariVersion = "3.4.5"
+lazy val javamelodyVersion = "1.83.0"
+lazy val jettyVersion = "9.4.30.v20200611"
 lazy val jtaVersion = "1.1"
 lazy val junitVersion = "4.13"
 lazy val logbackVersion = "1.2.3"
-lazy val oracleVersion = "19.3.0.0"
+lazy val oracleVersion = "19.6.0.0"
 lazy val scalatestVersion = "3.0.8"
 lazy val scalatraVersion = "2.6.5"
 lazy val servletVersion = "3.1.0"
@@ -22,8 +22,8 @@ lazy val varskbVersion = "11.0.3"
 
 lazy val buildSettings = Seq(
   organization := "org.mbari.vars",
-  scalaVersion := "2.12.10",
-  crossScalaVersions := Seq("2.12.10"),
+  scalaVersion := "2.12.11",
+  crossScalaVersions := Seq("2.12.11"),
   organizationName := "Monterey Bay Aquarium Research Institute",
   startYear := Some(2017),
   licenses += ("Apache-2.0", new URL("https://www.apache.org/licenses/LICENSE-2.0.txt"))
@@ -74,7 +74,7 @@ lazy val optionSettings = Seq(
     "-Xlint",
     "-Yno-adapted-args",
     "-Xfuture"),
-  javacOptions ++= Seq("-target", "1.8", "-source", "1.8"),
+  javacOptions ++= Seq("-target", "11", "-source", "11"),
   updateOptions := updateOptions.value.withCachedResolution(true)
 )
 
@@ -90,7 +90,7 @@ lazy val root = (project in file("."))
   .settings(varsSettings)
   .settings(
     name := "vars-kb-server",
-    version := "0.2.4",
+    version := "0.2.5",
     fork := true,
     libraryDependencies ++= {
       Seq(
@@ -99,7 +99,7 @@ lazy val root = (project in file("."))
         "com.github.ben-manes.caffeine" % "caffeine" % caffeineVersion,
         "com.google.code.gson" % "gson" % gsonVersion,
         "com.microsoft.sqlserver" % "mssql-jdbc" % sqlserverVersion,
-        "com.oracle.ojdbc" % "ojdbc8" % oracleVersion,
+        "com.oracle.database.jdbc" % "ojdbc10" % oracleVersion,
         "com.zaxxer" % "HikariCP" % hikariVersion,
         "commons-codec" % "commons-codec" % codecVersion,
         "javax.servlet" % "javax.servlet-api" % servletVersion,
