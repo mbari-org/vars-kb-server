@@ -23,30 +23,30 @@ import scala.concurrent.ExecutionContext
 import scala.collection.JavaConverters._
 
 /**
- * @author Brian Schlining
- * @since 2019-11-19T14:17:00
- */
-class HistoryApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext)
-  extends ApiStack {
+  * @author Brian Schlining
+  * @since 2019-11-19T14:17:00
+  */
+class HistoryApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) extends ApiStack {
 
   before() {
     contentType = "application/json"
-    response.headers += ("Access-Control-Allow-Origin" -> "*")
+    response.headers.set("Access-Control-Allow-Origin", "*")
   }
 
   get("/pending") {
     val dao = daoFactory.newHistoryDAO()
-    dao.findPendingHistories()
+    dao
+      .findPendingHistories()
       .map(_.asJava)
       .map(Constants.GSON.toJson)
   }
 
   get("/approved") {
     val dao = daoFactory.newHistoryDAO()
-    dao.findApprovedHistories()
+    dao
+      .findApprovedHistories()
       .map(_.asJava)
       .map(Constants.GSON.toJson)
   }
-
 
 }

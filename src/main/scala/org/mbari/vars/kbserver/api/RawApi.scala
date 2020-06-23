@@ -22,18 +22,19 @@ import org.mbari.vars.kbserver.dao.jpa.KnowledgebaseInitializer
 import org.scalatra.BadRequest
 import vars.knowledgebase.KnowledgebaseDAOFactory
 
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
- * @author Brian Schlining
- * @since 2018-01-08T13:07:00
- */
-class RawApi @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFactory)
-    (implicit val executor: ExecutionContext) extends ApiStack {
+  * @author Brian Schlining
+  * @since 2018-01-08T13:07:00
+  */
+class RawApi @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFactory)(
+    implicit val executor: ExecutionContext
+) extends ApiStack {
 
   before() {
     contentType = "application/json"
-    response.headers += ("Access-Control-Allow-Origin" -> "*")
+    response.headers.set("Access-Control-Allow-Origin", "*")
   }
 
   get("/") {
@@ -51,7 +52,7 @@ class RawApi @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFactory)
   post("/") {
     request.getHeader("Content-Type") match {
       case "application/json" =>
-        val kbInit = new KnowledgebaseInitializer(knowledgebaseDAOFactory)
+        val kbInit  = new KnowledgebaseInitializer(knowledgebaseDAOFactory)
         val concept = kbInit.read(request.body)
         kbInit.persist(concept)
       case _ =>
@@ -60,4 +61,3 @@ class RawApi @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFactory)
   }
 
 }
-
