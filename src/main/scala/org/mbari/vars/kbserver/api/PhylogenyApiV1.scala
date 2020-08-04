@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit
   * @since 2016-11-17T13:37:00
   */
 class PhylogenyApiV1(daoFactory: DAOFactory)(implicit val executor: ExecutionContext)
-    extends ApiStack {
+    extends ApiBase {
 
   before() {
     contentType = "application/json"
