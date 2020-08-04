@@ -21,6 +21,8 @@ import org.mbari.vars.kbserver.model.{BasicConceptNode, Msg}
 import org.scalatra.{BadRequest, NotFound}
 
 import scala.concurrent.ExecutionContext
+import scala.concurrent.Await
+import java.util.concurrent.TimeUnit
 
 /**
   *
@@ -41,12 +43,16 @@ class PhylogenyApiV1(daoFactory: DAOFactory)(implicit val executor: ExecutionCon
       .get("name")
       .getOrElse(halt(BadRequest(toJson(Msg("Please provide a term to look up")))))
     val dao = daoFactory.newFastPhylogenyDAO()
-    dao
-      .findUp(name)
-      .map({
-        case None    => halt(NotFound(toJson(Msg(s"No concept named $name was found", 404))))
-        case Some(c) => toJson(c)
-      })
+    Await.result(dao.findUp(name), scala.concurrent.duration.Duration(60, TimeUnit.SECONDS)) match {
+      case None    => halt(NotFound(toJson(Msg(s"No concept named $name was found", 404))))
+      case Some(c) => toJson(c)
+    }
+    // dao
+    //   .findUp(name)
+    //   .map({
+    //     case None    => halt(NotFound(toJson(Msg(s"No concept named $name was found", 404))))
+    //     case Some(c) => toJson(c)
+    //   })
   }
 
   get("/down/:name") {
@@ -54,12 +60,16 @@ class PhylogenyApiV1(daoFactory: DAOFactory)(implicit val executor: ExecutionCon
       .get("name")
       .getOrElse(halt(BadRequest(toJson(Msg("Please provide a term to look up")))))
     val dao = daoFactory.newFastPhylogenyDAO()
-    dao
-      .findDown(name)
-      .map({
-        case None    => halt(NotFound(toJson(Msg(s"No concept named $name was found", 404))))
-        case Some(c) => toJson(c)
-      })
+    Await.result(dao.findDown(name), scala.concurrent.duration.Duration(60, TimeUnit.SECONDS)) match {
+      case None    => halt(NotFound(toJson(Msg(s"No concept named $name was found", 404))))
+      case Some(c) => toJson(c)
+    }
+    // dao
+    //   .findDown(name)
+    //   .map({
+    //     case None    => halt(NotFound(toJson(Msg(s"No concept named $name was found", 404))))
+    //     case Some(c) => toJson(c)
+    //   })
   }
 
   get("/basic/:name") {
@@ -67,12 +77,17 @@ class PhylogenyApiV1(daoFactory: DAOFactory)(implicit val executor: ExecutionCon
       .get("name")
       .getOrElse(halt(BadRequest(toJson(Msg("Please provide a term to look up")))))
     val dao = daoFactory.newFastPhylogenyDAO()
-    dao
-      .findUp(name)
-      .map({
-        case None    => halt(NotFound(toJson(Msg(s"No concept named $name was found", 404))))
-        case Some(c) => toJson(BasicConceptNode.flatten(c).toArray)
-      })
+    Await
+      .result(dao.findUp(name), scala.concurrent.duration.Duration(60, TimeUnit.SECONDS)) match {
+      case None    => halt(NotFound(toJson(Msg(s"No concept named $name was found", 404))))
+      case Some(c) => toJson(BasicConceptNode.flatten(c).toArray)
+    }
+    // dao
+    //   .findUp(name)
+    //   .map({
+    //     case None    => halt(NotFound(toJson(Msg(s"No concept named $name was found", 404))))
+    //     case Some(c) => toJson(BasicConceptNode.flatten(c).toArray)
+    //   })
   }
 
   get("/taxa/:name") {
@@ -80,12 +95,17 @@ class PhylogenyApiV1(daoFactory: DAOFactory)(implicit val executor: ExecutionCon
       .get("name")
       .getOrElse(halt(BadRequest(toJson(Msg("Please provide a term to look up")))))
     val dao = daoFactory.newFastPhylogenyDAO()
-    dao
-      .findDown(name)
-      .map({
-        case None    => halt(NotFound(toJson(Msg(s"No concept named $name was found", 404))))
-        case Some(c) => toJson(BasicConceptNode.taxa(c).toArray)
-      })
+    Await
+      .result(dao.findDown(name), scala.concurrent.duration.Duration(60, TimeUnit.SECONDS)) match {
+      case None    => halt(NotFound(toJson(Msg(s"No concept named $name was found", 404))))
+      case Some(c) => toJson(BasicConceptNode.taxa(c).toArray)
+    }
+    // dao
+    //   .findDown(name)
+    //   .map({
+    //     case None    => halt(NotFound(toJson(Msg(s"No concept named $name was found", 404))))
+    //     case Some(c) => toJson(BasicConceptNode.taxa(c).toArray)
+    //   })
   }
 
 }
