@@ -55,6 +55,17 @@ class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext
       })
   }
 
+  get("/children/:name") {
+    val name = params
+      .get("name")
+      .getOrElse(halt(BadRequest("Please provide a term to look up")))
+    val dao = daoFactory.newConceptNodeDAO()
+    dao
+      .findChildren(name)
+      .map(_.asJava)
+      .map(toJson)
+  }
+
   get("/:name") {
     val name = params
       .get("name")

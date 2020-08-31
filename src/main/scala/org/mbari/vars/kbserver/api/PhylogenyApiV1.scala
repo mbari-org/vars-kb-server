@@ -21,6 +21,8 @@ import org.mbari.vars.kbserver.model.{BasicConceptNode, Msg}
 import org.scalatra.{BadRequest, NotFound}
 
 import scala.concurrent.ExecutionContext
+import scala.concurrent.Await
+import java.util.concurrent.TimeUnit
 
 /**
   *
@@ -29,11 +31,11 @@ import scala.concurrent.ExecutionContext
   * @since 2016-11-17T13:37:00
   */
 class PhylogenyApiV1(daoFactory: DAOFactory)(implicit val executor: ExecutionContext)
-    extends ApiStack {
+    extends ApiBase {
 
   before() {
     contentType = "application/json"
-    response.headers.set("Access-Control-Allow-Origin", "*")
+    response.headers += ("Access-Control-Allow-Origin" -> "*")
   }
 
   get("/up/:name") {

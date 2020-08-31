@@ -28,11 +28,21 @@ import org.mbari.vars.kbserver.dao.jdbc.generic.ImmutableConcept
 case class BasicConceptNode(name: String, rank: Option[String])
 
 object BasicConceptNode {
+
+  /**
+    * Returns the flattened hierarchy down to a node
+    *
+    * @param root The node of interest
+    * @return flattened hierarchy. includes the `root` provided as the last node in the chain
+    */
   def flatten(root: ImmutableConcept): List[BasicConceptNode] = {
-    def builder(node: ImmutableConcept, stack: List[BasicConceptNode] = Nil): List[BasicConceptNode] = {
+    def builder(
+        node: ImmutableConcept,
+        stack: List[BasicConceptNode] = Nil
+    ): List[BasicConceptNode] = {
       val next = apply(node) :: stack
       node.children.headOption match {
-        case None => next
+        case None    => next
         case Some(c) => builder(c) ++ next
       }
     }
@@ -41,5 +51,21 @@ object BasicConceptNode {
 
   def apply(immutableConcept: ImmutableConcept): BasicConceptNode =
     BasicConceptNode(immutableConcept.name, immutableConcept.rank)
+
+  /**
+    * Returns a set of all names from this node on down through its taxanomic heirarchy
+    *
+    * @param root The node of interest
+    * @return All the descendant taxa (includes this node). The order is arbitrary
+    */
+  def taxa(root: ImmutableConcept): List[BasicConceptNode] = {
+    val set = scala.collection.mutable.Set[BasicConceptNode]()
+    def builder(node: ImmutableConcept): Unit = {
+      set.add(apply(node))
+      node.children.foreach(builder)
+    }
+    builder(root)
+    set.toList.sortBy(_.name)
+  }
 
 }
