@@ -40,7 +40,7 @@ The structure of an association is:
 }
 ```
 
-___Examples:__
+__Examples:__
 
 ```
 // For an animal, indicating that it's eating a crab
