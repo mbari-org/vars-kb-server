@@ -2,7 +2,7 @@
 
 This is documentation on MBARI's knowldegebase REST APIs to better inform the innotesus developers on how we work with naming and tagging of annotations.
 
-## List all Concepts MBARI that can be used for Annotation
+## List all Concepts that can be used for Annotation
 
 <http://dsg.mbari.org/kb/v1/concept>
 
