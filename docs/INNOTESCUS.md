@@ -28,7 +28,7 @@ This call lists all concepts, including synonyms and common names. The return is
 http://dsg.mbari.org/kb/v1/links/{name}
 ```
 
-An `Association` is a from of descriptive tag that can be attached to an annotation. This allows annotators to add additional information such as color, behavior, shape, the substrate, etc. Our knowledgebase provides restrictions on what associations should be applied to a term. For example, a `rock` can't be eating something. To accomodate this in applications, we provide a REST endpoint that lists the possbile associations for a given term.
+An `Association` is a from of descriptive tag that can be attached to an annotation. This allows annotators to add additional information such as color, behavior, shape, the substrate, etc. Our knowledgebase provides restrictions on what associations should be applied to a term. For example, a `rock` can't be eating something. To accomodate this in applications, we provide a REST endpoint that lists the possbile associations that can be applied to a given term.
 
 The structure of an association is:
 
