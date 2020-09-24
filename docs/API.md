@@ -1,6 +1,4 @@
-![MBARI logo](resources/images/logo-mbari-3b.png)
-
-# vars-kb-server API
+# API
 
 MBARI Media Management (M3) uses a collection of services to support various video applications. One service is the vars-kb-server which supplies information about what concepts are used for annotating video, as well as phylogenetic structure that can be used to assist with various types of analysis. This service is a very simple RESTful service. All requests are made using HTTP GET requests.
 
