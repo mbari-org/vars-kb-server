@@ -14,7 +14,6 @@ This call lists all concepts, including synonyms and common names. The return is
   "1-gallon paint bucket",
   "2G Robotics structured light laser",
   "55-gallon drum",
-  "a\u0027a",
   "abandoned research equipment",
   "Abraliopsis",
   "Abraliopsis felis",
