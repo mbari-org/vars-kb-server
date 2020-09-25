@@ -18,7 +18,7 @@ package org.mbari.vars.kbserver.api
 
 import org.mbari.vars.kbserver.Constants
 import org.mbari.vars.kbserver.dao.DAOFactory
-import org.scalatra.{BadRequest, NotFound}
+import org.scalatra.{BadRequest, FutureSupport, NotFound}
 
 import scala.collection.JavaConverters._
 import scala.concurrent.ExecutionContext
@@ -27,7 +27,7 @@ import scala.concurrent.ExecutionContext
   * @author Brian Schlining
   * @since 2016-12-14T14:40:00
   */
-class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) extends ApiBase {
+class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) extends ApiBase with FutureSupport {
 
   before() {
     contentType = "application/json"
