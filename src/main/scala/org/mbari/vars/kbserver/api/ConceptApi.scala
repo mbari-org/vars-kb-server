@@ -16,18 +16,21 @@
 
 package org.mbari.vars.kbserver.api
 
+import java.util.concurrent.TimeUnit
+
 import org.mbari.vars.kbserver.Constants
 import org.mbari.vars.kbserver.dao.DAOFactory
-import org.scalatra.{BadRequest, FutureSupport, NotFound}
+import org.scalatra.{BadRequest, NotFound}
 
 import scala.collection.JavaConverters._
-import scala.concurrent.ExecutionContext
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContext}
 
 /**
   * @author Brian Schlining
   * @since 2016-12-14T14:40:00
   */
-class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) extends ApiBase with FutureSupport {
+class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) extends ApiBase {
 
   before() {
     contentType = "application/json"
@@ -36,10 +39,10 @@ class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext
 
   get("/") {
     val dao = daoFactory.newConceptNodeDAO()
-    dao
+    Await.result(dao
       .findAllNames()
       .map(_.asJava)
-      .map(Constants.GSON.toJson)
+      .map(Constants.GSON.toJson), Duration(60, TimeUnit.SECONDS))
   }
 
   get("/parent/:name") {
@@ -47,12 +50,12 @@ class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext
       .get("name")
       .getOrElse(halt(BadRequest("Please provide a term to look up")))
     val dao = daoFactory.newConceptNodeDAO()
-    dao
+    Await.result(dao
       .findParent(name)
       .map({
         case None    => halt(NotFound(s"No parent was found for the concept $name"))
         case Some(c) => toJson(c)
-      })
+      }), Duration(60, TimeUnit.SECONDS))
   }
 
   get("/children/:name") {
@@ -60,10 +63,10 @@ class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext
       .get("name")
       .getOrElse(halt(BadRequest("Please provide a term to look up")))
     val dao = daoFactory.newConceptNodeDAO()
-    dao
+    Await.result(dao
       .findChildren(name)
       .map(_.asJava)
-      .map(toJson)
+      .map(toJson), Duration(60, TimeUnit.SECONDS))
   }
 
   get("/:name") {
@@ -71,22 +74,22 @@ class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext
       .get("name")
       .getOrElse(halt(BadRequest("Please provide a term to look up")))
     val dao = daoFactory.newConceptNodeDAO()
-    dao
+    Await.result(dao
       .findByName(name)
       .map({
         case None    => halt(NotFound(s"No concept named $name was found"))
         case Some(c) => toJson(c)
-      })
+      }), Duration(60, TimeUnit.SECONDS))
   }
 
   get("/root") {
     val dao = daoFactory.newConceptNodeDAO()
-    dao
+    Await.result(dao
       .findRoot()
       .map({
         case None    => halt(NotFound("Unable to find the root concept. That's crazy!!"))
         case Some(c) => toJson(c)
-      })
+      }), Duration(60, TimeUnit.SECONDS))
   }
 
 }
