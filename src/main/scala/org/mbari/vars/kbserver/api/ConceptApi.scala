@@ -27,7 +27,7 @@ import scala.concurrent.ExecutionContext
   * @author Brian Schlining
   * @since 2016-12-14T14:40:00
   */
-class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) extends ApiStack {
+class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) extends ApiBase {
 
   before() {
     contentType = "application/json"

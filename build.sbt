@@ -1,6 +1,6 @@
 lazy val caffeineVersion   = "2.8.5"
-lazy val catsVersion       = "2.1.1"
-lazy val codecVersion      = "1.14"
+lazy val catsVersion       = "2.2.0"
+lazy val codecVersion      = "1.15"
 lazy val configVersion     = "1.4.0"
 lazy val derbyVersion      = "10.15.2.0"
 lazy val fatboyVersion     = "1.1.1"
@@ -18,6 +18,8 @@ lazy val servletVersion    = "3.1.0"
 lazy val slf4jVersion      = "1.7.30"
 lazy val sqlserverVersion  = "8.4.1.jre11"
 lazy val varskbVersion     = "11.0.3"
+
+Global / onChangedBuildSource := ReloadOnSourceChanges
 
 lazy val buildSettings = Seq(
   organization := "org.mbari.vars",
@@ -91,11 +93,10 @@ lazy val root = (project in file("."))
   .settings(varsSettings)
   .settings(
     name := "vars-kb-server",
-    version := "0.4.2",
+    version := "0.4.3",
     fork := true,
     libraryDependencies ++= {
       Seq(
-        "com.microsoft.sqlserver"                        % "mssql-jdbc"                % "7.4.1.jre11",
         "com.fatboyindustrial.gson-javatime-serialisers" % "gson-javatime-serialisers" % fatboyVersion,
         "com.github.ben-manes.caffeine"                  % "caffeine"                  % caffeineVersion,
         "com.google.code.gson"                           % "gson"                      % gsonVersion,
