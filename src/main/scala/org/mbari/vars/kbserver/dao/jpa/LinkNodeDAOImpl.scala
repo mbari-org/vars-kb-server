@@ -17,14 +17,14 @@
 package org.mbari.vars.kbserver.dao.jpa
 
 import javax.inject.Inject
-
 import org.mbari.vars.kbserver.dao.LinkNodeDAO
 import org.mbari.vars.kbserver.model.LinkNode
+import vars.{ILink, LinkBean}
 
 import scala.collection.JavaConverters._
 import vars.knowledgebase.KnowledgebaseDAOFactory
 
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
  *
@@ -61,6 +61,46 @@ class LinkNodeDAOImpl @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFactor
       val links = dao.findAll().asScala.map(LinkNode(_)).toSeq
       dao.endTransaction()
       dao.close()
+      links
+    }
+  }
+
+  def findAllLinkRealizationsByLinkName(linkName: String)(implicit ec: ExecutionContext): Future[Seq[ILink]] = {
+    Future {
+      val sql =
+        """
+          |SELECT
+          |    cn.ConceptName,
+          |    lr.LinkName,
+          |    lr.ToConcept,
+          |    lr.LinkValue
+          |FROM
+          |    LinkRealization lr RIGHT JOIN
+          |    ConceptDelegate cd ON lr.ConceptDelegateID_FK = cd.id RIGHT JOIN
+          |    Concept c ON cd.ConceptID_FK = c.id RIGHT JOIN
+          |    ConceptName cn ON cn.ConceptID_FK = c.id
+          |WHERE
+          |    lr.LinkName = ? AND
+          |    cn.NameType = 'Primary'
+          |
+          |""".stripMargin
+
+      val dao = knowledgebaseDAOFactory.newLinkRealizationDAO()
+      val entityManager = dao.getEntityManager
+      dao.startTransaction()
+      val query = entityManager.createNativeQuery(sql)
+      query.setParameter(1, linkName)
+      val links = query.getResultList
+        .asScala
+        .map(obj => {
+          val xs = obj.asInstanceOf[Array[Object]]
+          new LinkBean(xs(1).asInstanceOf[String],
+            xs(2).asInstanceOf[String],
+            xs(3).asInstanceOf[String],
+            xs(0).asInstanceOf[String])
+        })
+        .sortBy(_.getFromConcept)
+      dao.endTransaction()
       links
     }
   }

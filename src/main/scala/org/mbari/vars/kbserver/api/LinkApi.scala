@@ -16,11 +16,15 @@
 
 package org.mbari.vars.kbserver.api
 
+import java.nio.charset.StandardCharsets
+import java.util.concurrent.TimeUnit
+
 import org.mbari.vars.kbserver.dao.DAOFactory
 import org.scalatra.BadRequest
 
 import scala.collection.JavaConverters._
-import scala.concurrent.ExecutionContext
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContext}
 
 /**
  * @author Brian Schlining
@@ -61,6 +65,30 @@ class LinkApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) e
       .map(_.filter(_.linkName.equalsIgnoreCase(linkname)))
       .map(_.asJava)
       .map(toJson)
+  }
+
+  get("/query/linkrealizations/:linkname") {
+    val linkname = params.get("linkname")
+      .getOrElse(halt(BadRequest("Please provide a concept to look up")))
+    val dao = daoFactory.newLinkNodeDAO()
+    dao.findAllLinkRealizationsByLinkName(linkname)
+      .map(_.asJava)
+      .map(toJson)
+  }
+
+  get("/report/linkrealizations/:linkname") {
+    val linkname = params.get("linkname")
+      .getOrElse(halt(BadRequest("Please provide a concept to look up")))
+
+    val dao = daoFactory.newLinkNodeDAO()
+    val links = Await.result(dao.findAllLinkRealizationsByLinkName(linkname), Duration(30, TimeUnit.SECONDS))
+    response.setContentType("text/plain")
+    val out = response.getOutputStream
+    links.foreach(x => {
+      val s = s"${x.getFromConcept} | ${x.getLinkName} | ${x.getToConcept} | ${x.getLinkValue}\n".getBytes(StandardCharsets.UTF_8)
+      out.write(s)
+    })
+    Unit
   }
 
 }

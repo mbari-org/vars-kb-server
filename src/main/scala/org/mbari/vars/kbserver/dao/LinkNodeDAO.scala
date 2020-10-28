@@ -17,8 +17,9 @@
 package org.mbari.vars.kbserver.dao
 
 import org.mbari.vars.kbserver.model.LinkNode
+import vars.ILink
 
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
  *
@@ -34,5 +35,7 @@ trait LinkNodeDAO {
   ): Future[Seq[LinkNode]]
 
   def findAll(implicit ec: ExecutionContext): Future[Seq[LinkNode]]
+
+  def findAllLinkRealizationsByLinkName(linkName: String)(implicit ec: ExecutionContext): Future[Seq[ILink]]
 
 }
