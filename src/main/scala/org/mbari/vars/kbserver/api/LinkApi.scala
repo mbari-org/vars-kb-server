@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
 import org.mbari.vars.kbserver.dao.DAOFactory
 import org.scalatra.BadRequest
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContext}
 
@@ -34,7 +34,7 @@ class LinkApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) e
 
   before() {
     contentType = "application/json"
-    response.headers += ("Access-Control-Allow-Origin" -> "*")
+    response.headers.set("Access-Control-Allow-Origin", "*")
   }
 
   get("/") {
@@ -88,7 +88,7 @@ class LinkApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) e
       val s = s"${x.getFromConcept} | ${x.getLinkName} | ${x.getToConcept} | ${x.getLinkValue}\n".getBytes(StandardCharsets.UTF_8)
       out.write(s)
     })
-    Unit
+    ()
   }
 
 }

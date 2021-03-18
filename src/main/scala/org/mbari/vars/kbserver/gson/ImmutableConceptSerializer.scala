@@ -20,7 +20,7 @@ import java.lang.reflect.Type
 
 import com.google.gson.{ JsonElement, JsonObject, JsonSerializationContext, JsonSerializer }
 import org.mbari.vars.kbserver.dao.jdbc.generic.ImmutableConcept
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 /**
  * @author Brian Schlining

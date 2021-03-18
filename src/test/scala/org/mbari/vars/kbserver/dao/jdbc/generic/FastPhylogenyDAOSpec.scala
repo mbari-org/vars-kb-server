@@ -19,7 +19,9 @@ package org.mbari.vars.kbserver.dao.jdbc.generic
 //import com.typesafe.config.ConfigFactory
 import org.mbari.vars.kbserver.Constants
 import org.mbari.vars.kbserver.dao.jpa.TestDatabase
-import org.scalatest.{ BeforeAndAfterAll, FlatSpec, Matchers }
+import org.scalatest.BeforeAndAfterAll
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.Await
 //import scala.util.Try
@@ -29,7 +31,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
  * @author Brian Schlining
  * @since 2018-02-14T18:54:00
  */
-class FastPhylogenyDAOSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
+class FastPhylogenyDAOSpec extends AnyFlatSpec with Matchers  with BeforeAndAfterAll {
 
   //private[this] val config = ConfigFactory.load()
 

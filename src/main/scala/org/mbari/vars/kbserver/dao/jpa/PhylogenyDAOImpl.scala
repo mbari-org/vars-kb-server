@@ -22,7 +22,7 @@ import org.mbari.vars.kbserver.dao.{ PhylogenyDAO, PhylogenyRow }
 import org.mbari.vars.kbserver.model.{ ConceptNode, PhylogenyNode }
 import vars.knowledgebase.{ Concept, KnowledgebaseDAOFactory }
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.{ ExecutionContext, Future }
 
 /**

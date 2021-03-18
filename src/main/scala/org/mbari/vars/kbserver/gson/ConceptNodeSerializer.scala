@@ -20,7 +20,7 @@ import java.lang.reflect.Type
 
 import com.google.gson.{ JsonElement, JsonObject, JsonSerializationContext, JsonSerializer }
 import org.mbari.vars.kbserver.model.ConceptNode
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 /**
  * Created by brian on 11/29/16.

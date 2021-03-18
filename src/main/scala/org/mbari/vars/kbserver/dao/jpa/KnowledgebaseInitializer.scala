@@ -25,7 +25,7 @@ import org.mbari.vars.kbserver.Constants
 import org.slf4j.LoggerFactory
 import vars.gson.{ AnnotatedFieldExclusionStrategy, ConceptSerializer, UnderscoreFieldExclusionStrategy }
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import vars.knowledgebase._
 import vars.knowledgebase.jpa.ConceptImpl
 

@@ -80,7 +80,7 @@ class PhylogenyDAOImpl @Inject() (conceptNodeDAO: ConceptNodeDAO)
         rows += r
       }
       connection.close()
-      rows
+      rows.toSeq
     } catch {
       case NonFatal(e) =>
         log.error("Failed to execute SQL", e)

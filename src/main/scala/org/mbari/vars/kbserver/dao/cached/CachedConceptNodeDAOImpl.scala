@@ -37,7 +37,7 @@ class CachedConceptNodeDAOImpl(val proxied: ConceptNodeDAO) extends ConceptNodeD
     .expireAfterWrite(15, TimeUnit.MINUTES)
     .build[String, ConceptNode]()
 
-  val allNamesCache = Caffeine
+  val allNamesCache: Cache[String, Seq[String]] = Caffeine
     .newBuilder()
     .expireAfterWrite(15, TimeUnit.MINUTES)
     .build[String, Seq[String]]()
@@ -69,6 +69,10 @@ class CachedConceptNodeDAOImpl(val proxied: ConceptNodeDAO) extends ConceptNodeD
     }
   }
 
+  override def findAllNamesContaining(glob: String)(implicit ec: ExecutionContext): Future[Seq[ConceptNode]] = {
+    proxied.findAllNamesContaining(glob)
+  }
+
   override def findRoot()(implicit ec: ExecutionContext): Future[Option[ConceptNode]] = {
     proxied.findRoot()
   }
@@ -79,6 +83,8 @@ class CachedConceptNodeDAOImpl(val proxied: ConceptNodeDAO) extends ConceptNodeD
 
   def findChildren(name: String)(implicit ec: ExecutionContext): Future[Seq[ConceptNode]] =
     proxied.findChildren(name)
+
+
 }
 
 object CachedConceptNodeDAOImpl {

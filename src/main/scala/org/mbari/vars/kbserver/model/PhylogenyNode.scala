@@ -54,7 +54,7 @@ case class PhylogenyNode(
    */
   def subnode(name: String): Option[PhylogenyNode] =
     if (this.name.equalsIgnoreCase(name)) Some(this)
-    else children.toStream.flatMap(n => n.subnode(name)).headOption
+    else children.to(LazyList).flatMap(n => n.subnode(name)).headOption
 
 }
 

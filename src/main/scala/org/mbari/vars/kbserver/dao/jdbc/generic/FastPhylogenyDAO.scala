@@ -116,7 +116,7 @@ class FastPhylogenyDAO(connectionTestQuery: Option[String])
         rows += r
       }
       connection.close()
-      rows
+      rows.toSeq
     } catch {
       case NonFatal(e) =>
         log.error(s"Failed to execute SQL: ${FastPhylogenyDAO.SQL}", e)

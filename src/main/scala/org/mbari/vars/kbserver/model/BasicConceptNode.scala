@@ -43,7 +43,7 @@ object BasicConceptNode {
       val next = apply(node) :: stack
       node.children.headOption match {
         case None    => next
-        case Some(c) => builder(c) ++ next
+        case Some(c) => builder(c, Nil) ++ next
       }
     }
     builder(root).reverse

@@ -22,7 +22,7 @@ import org.mbari.vars.kbserver.model.History
 import vars.knowledgebase.KnowledgebaseDAOFactory
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.util.Try
 
 /**

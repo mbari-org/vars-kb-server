@@ -16,12 +16,14 @@
 
 package org.mbari.vars.kbserver.model
 
-import org.scalatest.{ FlatSpec, Matchers }
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+
 
 /**
  * Created by brian on 11/29/16.
  */
-class PhylogenyNodeSpec extends FlatSpec with Matchers {
+class PhylogenyNodeSpec extends AnyFlatSpec with Matchers {
 
   val root = PhylogenyNode("A")
   val b1 = PhylogenyNode("B1", parent = Some(root))

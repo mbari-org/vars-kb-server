@@ -22,7 +22,7 @@ import org.mbari.vars.kbserver.dao.ConceptNodeDAO
 import org.mbari.vars.kbserver.model.ConceptNode
 import vars.knowledgebase.{KnowledgebaseDAOFactory}
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.{ExecutionContext, Future}
 
 /**
@@ -85,7 +85,7 @@ class ConceptNodeDAOImpl @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFac
       val names = conceptNameDao.findAllNamesAsStrings().asScala
       conceptNameDao.endTransaction()
       conceptNameDao.close()
-      names
+      names.toSeq
     }
 
   override def findRoot()(implicit ec: ExecutionContext): Future[Option[ConceptNode]] =
@@ -97,4 +97,17 @@ class ConceptNodeDAOImpl @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFac
       conceptDao.close()
       root
     }
+
+  override def findAllNamesContaining(glob: String)(implicit ec: ExecutionContext): Future[Seq[ConceptNode]] = {
+    Future {
+      val conceptDao = knowledgebaseDAOFactory.newConceptDAO()
+      conceptDao.startTransaction()
+      val matches = conceptDao.findAllByNameContaining(glob)
+        .asScala
+        .map(ConceptNode(_))
+      conceptDao.endTransaction()
+      conceptDao.close()
+      matches.toSeq
+    }
+  }
 }

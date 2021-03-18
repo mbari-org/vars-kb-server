@@ -22,7 +22,7 @@ import org.mbari.vars.kbserver.Constants
 import org.mbari.vars.kbserver.dao.DAOFactory
 import org.scalatra.{BadRequest, NotFound}
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContext}
 
@@ -34,7 +34,7 @@ class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext
 
   before() {
     contentType = "application/json"
-    response.headers += ("Access-Control-Allow-Origin" -> "*")
+    response.headers.set("Access-Control-Allow-Origin", "*")
   }
 
   get("/") {
@@ -90,6 +90,16 @@ class ConceptApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext
         case None    => halt(NotFound("Unable to find the root concept. That's crazy!!"))
         case Some(c) => toJson(c)
       }), Duration(60, TimeUnit.SECONDS))
+  }
+
+  get("/find/:glob") {
+    val glob = params
+      .get("glob")
+      .getOrElse(halt(BadRequest("Please provide a term to look up")))
+    val dao = daoFactory.newConceptNodeDAO()
+    Await.result(dao.findAllNamesContaining(glob)
+      .map(_.asJava)
+      .map(toJson), Duration(60, TimeUnit.SECONDS))
   }
 
 }

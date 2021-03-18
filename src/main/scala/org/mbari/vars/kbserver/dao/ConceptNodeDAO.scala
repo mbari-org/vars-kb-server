@@ -37,4 +37,6 @@ trait ConceptNodeDAO {
 
   def findRoot()(implicit ec: ExecutionContext): Future[Option[ConceptNode]]
 
+  def findAllNamesContaining(glob: String)(implicit ec: ExecutionContext): Future[Seq[ConceptNode]]
+
 }

@@ -139,7 +139,7 @@ object MutableConcept {
 
     }
     val root = nodes.find(_.parent.isEmpty)
-    (root, nodes)
+    (root, nodes.toSeq)
   }
 
 }

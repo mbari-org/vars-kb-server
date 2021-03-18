@@ -33,7 +33,7 @@ class RawApi @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFactory)
 
   before() {
     contentType = "application/json"
-    response.headers += ("Access-Control-Allow-Origin" -> "*")
+    response.headers.set("Access-Control-Allow-Origin", "*")
   }
 
   get("/") {

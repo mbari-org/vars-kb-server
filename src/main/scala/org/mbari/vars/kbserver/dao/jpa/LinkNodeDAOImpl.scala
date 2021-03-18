@@ -21,7 +21,7 @@ import org.mbari.vars.kbserver.dao.LinkNodeDAO
 import org.mbari.vars.kbserver.model.LinkNode
 import vars.{ILink, LinkBean}
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import vars.knowledgebase.KnowledgebaseDAOFactory
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -101,7 +101,7 @@ class LinkNodeDAOImpl @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFactor
         })
         .sortBy(_.getFromConcept)
       dao.endTransaction()
-      links
+      links.toSeq
     }
   }
 

@@ -30,7 +30,7 @@ import scala.concurrent.duration.{ Duration => SDuration }
  * @author Brian Schlining
  * @since 2016-12-12T16:43:00
  */
-class WebApiStack extends ScalatraFlatSpec with BeforeAndAfterAll {
+trait WebApiStack extends ScalatraFlatSpec with BeforeAndAfterAll {
 
   override protected def beforeAll(): Unit = {
     super.beforeAll()

@@ -16,7 +16,10 @@
 
 package org.mbari.vars.kbserver.dao.jpa
 
-import org.scalatest.{ BeforeAndAfterAll, FlatSpec, Matchers }
+
+import org.scalatest.BeforeAndAfterAll
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -24,7 +27,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 /**
  * Created by brian on 11/30/16.
  */
-class LinkNodeDAOSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
+class LinkNodeDAOSpec extends AnyFlatSpec with Matchers  with BeforeAndAfterAll {
 
   override protected def beforeAll(): Unit = TestDatabase.init
 
