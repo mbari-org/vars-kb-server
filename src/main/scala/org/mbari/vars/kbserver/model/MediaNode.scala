@@ -16,9 +16,10 @@
 
 package org.mbari.vars.kbserver.model
 
+import org.mbari.kb.core.knowledgebase.Media
+
 import java.net.URL
 import java.util.regex.Pattern
-import vars.knowledgebase.Media
 
 /**
  *

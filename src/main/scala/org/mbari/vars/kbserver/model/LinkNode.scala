@@ -16,7 +16,8 @@
 
 package org.mbari.vars.kbserver.model
 
-import vars.ILink
+import org.mbari.kb.core.ILink
+
 
 /**
  *

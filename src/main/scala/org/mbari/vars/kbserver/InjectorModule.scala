@@ -28,7 +28,7 @@ import org.mbari.vars.kbserver.dao.jpa.DefaultDAOFactory
  */
 class InjectorModule extends Module {
   override def configure(binder: Binder): Unit = {
-    binder.install(new vars.jpa.InjectorModule)
+//    binder.install(new vars.jpa.InjectorModule)
     binder.bind(classOf[DAOFactory]).to(classOf[DefaultDAOFactory])
   }
 

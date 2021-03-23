@@ -20,8 +20,11 @@ import com.fatboyindustrial.gsonjavatime.Converters
 import com.google.gson.{FieldNamingPolicy, GsonBuilder}
 import com.google.inject.Guice
 import com.typesafe.config.{Config, ConfigFactory}
+import org.mbari.kb.core.ToolBelt
+import org.mbari.kb.jpa.knowledgebase.Factories
 import org.mbari.vars.kbserver.dao.DAOFactory
 import org.mbari.vars.kbserver.dao.jdbc.generic.ImmutableConcept
+import org.mbari.vars.kbserver.dao.jpa.DefaultDAOFactory
 import org.mbari.vars.kbserver.gson.{ConceptNodeSerializer, ImmutableConceptSerializer, OptionSerializer, PhylogenyNodeSerializer}
 import org.mbari.vars.kbserver.model.{ConceptNode, DbParams, PhylogenyNode}
 
@@ -51,6 +54,8 @@ object Constants {
     DbParams(user, password, url, driver, name, testQuery)
   }
 
+  lazy val TOOLBELT: ToolBelt = Factories.build().getToolBelt
+
   lazy val GUICE_INJECTOR = Guice.createInjector(new InjectorModule)
 
   val GSON = {
@@ -67,11 +72,12 @@ object Constants {
   }
 
   lazy val DAO_FACTORY: DAOFactory = {
-    val className = Try(CONFIG.getString("org.mbari.vars.kbserver.daofactory"))
-      .getOrElse("org.mbari.vars.kbserver.dao.DefaultDAOFactory")
-    //Class.forName(className).newInstance().asInstanceOf[DAOFactory]
-    val clazz = Class.forName(className)
-    GUICE_INJECTOR.getInstance(clazz).asInstanceOf[DAOFactory]
+//    val className = Try(CONFIG.getString("org.mbari.vars.kbserver.daofactory"))
+//      .getOrElse("org.mbari.vars.kbserver.dao.DefaultDAOFactory")
+//    //Class.forName(className).newInstance().asInstanceOf[DAOFactory]
+//    val clazz = Class.forName(className)
+//    GUICE_INJECTOR.getInstance(clazz).asInstanceOf[DAOFactory]
+    new DefaultDAOFactory(TOOLBELT.getKnowledgebaseDAOFactory)
   }
 
 }

@@ -16,7 +16,8 @@
 
 package org.mbari.vars.kbserver.model
 
-import vars.knowledgebase.Concept
+import org.mbari.kb.core.knowledgebase.Concept
+
 import scala.jdk.CollectionConverters._
 
 /**

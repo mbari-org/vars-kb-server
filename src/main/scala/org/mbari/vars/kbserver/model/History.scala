@@ -18,7 +18,7 @@ package org.mbari.vars.kbserver.model
 
 import java.time.Instant
 
-import vars.knowledgebase.{History => VHistory}
+import org.mbari.kb.core.knowledgebase.{History => VHistory}
 
 /**
  * @author Brian Schlining

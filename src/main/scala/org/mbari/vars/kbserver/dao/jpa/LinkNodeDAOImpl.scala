@@ -16,14 +16,14 @@
 
 package org.mbari.vars.kbserver.dao.jpa
 
+import org.mbari.kb.core.{ILink, LinkBean}
+import org.mbari.kb.core.knowledgebase.KnowledgebaseDAOFactory
+
 import javax.inject.Inject
 import org.mbari.vars.kbserver.dao.LinkNodeDAO
 import org.mbari.vars.kbserver.model.LinkNode
-import vars.{ILink, LinkBean}
 
 import scala.jdk.CollectionConverters._
-import vars.knowledgebase.KnowledgebaseDAOFactory
-
 import scala.concurrent.{ExecutionContext, Future}
 
 /**

@@ -16,8 +16,8 @@
 
 package org.mbari.vars.kbserver.dao
 
+import org.mbari.kb.core.ILink
 import org.mbari.vars.kbserver.model.LinkNode
-import vars.ILink
 
 import scala.concurrent.{ExecutionContext, Future}
 

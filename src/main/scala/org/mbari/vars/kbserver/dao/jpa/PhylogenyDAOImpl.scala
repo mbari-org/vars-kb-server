@@ -16,14 +16,14 @@
 
 package org.mbari.vars.kbserver.dao.jpa
 
-import javax.inject.Inject
+import org.mbari.kb.core.knowledgebase.{Concept, KnowledgebaseDAOFactory}
 
-import org.mbari.vars.kbserver.dao.{ PhylogenyDAO, PhylogenyRow }
-import org.mbari.vars.kbserver.model.{ ConceptNode, PhylogenyNode }
-import vars.knowledgebase.{ Concept, KnowledgebaseDAOFactory }
+import javax.inject.Inject
+import org.mbari.vars.kbserver.dao.{PhylogenyDAO, PhylogenyRow}
+import org.mbari.vars.kbserver.model.{ConceptNode, PhylogenyNode}
 
 import scala.jdk.CollectionConverters._
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
  *

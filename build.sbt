@@ -5,6 +5,7 @@ lazy val configVersion     = "1.4.1"
 lazy val derbyVersion      = "10.15.2.0"
 lazy val fatboyVersion     = "1.1.1"
 lazy val gsonVersion       = "2.8.6"
+lazy val guiceVersion      = "5.0.1"
 lazy val hikariVersion     = "4.0.3"
 lazy val javamelodyVersion = "1.86.0"
 lazy val jettyVersion      = "9.4.38.v20210224"
@@ -17,7 +18,7 @@ lazy val scalatraVersion   = "2.7.1"
 lazy val servletVersion    = "3.1.0"
 lazy val slf4jVersion      = "1.7.30"
 lazy val sqlserverVersion  = "8.4.1.jre11"
-lazy val varskbVersion     = "11.0.3"
+lazy val varskbVersion     = "11.0.7.jre11"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -27,7 +28,8 @@ lazy val buildSettings = Seq(
   crossScalaVersions := Seq("2.13.5"),
   organizationName := "Monterey Bay Aquarium Research Institute",
   startYear := Some(2017),
-  licenses += ("Apache-2.0", new URL("https://www.apache.org/licenses/LICENSE-2.0.txt"))
+  licenses += ("Apache-2.0", new URL("https://www.apache.org/licenses/LICENSE-2.0.txt")),
+    githubTokenSource := TokenSource.Environment("GITHUB_TOKEN")
 )
 
 lazy val consoleSettings = Seq(
@@ -57,7 +59,8 @@ lazy val dependencySettings = Seq(
   resolvers ++= Seq(
     Resolver.mavenLocal,
     Resolver.sonatypeRepo("releases"),
-    "hohonuuli-bintray" at "https://dl.bintray.com/hohonuuli/maven"
+    Resolver.githubPackages("mbari-org")
+//    "hohonuuli-bintray" at "https://dl.bintray.com/hohonuuli/maven"
   )
 )
 
@@ -97,6 +100,7 @@ lazy val root = (project in file("."))
         "com.fatboyindustrial.gson-javatime-serialisers" % "gson-javatime-serialisers" % fatboyVersion,
         "com.github.ben-manes.caffeine"                  % "caffeine"                  % caffeineVersion,
         "com.google.code.gson"                           % "gson"                      % gsonVersion,
+        "com.google.inject"                              % "guice"                     % guiceVersion,
         "com.microsoft.sqlserver"                        % "mssql-jdbc"                % sqlserverVersion,
         "com.oracle.database.jdbc"                       % "ojdbc10"                   % oracleVersion,
         "com.zaxxer"                                     % "HikariCP"                  % hikariVersion,
@@ -111,7 +115,7 @@ lazy val root = (project in file("."))
         "org.eclipse.jetty"                              % "jetty-server"              % jettyVersion % "compile;test",
         "org.eclipse.jetty"                              % "jetty-servlets"            % jettyVersion % "compile;test",
         "org.eclipse.jetty"                              % "jetty-webapp"              % jettyVersion % "compile;test",
-        "org.mbari.vars"                                 % "vars-jpa"                  % varskbVersion,
+        "org.mbari.vars"                                 % "org.mbari.kb.jpa"          % varskbVersion,
         "org.scalatest"                                  %% "scalatest"                % scalatestVersion % "test",
         "org.scalatra"                                   %% "scalatra"                 % scalatraVersion,
         "org.scalatra"                                   %% "scalatra-json"            % scalatraVersion,

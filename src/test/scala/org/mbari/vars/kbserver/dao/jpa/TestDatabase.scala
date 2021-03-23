@@ -17,13 +17,11 @@
 package org.mbari.vars.kbserver.dao.jpa
 
 import java.util.concurrent.TimeUnit
-
-import com.google.inject.Guice
-import org.mbari.net.URLUtilities
+import mbarix4j.net.URLUtilities
+import org.mbari.kb.core.knowledgebase.KnowledgebaseDAOFactory
+import org.mbari.kb.jpa.gson.InitializeKnowledgebaseApp
+import org.mbari.vars.kbserver.{Constants}
 import org.slf4j.LoggerFactory
-import vars.gson.InitializeKnowledgebaseApp
-import vars.jpa.InjectorModule
-import vars.knowledgebase.KnowledgebaseDAOFactory
 
 import scala.concurrent.duration.Duration
 import scala.util.control.NonFatal
@@ -37,7 +35,7 @@ import scala.util.control.NonFatal
 object TestDatabase {
 
   private[this] val log = LoggerFactory.getLogger(getClass)
-  private[this] val injector = Guice.createInjector(new InjectorModule)
+//  private[this] val injector = Guice.createInjector(new InjectorModule)
 
   val TIMEOUT = Duration(30, TimeUnit.SECONDS)
 
@@ -54,6 +52,8 @@ object TestDatabase {
     }
   }
 
-  val KB_DAO_FACTORY = injector.getInstance(classOf[KnowledgebaseDAOFactory])
+  val KB_DAO_FACTORY: KnowledgebaseDAOFactory = Constants.TOOLBELT.getKnowledgebaseDAOFactory
+
+//  val KB_DAO_FACTORY = injector.getInstance(classOf[KnowledgebaseDAOFactory])
 
 }

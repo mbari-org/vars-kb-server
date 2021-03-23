@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
+import org.mbari.kb.core.knowledgebase.KnowledgebaseDAOFactory
+
 import java.util.concurrent.Executors
 import javax.servlet.ServletContext
-
 import org.mbari.vars.kbserver.Constants
 import org.mbari.vars.kbserver.api._
 import org.scalatra.LifeCycle
 import org.slf4j.LoggerFactory
-import vars.knowledgebase.KnowledgebaseDAOFactory
 
 import scala.concurrent.ExecutionContext
 

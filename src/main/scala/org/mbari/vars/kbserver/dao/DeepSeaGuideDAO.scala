@@ -14,22 +14,12 @@
  * limitations under the License.
  */
 
-package org.mbari.vars.kbserver.dao.jdbc.oracle
+package org.mbari.vars.kbserver.dao
 
-import com.google.inject.Inject
-import org.mbari.kb.core.knowledgebase.KnowledgebaseDAOFactory
-import org.mbari.vars.kbserver.dao.PhylogenyDAO
-import org.mbari.vars.kbserver.dao.jpa.DefaultDAOFactory
+import org.mbari.kb.core.knowledgebase.Media
 
-/**
- * @author Brian Schlining
- * @since 2018-02-09T13:02:00
- *
- */
-@deprecated(message = "Use FastPhylogenyDAO instead", since = "0.2.0")
-class OracleDAOFactory @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFactory)
-    extends DefaultDAOFactory(knowledgebaseDAOFactory) {
+trait DeepSeaGuideDAO {
 
-  override def newPhylogenyDAO(): PhylogenyDAO = new PhylogenyDAOImpl(newConceptNodeDAO())
+  def findRepresentativeImage(concept: String): List[Media]
 
 }

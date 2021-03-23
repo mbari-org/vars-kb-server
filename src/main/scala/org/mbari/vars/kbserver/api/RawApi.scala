@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 import org.mbari.vars.kbserver.dao.jpa.KnowledgebaseInitializer
 import org.scalatra.BadRequest
-import vars.knowledgebase.KnowledgebaseDAOFactory
+import org.mbari.kb.core.knowledgebase.KnowledgebaseDAOFactory
 
 import scala.concurrent.{ ExecutionContext, Future }
 

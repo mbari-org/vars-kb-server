@@ -16,18 +16,17 @@
 
 package org.mbari.vars.kbserver.dao.jpa
 
-import java.io.{ IOException, InputStream }
+import java.io.{IOException, InputStream}
 import java.util
 import java.util.Scanner
-
-import com.google.gson.{ FieldNamingPolicy, GsonBuilder }
+import com.google.gson.{FieldNamingPolicy, GsonBuilder}
 import org.mbari.vars.kbserver.Constants
 import org.slf4j.LoggerFactory
-import vars.gson.{ AnnotatedFieldExclusionStrategy, ConceptSerializer, UnderscoreFieldExclusionStrategy }
 
 import scala.jdk.CollectionConverters._
-import vars.knowledgebase._
-import vars.knowledgebase.jpa.ConceptImpl
+import org.mbari.kb.core.knowledgebase.{Concept, KnowledgebaseDAOFactory}
+import org.mbari.kb.jpa.gson.{AnnotatedFieldExclusionStrategy, ConceptSerializer, UnderscoreFieldExclusionStrategy}
+import org.mbari.kb.jpa.knowledgebase.ConceptImpl
 
 import scala.util.Try
 

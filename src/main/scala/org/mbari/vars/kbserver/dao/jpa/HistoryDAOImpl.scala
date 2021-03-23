@@ -16,10 +16,11 @@
 
 package org.mbari.vars.kbserver.dao.jpa
 
+import org.mbari.kb.core.knowledgebase.KnowledgebaseDAOFactory
+
 import javax.inject.Inject
 import org.mbari.vars.kbserver.dao.HistoryDAO
 import org.mbari.vars.kbserver.model.History
-import vars.knowledgebase.KnowledgebaseDAOFactory
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.jdk.CollectionConverters._
