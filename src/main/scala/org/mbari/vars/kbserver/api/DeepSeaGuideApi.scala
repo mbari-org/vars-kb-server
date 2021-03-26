@@ -16,41 +16,34 @@
 
 package org.mbari.vars.kbserver.api
 
-import org.mbari.vars.kbserver.Constants
 import org.mbari.vars.kbserver.dao.DAOFactory
 import org.mbari.vars.kbserver.model.Msg
+import org.scalatra.BadRequest
 
 import scala.concurrent.ExecutionContext
 import scala.jdk.CollectionConverters._
 
-/**
- * @author Brian Schlining
- * @since 2019-11-19T14:17:00
- */
-class HistoryApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext)
-  extends ApiStack {
+class DeepSeaGuideApi(daoFactory: DAOFactory)(implicit val executor: ExecutionContext) extends ApiStack {
 
   before() {
     contentType = "application/json"
     response.headers.set("Access-Control-Allow-Origin", "*")
   }
 
-  get("/pending") {
-    val dao = daoFactory.newHistoryDAO()
-    dao.findPendingHistories()
+  get("/images/representative/:name") {
+    val name = params
+      .get("name")
+      .getOrElse(halt(BadRequest(toJson(Msg("Please provide a term to look up")))))
+    val count = params.get("limit").map(_.toInt).getOrElse(10)
+    val dao = daoFactory.newDeepSeaGuideDAO()
+    dao.findRepresentativeImages(name, count)
       .map(_.asJava)
-      .map(Constants.GSON.toJson)
-  }
-
-  get("/approved") {
-    val dao = daoFactory.newHistoryDAO()
-    dao.findApprovedHistories()
-      .map(_.asJava)
-      .map(Constants.GSON.toJson)
+      .map(toJson)
   }
 
   get("/test") {
     toJson(Msg("Worked", 200))
   }
+
 
 }

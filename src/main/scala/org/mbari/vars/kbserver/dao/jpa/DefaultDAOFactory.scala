@@ -17,12 +17,11 @@
 package org.mbari.vars.kbserver.dao.jpa
 
 import javax.inject.Inject
-
 import org.mbari.kb.core.knowledgebase.KnowledgebaseDAOFactory
 import org.mbari.vars.kbserver.Constants
 import org.mbari.vars.kbserver.dao.cached.CachedConceptNodeDAOImpl
-import org.mbari.vars.kbserver.dao.jdbc.generic.FastPhylogenyDAO
-import org.mbari.vars.kbserver.dao.{ConceptNodeDAO, DAOFactory, HistoryDAO, LinkNodeDAO, PhylogenyDAO}
+import org.mbari.vars.kbserver.dao.jdbc.generic.{DeepSeaGuideDAOImpl, FastPhylogenyDAO}
+import org.mbari.vars.kbserver.dao.{ConceptNodeDAO, DAOFactory, DeepSeaGuideDAO, HistoryDAO, LinkNodeDAO, PhylogenyDAO}
 
 /**
  *
@@ -47,6 +46,9 @@ class DefaultDAOFactory @Inject() (knowledgebaseDAOFactory: KnowledgebaseDAOFact
 
   override def newHistoryDAO(): HistoryDAO =
     new HistoryDAOImpl(knowledgebaseDAOFactory)
+
+  override def newDeepSeaGuideDAO(): DeepSeaGuideDAO =
+    new DeepSeaGuideDAOImpl(this, Constants.DB_PARAMS.testQuery)
 }
 
 object DefaultDAOFactory {

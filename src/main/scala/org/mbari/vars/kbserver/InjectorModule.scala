@@ -16,7 +16,9 @@
 
 package org.mbari.vars.kbserver
 
-import com.google.inject.{ Binder, Module }
+import com.google.inject.{Binder, Module}
+import org.mbari.kb.core.knowledgebase.KnowledgebaseDAOFactory
+import org.mbari.kb.jpa.knowledgebase.Factories
 import org.mbari.vars.kbserver.dao.DAOFactory
 import org.mbari.vars.kbserver.dao.jpa.DefaultDAOFactory
 
@@ -28,7 +30,8 @@ import org.mbari.vars.kbserver.dao.jpa.DefaultDAOFactory
  */
 class InjectorModule extends Module {
   override def configure(binder: Binder): Unit = {
-//    binder.install(new vars.jpa.InjectorModule)
+    val factories = Factories.build()
+    binder.bind(classOf[KnowledgebaseDAOFactory]).toInstance(factories.getKnowledgebaseDAOFactory)
     binder.bind(classOf[DAOFactory]).to(classOf[DefaultDAOFactory])
   }
 

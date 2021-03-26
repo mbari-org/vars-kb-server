@@ -7,16 +7,17 @@ lazy val fatboyVersion     = "1.1.1"
 lazy val gsonVersion       = "2.8.6"
 lazy val guiceVersion      = "5.0.1"
 lazy val hikariVersion     = "4.0.3"
+lazy val jansiVersion      = "2.3.1"
 lazy val javamelodyVersion = "1.86.0"
 lazy val jettyVersion      = "9.4.38.v20210224"
 lazy val jtaVersion        = "1.1"
 lazy val junitVersion      = "4.13.2"
-lazy val logbackVersion    = "1.2.3"
+lazy val logbackVersion    = "1.3.0-alpha4"
 lazy val oracleVersion     = "19.10.0.0"
 lazy val scalatestVersion  = "3.2.6"
 lazy val scalatraVersion   = "2.7.1"
 lazy val servletVersion    = "3.1.0"
-lazy val slf4jVersion      = "1.7.30"
+lazy val slf4jVersion      = "1.8.0-beta4"
 lazy val sqlserverVersion  = "8.4.1.jre11"
 lazy val varskbVersion     = "11.0.7.jre11"
 
@@ -93,7 +94,7 @@ lazy val root = (project in file("."))
   .settings(varsSettings)
   .settings(
     name := "vars-kb-server",
-    version := "0.5.0",
+    version := "0.6.0",
     fork := true,
     libraryDependencies ++= {
       Seq(

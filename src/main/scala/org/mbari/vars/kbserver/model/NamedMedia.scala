@@ -14,22 +14,25 @@
  * limitations under the License.
  */
 
-package org.mbari.vars.kbserver.dao
+package org.mbari.vars.kbserver.model
 
-import org.mbari.vars.kbserver.model.NamedMedia
+import java.net.URL
 
-import scala.concurrent.{ExecutionContext, Future}
+case class NamedMedia(
+                     name: String,
+                     url: URL,
+                     caption: String,
+                     credit: String,
+                     mimeType: String,
+                     isPrimary: Boolean = false
+                     )
 
-trait DeepSeaGuideDAO {
-
-  /**
-   * Given a concept name, find a list of representative images for the concept. If the concept
-   * has it's own media use that. Otherwise, walk it's descendants and return up to the number (count)
-   * of images.
-   * @param concept The concept name
-   * @param count The number of images to return
-   * @return
-   */
-  def findRepresentativeImages(concept: String, count: Int)(implicit ec: ExecutionContext): Future[Seq[NamedMedia]]
-
+object NamedMedia {
+  def apply(name: String, mediaNode: MediaNode): NamedMedia =
+    NamedMedia(name,
+      mediaNode.url,
+      mediaNode.caption,
+      mediaNode.credit,
+      mediaNode.mimeType,
+    )
 }

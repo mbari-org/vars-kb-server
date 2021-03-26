@@ -47,6 +47,7 @@ class ScalatraBootstrap extends LifeCycle {
     val conceptApi = new ConceptApi(daoFactory)
     val linkApi = new LinkApi(daoFactory)
     val historyApi = new HistoryApi(daoFactory)
+    val dsgApi = new DeepSeaGuideApi(daoFactory)
 
     val kbDaoFactory = Constants.GUICE_INJECTOR.getInstance(classOf[KnowledgebaseDAOFactory])
     val rawApi = new RawApi(kbDaoFactory)
@@ -56,6 +57,7 @@ class ScalatraBootstrap extends LifeCycle {
     context.mount(linkApi, "/v1/links")
     context.mount(rawApi, "/v1/raw")
     context.mount(historyApi, "/v1/history")
+    context.mount(dsgApi, "/v1/dsg")
 
   }
 

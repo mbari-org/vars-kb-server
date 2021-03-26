@@ -45,7 +45,7 @@ object MediaNode {
       media.isPrimary
     )
 
-  private def resolveMimeType(t: String, url: String): String = {
+  def resolveMimeType(t: String, url: String): String = {
     val ext = url.split(Pattern.quote(".")).last
     t match {
       case Media.TYPE_IMAGE => s"image/$ext"

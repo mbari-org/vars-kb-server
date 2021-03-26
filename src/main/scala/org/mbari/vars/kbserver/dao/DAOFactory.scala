@@ -36,4 +36,6 @@ trait DAOFactory {
 
   def newHistoryDAO(): HistoryDAO
 
+  def newDeepSeaGuideDAO(): DeepSeaGuideDAO
+
 }
