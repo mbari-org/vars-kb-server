@@ -126,8 +126,7 @@ class FastPhylogenyDAO(connectionTestQuery: Option[String])
 
 object FastPhylogenyDAO {
   val SQL: String =
-    """
-      |SELECT
+    """SELECT
       |  c.ID,
       |  c.PARENTCONCEPTID_FK,
       |  cn.CONCEPTNAME,
@@ -141,11 +140,10 @@ object FastPhylogenyDAO {
       |  ConceptName cn ON cn.CONCEPTID_FK = C.ID
       |WHERE
       | cn.CONCEPTNAME IS NOT NULL
-    """.stripMargin
+    """.stripMargin('|')
 
   val LAST_UPDATE_SQL: String =
-    """
-      |SELECT
+    """SELECT
       |  MAX(t.mytime)
       |FROM
       |(SELECT
@@ -157,5 +155,5 @@ object FastPhylogenyDAO {
       |  MAX(LAST_UPDATED_TIME) AS mytime
       |FROM
       |  ConceptName) t
-    """.stripMargin
+    """.stripMargin('|')
 }
