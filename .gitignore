@@ -1,29 +1,13 @@
 # General files to be ignored
-*.class
-.DS_Store
-*.orig
-derby.log
-
-# Package Files #
-*.jar
-*.war
-*.ear
-
-# Build Directory #
-target/
-
-# Ignore IntelliJ files
-.idea/
-*.iml
-
-# eclipse conf file
-.settings
-.classpath
-.project
-.manager
-.scala_dependencies
-.metals/
 .bloop/
-# ensime
-*ensime*
+.bsp/
+.history/
+.metals/
+.vscode/
+derby.log
+project/.bloop/
+project/metals.sbt
+project/project/
+project/target/
+target/
 
