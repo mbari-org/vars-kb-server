@@ -26,6 +26,7 @@ import org.scalatest.matchers.should.Matchers
 import scala.concurrent.Await
 //import scala.util.Try
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.jdk.CollectionConverters._
 
 /**
  * @author Brian Schlining
@@ -50,6 +51,13 @@ class FastPhylogenyDAOSpec extends AnyFlatSpec with Matchers  with BeforeAndAfte
     val cn = Await.result(dao.findDown("Agalmatidae"), TestDatabase.TIMEOUT)
     cn should not be (empty)
     println(Constants.GSON.toJson(cn.get))
+  }
+
+  it should "findSiblings" in {
+    val sibs = Await.result(dao.findSiblings("Anthozoa"), TestDatabase.TIMEOUT)
+    sibs should not be (empty)
+    sibs.size should be (4)
+    println(Constants.GSON.toJson(sibs.asJava))
   }
 
 }

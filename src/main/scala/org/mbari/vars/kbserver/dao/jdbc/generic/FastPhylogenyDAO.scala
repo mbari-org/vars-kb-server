@@ -61,22 +61,34 @@ class FastPhylogenyDAO(connectionTestQuery: Option[String])
     }
   }
 
+  def findSiblings(name: String)(implicit ec: ExecutionContext): Future[Seq[ImmutableConcept]] = {
+    Future {
+      load()
+      findMutableNode(name)
+        .flatMap(n => n.parent.map(p => p.children.map(_.toImmutable())))
+        .getOrElse(Nil)
+        .map(node => node.copy(children = Nil))
+    }
+  }
+
   private def findMutableNode(name: String): Option[MutableConcept] =
     allNodes.find(_.names.map(_.name).contains(name))
 
   private def load(): Unit = {
     val lastUpdateInDb = executeLastUpdateQuery()
     if (lastUpdateInDb.isAfter(lastUpdate)) {
-      log.debug("Loading cache ...")
-      val cache = executeQuery()
-      if (cache.nonEmpty) {
-        val lu = cache.maxBy(_.lastUpdate.toEpochMilli)
-        lastUpdate = lu.lastUpdate
-      }
+      this.synchronized {
+        log.debug("Loading cache ...")
+        val cache = executeQuery()
+        if (cache.nonEmpty) {
+          val lu = cache.maxBy(_.lastUpdate.toEpochMilli)
+          lastUpdate = lu.lastUpdate
+        }
 
-      val r = MutableConcept.toTree(cache)
-      rootNode = r._1
-      allNodes = r._2
+        val r = MutableConcept.toTree(cache)
+        rootNode = r._1
+        allNodes = r._2
+      }
 
     }
   }
