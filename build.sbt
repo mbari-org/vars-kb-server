@@ -1,6 +1,6 @@
 lazy val caffeineVersion   = "3.0.4"
-lazy val catsVersion       = "2.6.1"
-val circeVersion        = "0.14.1"
+lazy val catsVersion       = "2.7.0"
+lazy val circeVersion      = "0.14.1"
 lazy val codecVersion      = "1.15"
 lazy val configVersion     = "1.4.1"
 lazy val derbyVersion      = "10.15.2.0"
@@ -78,6 +78,7 @@ lazy val optionSettings = Seq(
     "-unchecked",
     "-Xfatal-warnings",
     "-Xlint",
+    "-Xlint:-byname-implicit" // CirceCodecs fail to compile without this
   ),
   javacOptions ++= Seq("-target", "17", "-source", "17"),
   updateOptions := updateOptions.value.withCachedResolution(true)

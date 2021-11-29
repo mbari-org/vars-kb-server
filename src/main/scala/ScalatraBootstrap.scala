@@ -58,6 +58,7 @@ class ScalatraBootstrap extends LifeCycle {
     context.mount(rawApi, "/v1/raw")
     context.mount(historyApi, "/v1/history")
     context.mount(dsgApi, "/v1/dsg")
+    context.mount(new HealthApi, "/v1/health")
 
   }
 

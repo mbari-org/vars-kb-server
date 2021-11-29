@@ -21,6 +21,7 @@ import org.eclipse.jetty.server._
 import org.eclipse.jetty.servlet.FilterHolder
 import org.eclipse.jetty.webapp.WebAppContext
 import org.scalatra.servlet.ScalatraListener
+import org.slf4j.LoggerFactory
 
 object JettyMain {
 
@@ -35,8 +36,19 @@ object JettyMain {
 
   def main(args: Array[String]) = {
     System.setProperty("user.timezone", "UTC")
+    val s = """
+      |                               __   __                                        
+      |  _   ______ ___________      / /__/ /_        ________  ______   _____  _____
+      | | | / / __ `/ ___/ ___/_____/ //_/ __ \______/ ___/ _ \/ ___/ | / / _ \/ ___/
+      | | |/ / /_/ / /  (__  )_____/ ,< / /_/ /_____(__  )  __/ /   | |/ /  __/ /    
+      | |___/\__,_/_/  /____/     /_/|_/_.___/     /____/\___/_/    |___/\___/_/ 
+    |"""
+    println(s)
     val server: Server = new Server
-    println("starting jetty")
+    LoggerFactory
+      .getLogger(getClass)
+      .atInfo
+      .log("Starting Jetty server on port {}", conf.port)
 
     server setStopTimeout conf.stopTimeout
     //server setDumpAfterStart true
@@ -65,8 +77,6 @@ object JettyMain {
     monitoringFilter.setInitParameter(Parameter.APPLICATION_NAME.getCode, conf.webapp)
     monitoringFilter.setInitParameter("authorized-users", "adminz:Cranchiidae")
     webApp.addFilter(monitoringFilter, "/*", java.util.EnumSet.of(DispatcherType.REQUEST, DispatcherType.ASYNC))
-
-
 
     server setHandler webApp
 
