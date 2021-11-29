@@ -37,7 +37,7 @@ class ScalatraBootstrap extends LifeCycle {
 
   override def init(context: ServletContext): Unit = {
 
-    log.info("STARTING UP NOW")
+    log.info("Mounting servlets")
 
     implicit val ec = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(Runtime.getRuntime.availableProcessors()))
 
