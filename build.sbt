@@ -1,5 +1,6 @@
 lazy val caffeineVersion   = "3.0.1"
 lazy val catsVersion       = "2.4.2"
+val circeVersion        = "0.14.1"
 lazy val codecVersion      = "1.15"
 lazy val configVersion     = "1.4.1"
 lazy val derbyVersion      = "10.15.2.0"
@@ -78,7 +79,7 @@ lazy val optionSettings = Seq(
     "-Xfatal-warnings",
     "-Xlint",
   ),
-  javacOptions ++= Seq("-target", "11", "-source", "11"),
+  javacOptions ++= Seq("-target", "17", "-source", "17"),
   updateOptions := updateOptions.value.withCachedResolution(true)
 )
 
@@ -106,6 +107,9 @@ lazy val root = (project in file("."))
         "com.oracle.database.jdbc"                       % "ojdbc10"                   % oracleVersion,
         "com.zaxxer"                                     % "HikariCP"                  % hikariVersion,
         "commons-codec"                                  % "commons-codec"             % codecVersion,
+        "io.circe"                                       %% "circe-core"               % circeVersion,
+        "io.circe"                                       %% "circe-generic"            % circeVersion,
+        "io.circe"                                       %% "circe-parser"             % circeVersion,
         "javax.servlet"                                  % "javax.servlet-api"         % servletVersion,
         "javax.transaction"                              % "jta"                       % jtaVersion,
         "org.apache.derby"                               % "derby"                     % derbyVersion, //          % "test",
@@ -144,4 +148,3 @@ lazy val root = (project in file("."))
     packJarNameConvention := "original"
   )
 
-addCommandAlias("cleanall", ";clean;clean-files")
