@@ -20,7 +20,7 @@ lazy val scalatraVersion   = "2.8.2"
 lazy val servletVersion    = "3.1.0"
 lazy val slf4jVersion      = "2.0.0-alpha5"
 lazy val sqlserverVersion  = "9.4.0.jre11"
-lazy val varskbVersion     = "11.0.7.jre11"
+lazy val varskbVersion     = "11.0.12"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -96,7 +96,7 @@ lazy val root = (project in file("."))
   .settings(varsSettings)
   .settings(
     name := "vars-kb-server",
-    version := "0.7.1",
+    version := "0.7.2",
     fork := true,
     libraryDependencies ++= {
       Seq(
