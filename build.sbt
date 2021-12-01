@@ -8,6 +8,7 @@ lazy val fatboyVersion     = "1.1.1"
 lazy val gsonVersion       = "2.8.9"
 lazy val guiceVersion      = "5.0.1"
 lazy val hikariVersion     = "5.0.0"
+lazy val httpcomponentsVersion = "4.5.13"
 lazy val jansiVersion      = "2.3.1"
 lazy val javamelodyVersion = "1.88.0"
 lazy val jettyVersion      = "9.4.44.v20210927"
@@ -78,7 +79,8 @@ lazy val optionSettings = Seq(
     "-unchecked",
     "-Xfatal-warnings",
     "-Xlint",
-    "-Xlint:-byname-implicit" // CirceCodecs fail to compile without this
+    "-Xlint:-byname-implicit",
+    "-Ylog-classpath" // CirceCodecs fail to compile without this
   ),
   javacOptions ++= Seq("-target", "17", "-source", "17"),
   updateOptions := updateOptions.value.withCachedResolution(true)
@@ -118,6 +120,8 @@ lazy val root = (project in file("."))
         "org.apache.derby"                               % "derbynet"                  % derbyVersion, //          % "test",
         "org.apache.derby"                               % "derbyshared"               % derbyVersion,
         "org.apache.derby"                               % "derbytools"                % derbyVersion,
+        "org.apache.httpcomponents" % "httpcomponents-client"                % httpcomponentsVersion % Test,
+        "org.apache.httpcomponents" % "httpmime"                  % httpcomponentsVersion % Test,
         "org.eclipse.jetty"                              % "jetty-server"              % jettyVersion % "compile;test",
         "org.eclipse.jetty"                              % "jetty-servlets"            % jettyVersion % "compile;test",
         "org.eclipse.jetty"                              % "jetty-webapp"              % jettyVersion % "compile;test",
@@ -125,9 +129,9 @@ lazy val root = (project in file("."))
         "org.scalatest"                                  %% "scalatest"                % scalatestVersion % "test",
         "org.scalatra"                                   %% "scalatra"                 % scalatraVersion,
         "org.scalatra"                                   %% "scalatra-json"            % scalatraVersion,
-        "org.scalatra"                                   %% "scalatra-scalate"         % scalatraVersion,
+        // "org.scalatra"                                   %% "scalatra-scalate"         % scalatraVersion,
 //        "org.scalatra" %% "scalatra-slf4j" % scalatraVersion,
-        "org.scalatra" %% "scalatra-swagger" % scalatraVersion,
+        // "org.scalatra" %% "scalatra-swagger" % scalatraVersion,
 //        "org.scalatra" %% "scalatra-swagger-ext" % scalatraVersion,
         "org.scalatra"        %% "scalatra-scalatest" % scalatraVersion,
         "org.typelevel"       %% "cats-core"          % catsVersion,
