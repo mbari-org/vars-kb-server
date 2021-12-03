@@ -79,8 +79,7 @@ lazy val optionSettings = Seq(
     "-unchecked",
     "-Xfatal-warnings",
     "-Xlint",
-    "-Xlint:-byname-implicit",
-    "-Ylog-classpath" // CirceCodecs fail to compile without this
+    "-Xlint:-byname-implicit"// CirceCodecs fail to compile without this
   ),
   javacOptions ++= Seq("-target", "17", "-source", "17"),
   updateOptions := updateOptions.value.withCachedResolution(true)
