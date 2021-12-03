@@ -72,11 +72,6 @@ object Constants {
   }
 
   lazy val DAO_FACTORY: DAOFactory = {
-//    val className = Try(CONFIG.getString("org.mbari.vars.kbserver.daofactory"))
-//      .getOrElse("org.mbari.vars.kbserver.dao.DefaultDAOFactory")
-//    //Class.forName(className).newInstance().asInstanceOf[DAOFactory]
-//    val clazz = Class.forName(className)
-//    GUICE_INJECTOR.getInstance(clazz).asInstanceOf[DAOFactory]
     new DefaultDAOFactory(TOOLBELT.getKnowledgebaseDAOFactory)
   }
 

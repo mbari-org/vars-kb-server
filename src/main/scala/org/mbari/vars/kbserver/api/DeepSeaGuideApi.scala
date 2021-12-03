@@ -27,7 +27,6 @@ class DeepSeaGuideApi(daoFactory: DAOFactory)(implicit val executor: ExecutionCo
 
   before() {
     contentType = "application/json"
-    response.headers.set("Access-Control-Allow-Origin", "*")
   }
 
   get("/images/representative/:name") {
