@@ -26,6 +26,7 @@ final case class HealthStatus(
     totalMemory: Long,
     application: String = AppConfig.Name,
     version: String = AppConfig.Version,
+    description: String = AppConfig.Description
 )
 
 object HealthStatus {
