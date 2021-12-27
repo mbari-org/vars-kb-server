@@ -32,20 +32,8 @@ lazy val buildSettings = Seq(
   organizationName := "Monterey Bay Aquarium Research Institute",
   startYear := Some(2017),
   licenses += ("Apache-2.0", new URL("https://www.apache.org/licenses/LICENSE-2.0.txt")),
-    githubTokenSource := TokenSource.Environment("GITHUB_TOKEN")
 )
 
-lazy val consoleSettings = Seq(
-  shellPrompt := { state =>
-    val user = System.getProperty("user.name")
-    user + "@" + Project.extract(state).currentRef.project + ":sbt> "
-  },
-  initialCommands in console :=
-    """
-      |import java.time.Instant
-      |import java.util.UUID
-    """.stripMargin
-)
 
 lazy val dependencySettings = Seq(
   libraryDependencies ++= {
@@ -79,27 +67,35 @@ lazy val optionSettings = Seq(
     "-unchecked",
     "-Xfatal-warnings",
     "-Xlint",
-    "-Xlint:-byname-implicit",
-    "-Ylog-classpath" // CirceCodecs fail to compile without this
+    "-Xlint:-byname-implicit"// CirceCodecs fail to compile without this
   ),
   javacOptions ++= Seq("-target", "17", "-source", "17"),
   updateOptions := updateOptions.value.withCachedResolution(true)
 )
 
-lazy val varsSettings = buildSettings ++ consoleSettings ++ dependencySettings ++
+lazy val varsSettings = buildSettings ++ dependencySettings ++
   optionSettings // ++ reformatOnCompileSettings
 
 lazy val apps = Map("jetty-main" -> "JettyMain") // for sbt-pack
 
 lazy val root = (project in file("."))
-  .enablePlugins(JettyPlugin)
-  .enablePlugins(AutomateHeaderPlugin)
-  .enablePlugins(PackPlugin)
+  .enablePlugins(
+    AutomateHeaderPlugin, 
+    GitBranchPrompt, 
+    GitVersioning, 
+    JettyPlugin,
+    PackPlugin)
   .settings(varsSettings)
   .settings(
     name := "vars-kb-server",
-    version := "0.7.2",
     fork := true,
+    // Set version based on git tag. I use "0.0.0" format (no leading "v", which is the default)
+    // Use `show gitCurrentTags` in sbt to update/see the tags
+    git.gitTagToVersionNumber := { tag: String =>
+      if(tag matches "[0-9]+\\..*") Some(tag)
+      else None
+    },
+    git.useGitDescribe := true,
     libraryDependencies ++= {
       Seq(
         "com.fatboyindustrial.gson-javatime-serialisers" % "gson-javatime-serialisers" % fatboyVersion,

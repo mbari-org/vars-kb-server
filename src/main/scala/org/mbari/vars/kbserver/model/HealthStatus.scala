@@ -16,13 +16,17 @@
 
 package org.mbari.vars.kbserver.model
 
+import org.mbari.vars.kbserver.AppConfig
+
 final case class HealthStatus(
     jdkVersion: String,
     availableProcessors: Int,
     freeMemory: Long,
     maxMemory: Long,
     totalMemory: Long,
-    application: String = "vars-kb-server"
+    application: String = AppConfig.Name,
+    version: String = AppConfig.Version,
+    description: String = AppConfig.Description
 )
 
 object HealthStatus {

@@ -14,22 +14,16 @@
  * limitations under the License.
  */
 
-package org.mbari.vars.kbserver.api
+package org.mbari.vars.kbserver
 
-import org.scalatra.ScalatraServlet
-import org.mbari.vars.kbserver.model.CirceCodecs
-import org.mbari.vars.kbserver.model.CirceCodecs._
-import org.mbari.vars.kbserver.model.HealthStatus
+import scala.util.Try
 
-class HealthApi extends ScalatraServlet {
+object AppConfig {
+  
+  val Name: String = "vars-kb-server"
 
-  before() {
-    contentType = "application/json"
-  }
+  val Version: String = Try(getClass.getPackage.getImplementationVersion).getOrElse("0.0.0")
 
-  get("/") {
-    CirceCodecs.print(HealthStatus.default)
-  }
+  val Description: String = "VARS Knowledge Base"
 
 }
-
