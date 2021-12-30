@@ -121,6 +121,7 @@ lazy val root = (project in file("."))
         "org.eclipse.jetty"                              % "jetty-server"              % jettyVersion % "compile;test",
         "org.eclipse.jetty"                              % "jetty-servlets"            % jettyVersion % "compile;test",
         "org.eclipse.jetty"                              % "jetty-webapp"              % jettyVersion % "compile;test",
+        "org.eclipse.persistence" % "org.eclipse.persistence.jpa" % "2.7.9",
         "org.mbari.vars"                                 % "org.mbari.kb.jpa"          % varskbVersion,
         "org.scalatest"                                  %% "scalatest"                % scalatestVersion % "test",
         "org.scalatra"                                   %% "scalatra"                 % scalatraVersion,
