@@ -98,7 +98,7 @@ class FastPhylogenyDAO(connectionTestQuery: Option[String])
       val connection = dataSource.getConnection()
       val preparedStatement = connection.prepareStatement(FastPhylogenyDAO.LAST_UPDATE_SQL, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
       val resultSet = preparedStatement.executeQuery()
-      val lastUpdate = if (resultSet.next()) resultSet.getTimestamp(1).toInstant
+      val lastUpdate = if (resultSet.next()) Try(resultSet.getTimestamp(1).toInstant).getOrElse(Instant.now())
       else Instant.now()
       connection.close()
       lastUpdate
