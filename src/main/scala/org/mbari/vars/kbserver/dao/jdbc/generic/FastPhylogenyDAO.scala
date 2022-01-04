@@ -98,7 +98,16 @@ class FastPhylogenyDAO(connectionTestQuery: Option[String])
       val connection = dataSource.getConnection()
       val preparedStatement = connection.prepareStatement(FastPhylogenyDAO.LAST_UPDATE_SQL, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
       val resultSet = preparedStatement.executeQuery()
-      val lastUpdate = if (resultSet.next()) Try(resultSet.getTimestamp(1).toInstant).getOrElse(Instant.now())
+      val lastUpdate = if (resultSet.next()) {
+        val timestamp = resultSet.getTimestamp(1)
+        if (timestamp == null) {
+          log.warn("Attempted to load last update from database but the database is empty")
+          Instant.now()
+        }
+        else {
+          timestamp.toInstant()
+        }
+      }
       else Instant.now()
       connection.close()
       lastUpdate
