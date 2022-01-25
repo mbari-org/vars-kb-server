@@ -25,3 +25,7 @@ docker run -d \
     --restart unless-stopped \
     mbari/vars-kb-server
 ```
+
+## UI
+
+The knowledgebase can be edited using the [vars-kb](https://github.com/mbari-media-management/vars-kb) application.
