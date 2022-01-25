@@ -2,7 +2,7 @@
 
 ![MBARI logo](assets/images/logo-mbari-3b.png)
 
-The VARS Knowlegebase server provides a naming service used by a variety of applications. The fastest way to get up and running is to use the [m3-quickstart](https://github.com/mbari-media-management/m3-quickstart) project which will bring up a full suite of services, including a database server. If you don't need all those services, it is possible to just run the vars-kb-server.
+The VARS Knowlegebase server provides a naming service that can be used by a variety of applications. The fastest way to get up and running is to use the [m3-quickstart](https://github.com/mbari-media-management/m3-quickstart) project which will bring up a full suite of services, including a database server. If you don't need all those services, it is possible to just run the vars-kb-server.
 
 ## Quickstart
 
