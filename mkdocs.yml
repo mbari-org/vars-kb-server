@@ -1,6 +1,5 @@
 site_name: "VARS Knowledgebase Server"
 theme:
-    # name: 'readthedocs'
     name: 'material'
     logo: https://docs.mbari.org/imgs/mbari-logo.png
 extra_css:
