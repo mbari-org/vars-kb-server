@@ -6,24 +6,24 @@ MBARI Media Management (M3) uses a collection of services to support various vid
 
 All requests return JSON objects.
 
-`GET /v1/concept` - Return all concept names. e.g. <http://dsg.mbari.org/kb/v1/concept>
-`GET /v1/concept/{name}` - Return the details (alternate names, media, descriptors) for the given concept {name}. e.g. <http://dsg.mbari.org/kb/v1/concept/Pandalus%20platyceros>
-`GET /v1/concept/children/{name}` - Return the children of the given concept `{name}`. <http://dsg.mbari.org/kb/v1/concept/squid>
-`GET /v1/concept/find/{glob}` - Find concepts whose name or alternative names contains the provided characters. (e.g. red). <http://dsg.mbari.org/kb/v1/concept/find/red>
-`GET /v1/concept/parent/{name}` - Return the parent of the given concept `{name}`. e.g. <http://dsg.mbari.org/kb/v1/concept/parent/crab>
-`GET /v1/concept/root` - Return the details for the root concept of the knowledgebase. <http://dsg.mbari.org/kb/v1/concept/root>
-`GET /v1/dsg/images/representative/{name}` - Returns a random sample of representative images for this node from its child concepts. <http://dsg.mbari.org/kb/v1/dsg/images/representative/squid>
-`GET /v1/health` - Returns application info. Also useful for checking that the service is up.
-`GET /v1/history/approved`- Returns all approved changes to the knowledgebase
-`GET /v1/history/pending` - Returns all changes to the knowledebase that are pending approval by an administrator.
-`GET /v1/links/{name}/using/{linkname}` - Returns all link templates for the concept {name} that have the given {linkname}. e.g <http://dsg.mbari.org/kb/v1/links/Nanomia/using/surface-color>
-`GET /v1/links/{name}` - Return all link templates that can be applied to the given concept.
-`GET /v1/links/query/linkrealizations/{linkname}` - Link realizations are descriptive info about a concept useful for descriptive guides. <http://dsg.mbari.org/kb/v1/links/query/linkrealizations/dsg-range>
-`GET /v1/phylogeny/basic/{name}` - Get a flattened taxa branch from the root of the knowledgebase down to the named concept {name}. They are ordered; i.e. the top node is the kb root, the bottom node is the named concept  
-`GET /v1/phylogeny/down/{name}` - Return the descendents of 'name' (includes 'name')
-`GET /v1/phylogeny/siblings/{name}` - Return the siblings of 'name' (includes 'name'). Siblings share the same parent concept. e.g. <http://dsg.mbari.org/kb/v1/phylogeny/siblings/Nanomia>  
-`GET /v1/phylogeny/taxa/{name}` - Get a list of all concepts that includes the named concept and all of it's descendants. They are alphabetically ordered by concept name  
-`GET /v1/phylogeny/up/{name}` - Return the ancestors of 'name' (includes 'name')  
+- `GET /v1/concept` - Return all concept names. e.g. <http://dsg.mbari.org/kb/v1/concept>
+- `GET /v1/concept/{name}` - Return the details (alternate names, media, descriptors) for the given concept {name}. e.g. <http://dsg.mbari.org/kb/v1/concept/Pandalus%20platyceros>
+- `GET /v1/concept/children/{name}` - Return the children of the given concept `{name}`. <http://dsg.mbari.org/kb/v1/concept/squid>
+- `GET /v1/concept/find/{glob}` - Find concepts whose name or alternative names contains the provided characters. (e.g. red). <http://dsg.mbari.org/kb/v1/concept/find/red>
+- `GET /v1/concept/parent/{name}` - Return the parent of the given concept `{name}`. e.g. <http://dsg.mbari.org/kb/v1/concept/parent/crab>
+- `GET /v1/concept/root` - Return the details for the root concept of the knowledgebase. <http://dsg.mbari.org/kb/v1/concept/root>
+- `GET /v1/dsg/images/representative/{name}` - Returns a random sample of representative images for this node from its child concepts. <http://dsg.mbari.org/kb/v1/dsg/images/representative/squid>
+- `GET /v1/health` - Returns application info. Also useful for checking that the service is up.
+- `GET /v1/history/approved`- Returns all approved changes to the knowledgebase
+- `GET /v1/history/pending` - Returns all changes to the knowledebase that are pending approval by an administrator.
+- `GET /v1/links/{name}/using/{linkname}` - Returns all link templates for the concept {name} that have the given {linkname}. e.g <http://dsg.mbari.org/kb/v1/links/Nanomia/using/surface-color>
+- `GET /v1/links/{name}` - Return all link templates that can be applied to the given concept.
+- `GET /v1/links/query/linkrealizations/{linkname}` - Link realizations are descriptive info about a concept useful for descriptive guides. <http://dsg.mbari.org/kb/v1/links/query/linkrealizations/dsg-range>
+- `GET /v1/phylogeny/basic/{name}` - Get a flattened taxa branch from the root of the knowledgebase down to the named concept {name}. They are ordered; i.e. the top node is the kb root, the bottom node is the named concept  
+- `GET /v1/phylogeny/down/{name}` - Return the descendents of 'name' (includes 'name')
+- `GET /v1/phylogeny/siblings/{name}` - Return the siblings of 'name' (includes 'name'). Siblings share the same parent concept. e.g. <http://dsg.mbari.org/kb/v1/phylogeny/siblings/Nanomia>  
+- `GET /v1/phylogeny/taxa/{name}` - Get a list of all concepts that includes the named concept and all of it's descendants. They are alphabetically ordered by concept name  
+- `GET /v1/phylogeny/up/{name}` - Return the ancestors of 'name' (includes 'name')  
 
 ## Detailed API
 
