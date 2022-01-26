@@ -10,9 +10,9 @@ The VARS Knowlegebase server provides a naming service that can be used by a var
 
 ```mermaid
 flowchart LR
-  A[(Database)] --- B(vars-kb-server)
-  A --- C(vars-kb UI)
-  B --- D(Your applications)
+  A[(Database)]---|JDBC|B(vars-kb-server)
+  A---|JDBC|C(vars-kb UI)
+  B---[REST/JSON|D(Your applications)
 ```
 
 ### Docker
