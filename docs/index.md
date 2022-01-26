@@ -12,7 +12,7 @@ The VARS Knowlegebase server provides a naming service that can be used by a var
 flowchart LR
   A[(Database)]---|JDBC|B(vars-kb-server)
   A---|JDBC|C(vars-kb UI)
-  B---[REST/JSON|D(Your applications)
+  B---|REST/JSON|D(Your applications)
 ```
 
 ### Docker
