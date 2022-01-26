@@ -11,10 +11,8 @@ The VARS Knowlegebase server provides a naming service that can be used by a var
 ```mermaid
 flowchart LR
   A[(Database)] --- B(vars-kb-server)
-  A --- C(vars-kb)
+  A --- C(vars-kb UI)
   B --- D(Your applications)
-  click B href "https://github.com/mbari-media-management/vars-kb-server" vars-kb-server
-  click C href "https://github.com/mbari-media-management/vars-kb" vars-kb
 ```
 
 ### Docker
