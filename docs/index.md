@@ -13,6 +13,7 @@ flowchart LR
   A[(Database)]---|JDBC|B(vars-kb-server)
   A---|JDBC|C(vars-kb UI)
   B---|REST/JSON|D(Your applications)
+  style B fill:#FFCC80,stroke:#233338,stroke-width:2px
 ```
 
 ### Docker
