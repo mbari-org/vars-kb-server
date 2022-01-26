@@ -2,19 +2,25 @@
 
 ![MBARI logo](src/site/resources/images/logo-mbari-3b.png)
 
-This is a RESTful read-only service for retrieving information from MBARI's knowledgebase (KB). It can return:
+This vars-kb-server is REST service used by a variety of applications at [MBARI](https://www.mbari.org/) that need consistent names for animals, equipment, geology, and other objects of interest. It structures the terms in a hierarchy, allowing groups to model phylogentic trees or other parent-child relationships.
 
-- the hierarchy of concepts (e.g. phylogeny) found in the KB; both ancestors (up) and descendants (down) for a given concept.
-- information about a specific concepts including alternate names, media and link-realizations (descriptions)
-- Links (linktemplates) that can be applied to a particular concept when annotating
-
-This server has dependencies on the [vars-kb](https://github.com/hohonuuli/vars-kb) project.
-
-This project is built using [SBT](http://www.scala-sbt.org/) and [Java 17](https://jdk.java.net/17/)
+User documentation is at <https://docs.mbari.org/vars-kb-server/>.
 
 ## Development
 
 ### Getting Started
+
+You will need the following installed to build the vars-kb-server from source:
+
+- [SBT](http://www.scala-sbt.org/)
+- [Java 17](https://jdk.java.net/17/)
+
+In addition you will need to provide a GitHub access token to access [MBARI's Maven repository on GitHub](https://github.com/mbari-org/maven). Follow the instructions at <https://github.com/mbari-org/maven> to generate a token. Then export it as an environment variable:
+
+```bash
+export GITHUB_USERNAME 'your github username'
+export GITHUB_TOKEN 'your github token'
+```
 
 #### Build Java application
 

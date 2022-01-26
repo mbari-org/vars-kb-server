@@ -6,6 +6,19 @@ The VARS Knowlegebase server provides a naming service that can be used by a var
 
 ## Quickstart
 
+### System Diagram
+
+```mermaid
+flowchart LR
+  A[(Database)] --- B(vars-kb-server)
+  A --- C(vars-kb)
+  B --- D(Your applications)
+  click B href "https://github.com/mbari-media-management/vars-kb-server" vars-kb-server
+  click C href "https://github.com/mbari-media-management/vars-kb" vars-kb
+```
+
+### Docker
+
 If you already have a database server that you'd like to use for the knowledgebase. Out-of-the box the vars-kb-server includes drivers for Oracle, SQL Server, Postgresql, and Apache Derby. Create a database user with read/write and create schema permissions. When the vars-kb-server is configured with that user, it can create the tables it needs the first time you run it. The vars-kb-server is distributed as a [docker image](https://hub.docker.com/repository/docker/mbari/vars-kb-server). Here's an example command to start it. The environment parameters will vary depending on your database configuration.
 
 ```bash
