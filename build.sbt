@@ -1,34 +1,35 @@
-lazy val caffeineVersion   = "3.0.4"
+lazy val caffeineVersion   = "3.0.5"
 lazy val catsVersion       = "2.7.0"
 lazy val circeVersion      = "0.14.1"
 lazy val codecVersion      = "1.15"
-lazy val configVersion     = "1.4.1"
+lazy val configVersion     = "1.4.2"
 lazy val derbyVersion      = "10.15.2.0"
 lazy val fatboyVersion     = "1.1.1"
-lazy val gsonVersion       = "2.8.9"
-lazy val guiceVersion      = "5.0.1"
-lazy val hikariVersion     = "5.0.0"
+lazy val gsonVersion       = "2.9.0"
+lazy val guiceVersion      = "5.1.0"
+lazy val hikariVersion     = "5.0.1"
 lazy val httpcomponentsVersion = "4.5.13" // // override 4.5.6 in scalatratest. It's broken
 lazy val jansiVersion      = "2.3.1"
-lazy val javamelodyVersion = "1.88.0"
-lazy val jettyVersion      = "9.4.44.v20210927"
+lazy val javamelodyVersion = "1.90.0"
+lazy val jettyVersion      = "9.4.45.v20220203"
 lazy val jtaVersion        = "1.1"
 lazy val junitVersion      = "4.13.2"
-lazy val logbackVersion    = "1.3.0-alpha10"
-lazy val oracleVersion     = "19.12.0.0"
-lazy val scalatestVersion  = "3.2.10"
+lazy val logbackVersion    = "1.3.0-alpha14"
+lazy val oracleVersion     = "19.13.0.0.1"
+lazy val postgresqlVersion   = "42.3.3"
+lazy val scalatestVersion  = "3.2.11"
 lazy val scalatraVersion   = "2.8.2"
 lazy val servletVersion    = "3.1.0"
-lazy val slf4jVersion      = "2.0.0-alpha5"
-lazy val sqlserverVersion  = "9.4.0.jre11"
+lazy val slf4jVersion      = "2.0.0-alpha6"
+lazy val sqlserverVersion  = "10.2.0.jre17"
 lazy val varskbVersion     = "11.0.12"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 lazy val buildSettings = Seq(
   organization := "org.mbari.vars",
-  scalaVersion := "2.13.7",
-  crossScalaVersions := Seq("2.13.7"),
+  scalaVersion := "2.13.8",
+  crossScalaVersions := Seq("2.13.8"),
   organizationName := "Monterey Bay Aquarium Research Institute",
   startYear := Some(2017),
   licenses += ("Apache-2.0", new URL("https://www.apache.org/licenses/LICENSE-2.0.txt")),
@@ -121,8 +122,9 @@ lazy val root = (project in file("."))
         "org.eclipse.jetty"                              % "jetty-server"              % jettyVersion % "compile;test",
         "org.eclipse.jetty"                              % "jetty-servlets"            % jettyVersion % "compile;test",
         "org.eclipse.jetty"                              % "jetty-webapp"              % jettyVersion % "compile;test",
-        "org.eclipse.persistence" % "org.eclipse.persistence.jpa" % "2.7.9",
+        "org.eclipse.persistence" % "org.eclipse.persistence.jpa" % "2.7.10",
         "org.mbari.vars"                                 % "org.mbari.kb.jpa"          % varskbVersion,
+        "org.postgresql"                                 % "postgresql"                % postgresqlVersion,
         "org.scalatest"                                  %% "scalatest"                % scalatestVersion % "test",
         "org.scalatra"                                   %% "scalatra"                 % scalatraVersion,
         "org.scalatra"                                   %% "scalatra-json"            % scalatraVersion,
