@@ -7,21 +7,11 @@ VCS_REF=`git tag | sort -V | tail -1`
 
 
 sbt pack \
-    && docker buildx build \
-        --platform linux/amd64 \
+    && docker buildx build \    
+        --platform linux/amd64,linux/arm64 \
         --push \
         -t mbari/vars-kb-server:${VCS_REF} \
-        -t mbari/vars-kb-server:latest . \
-    && docker buildx build \
-        --platform linux/arm64 \
-        --push \
-        -t mbari/vars-kb-server:${VCS_REF} \
-        -t mbari/vars-kb-server:latest . \
-    && docker buildx build \
-       --platform linux/arm64 \
-       --load \
-       -t mbari/vars-kb-server:${VCS_REF} \
-       -t mbari/vars-kb-server:latest .
+        -t mbari/vars-kb-server:latest .
 
 
 # docker buildx build \
