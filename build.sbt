@@ -21,7 +21,7 @@ lazy val scalatestVersion  = "3.2.11"
 lazy val scalatraVersion   = "2.8.2"
 lazy val servletVersion    = "3.1.0"
 lazy val slf4jVersion      = "2.0.0-alpha6"
-lazy val sqlserverVersion  = "10.2.0.jre17"
+lazy val sqlserverVersion  = "9.4.1.jre11"
 lazy val varskbVersion     = "11.0.12"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
