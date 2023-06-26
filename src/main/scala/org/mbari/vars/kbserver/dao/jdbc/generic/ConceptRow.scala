@@ -102,7 +102,7 @@ object MutableConcept {
         Find an existing parent or create one as needed
        */
       val parentOpt = row.parentId.map(parentId =>
-        nodes.find(_.id.getOrElse(-1) == parentId)
+        nodes.find(_.id.getOrElse(-1L) == parentId)
           .getOrElse({
             val mc = newParent(parentId)
             nodes += mc
@@ -116,7 +116,7 @@ object MutableConcept {
       /*
         Find the existing concept or create one if needed
        */
-      val concept = nodes.find(_.id.getOrElse(-1) == row.id) match {
+      val concept = nodes.find(_.id.getOrElse(-1L) == row.id) match {
         case None =>
           val mc = new MutableConcept
           mc.id = Some(row.id)

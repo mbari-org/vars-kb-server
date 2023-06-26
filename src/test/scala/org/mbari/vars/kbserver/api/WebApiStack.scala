@@ -25,6 +25,8 @@ import org.scalatra.test.scalatest.ScalatraFlatSpec
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration.{ Duration => SDuration }
+import com.google.gson.Gson
+import org.mbari.vars.kbserver.dao.DAOFactory
 
 /**
  * @author Brian Schlining
@@ -37,9 +39,9 @@ trait WebApiStack extends ScalatraFlatSpec with BeforeAndAfterAll {
     TestDatabase.init
   }
 
-  protected[this] val gson = Constants.GSON
-  protected[this] val daoFactory = new DefaultDAOFactory(TestDatabase.KB_DAO_FACTORY)
-  protected[this] implicit val executionContext = ExecutionContext.global
-  protected[this] val timeout = SDuration(3000, TimeUnit.MILLISECONDS)
+  protected[this] val gson: Gson = Constants.GSON
+  protected[this] val daoFactory: DAOFactory = new DefaultDAOFactory(TestDatabase.KB_DAO_FACTORY)
+  protected[this] implicit val executionContext: ExecutionContext = ExecutionContext.global
+  protected[this] val timeout: SDuration = SDuration(3000, TimeUnit.MILLISECONDS)
 
 }

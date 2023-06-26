@@ -28,24 +28,24 @@ import org.mbari.vars.kbserver.Constants
 
 trait ApiBase extends ScalatraServlet {
 
-  implicit protected val stringToUUID = new TypeConverter[String, UUID] {
+  implicit protected val stringToUUID: TypeConverter[String, UUID] = new TypeConverter[String, UUID] {
     override def apply(s: String): Option[UUID] = Try(UUID.fromString(s)).toOption
   }
 
-  implicit protected val stringToInstant = new TypeConverter[String, Instant] {
+  implicit protected val stringToInstant: TypeConverter[String, Instant] = new TypeConverter[String, Instant] {
     override def apply(s: String): Option[Instant] = Try(Instant.parse(s)).toOption
   }
 
-  implicit protected val stringToDuration = new TypeConverter[String, Duration] {
+  implicit protected val stringToDuration: TypeConverter[String, Duration] = new TypeConverter[String, Duration] {
     override def apply(s: String): Option[Duration] = Try(Duration.ofMillis(s.toLong)).toOption
   }
 
-  implicit protected val stringToURI = new TypeConverter[String, URI] {
+  implicit protected val stringToURI: TypeConverter[String, URI] = new TypeConverter[String, URI] {
     override def apply(s: String): Option[URI] = Try(URI.create(s)).toOption
   }
 
-  implicit protected val stringToURL = new TypeConverter[String, URL] {
-    override def apply(s: String): Option[URL] = Try(new URL(s)).toOption
+  implicit protected val stringToURL: TypeConverter[String, URL] = new TypeConverter[String, URL] {
+    override def apply(s: String): Option[URL] = Try(URI.create(s).toURL()).toOption
   }
 
   def toJson(obj: Any): String = Constants.GSON.toJson(obj)

@@ -17,7 +17,6 @@
 package org.mbari.vars.kbserver.dao.jpa
 
 import java.util.concurrent.TimeUnit
-import mbarix4j.net.URLUtilities
 import org.mbari.kb.core.knowledgebase.KnowledgebaseDAOFactory
 import org.mbari.kb.jpa.gson.InitializeKnowledgebaseApp
 import org.mbari.vars.kbserver.{Constants}
@@ -25,6 +24,7 @@ import org.slf4j.LoggerFactory
 
 import scala.concurrent.duration.Duration
 import scala.util.control.NonFatal
+import java.nio.file.Paths
 
 /**
  * Reads a zipped up JSON dump of MBARI's KB and loads it into the database.
@@ -44,7 +44,8 @@ object TestDatabase {
     log.info("Begin database initialization")
     try {
       val url = getClass.getResource("/kb/kb-dump.json.zip")
-      val file = URLUtilities.toFile(url)
+      val file = Paths.get(url.toURI()).toFile()
+      // val file = URLUtilities.toFile(url)
       InitializeKnowledgebaseApp.run(file, KB_DAO_FACTORY)
       true
     } catch {
